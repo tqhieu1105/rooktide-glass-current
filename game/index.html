@@ -11,16 +11,18 @@
 <body>
   <canvas id="game" tabindex="0" aria-label="Rooktide 3D open city. WASD to walk or drive, E to enter or exit the car, mouse drag to look."></canvas>
   <div id="hud">
-    <header class="brand"><i class="gate-mark"></i><div><h1><span class="wordmark" data-title="ROOKTIDE">ROOKTIDE</span><span class="brand-subtitle">GLASS CURRENT</span></h1></div></header>
-    <section class="explore panel" id="free-roam"><div class="eyebrow"><b class="small-dot"></b> FREE ROAM <span></span></div><h2>Take the long way.</h2><p id="objective">Your next bad idea has four wheels.</p><div class="explore-footer"><span>DISTRICTS DISCOVERED</span><strong id="explored">01 / 06</strong></div></section>
-    <section id="mission-card" class="explore panel" aria-label="Current mission" hidden>
-      <div class="eyebrow"><b class="small-dot"></b><b id="mission-chapter"></b><span id="mission-step"></span></div>
-      <h2 id="mission-title"></h2><div id="mission-stages" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <p id="mission-objective"></p><div id="mission-waypoint"></div><div id="mission-next"></div>
-    </section>
+    <div class="mission-slot">
+      <header class="brand"><i class="gate-mark" aria-hidden="true"></i><h1><span class="wordmark" data-title="ROOKTIDE">ROOKTIDE</span><span class="brand-subtitle">GLASS CURRENT</span></h1></header>
+      <section class="explore" id="free-roam"><div class="eyebrow"><b class="small-dot"></b> FREE ROAM</div><h2>Take the long way.</h2><p id="objective">Your next bad idea has four wheels.</p><div class="explore-footer"><span>DISTRICTS DISCOVERED</span><strong id="explored">01 / 06</strong></div></section>
+      <section id="mission-card" class="explore glass" aria-label="Current mission" hidden>
+        <div class="eyebrow"><b class="small-dot"></b><b id="mission-chapter"></b><span id="mission-step"></span></div>
+        <h2 id="mission-title"></h2><div id="mission-stages" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <p id="mission-objective"></p><div id="mission-next"></div>
+      </section>
+    </div>
     <div id="waypoint-label" aria-hidden="true" hidden><i></i><span id="waypoint-name"></span></div>
     <div id="aim-reticle" aria-hidden="true" hidden><i></i><b></b></div>
-    <div class="district-title"><h2 id="district">Kiln Market</h2><p id="district-subtitle">CLAY / COFFEE / SMALL FAVOURS</p></div>
+    <div class="district-title"><h2 id="district">Kiln Market</h2><p id="district-subtitle">CLAY / COFFEE / SMALL FAVOURS</p><p id="compass">N / 000°</p></div>
     <aside class="street-status" aria-label="Street status">
       <div class="status-topline"><span class="game-clock"><span>ROOKTIDE</span><strong id="game-time">17:40</strong></span>
         <button id="help-button" title="Pause menu" aria-label="Pause menu"><span aria-hidden="true">Ⅱ</span> ESC</button></div>
@@ -28,14 +30,14 @@
         <div class="health stat-bar"><span>HEALTH</span><div><i id="health-bar"></i></div><b id="health-value">100</b></div>
         <div class="armour stat-bar"><span>ARMOUR</span><div><i id="armour-bar"></i></div><b id="armour-value">0</b></div>
       </div>
-      <div class="wallet">
-        <div><span class="wallet-label">CASH</span><div class="wallet-cash"><span aria-hidden="true">$</span><strong id="city-cash" aria-label="Cash: $250">250</strong></div></div>
-        <div class="rank-line"><span id="city-rank">RUNNER · 0 RP</span><div class="rank-track" role="progressbar" aria-label="Reputation progress" aria-valuemin="0" aria-valuemax="150" aria-valuenow="0"><i id="rank-meter"></i></div></div>
-        <div class="crew-unlocks" id="crew-unlocks" aria-label="Crew service unlocks"><span id="unlock-ilex">ILEX · LOCKED</span><span id="unlock-sava">SAVA · LOCKED</span><span id="unlock-daro">DARO · LOCKED</span></div>
-      </div>
       <div id="weapon-readout" aria-label="Selected weapon">
         <span class="weapon-icon-frame" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 18c-2-1-3-3-2-5l2-4 3 1 2 3 2-6 3 1-1 5 2-4 3 1-2 6 2-3 3 2-4 8c-1 3-4 4-7 3l-4-2-4-5c-1-1-1-2 0-3Z"/></svg></span>
-        <span class="weapon-name" id="weapon-name">FISTS</span><span id="pistol-slot" class="screen-reader" hidden>PISTOL</span><strong id="weapon-ammo" hidden></strong>
+        <span class="weapon-name" id="weapon-name">1 · FISTS</span><strong id="weapon-ammo" hidden></strong>
+      </div>
+      <div class="wallet">
+        <div class="wallet-cash"><span aria-hidden="true">$</span><strong id="city-cash" aria-label="Cash: $250">250</strong></div>
+        <div class="rank-line"><span id="city-rank">RUNNER · 0 RP</span><div class="rank-track" role="progressbar" aria-label="Reputation progress" aria-valuemin="0" aria-valuemax="150" aria-valuenow="0"><i id="rank-meter"></i></div></div>
+        <div class="crew-unlocks" id="crew-unlocks" aria-label="Crew service unlocks"><span id="unlock-ilex">ILEX · LOCKED</span><span id="unlock-sava">SAVA · LOCKED</span><span id="unlock-daro">DARO · LOCKED</span></div>
       </div>
       <section class="wanted" aria-label="Police response">
         <div class="wanted-heading"><span>ROOKTIDE CIVIC PATROL</span><strong id="wanted-level">ROUTINE</strong></div>
@@ -52,10 +54,10 @@
       </section>
       <ol class="dispatch-units" id="dispatch-units" aria-label="Responding units" hidden><li></li><li></li><li></li></ol>
     </aside>
-    <div class="compass" id="compass">N / 000°</div>
     <section class="map-wrap" aria-label="Navigation and health">
       <div class="map-ring"><canvas id="minimap" aria-label="Rooktide street minimap"></canvas></div>
-      <div class="map-caption"><kbd>M</kbd><span id="map-label">CITY OVERVIEW</span></div>
+      <div class="map-vitals" aria-hidden="true"><div class="meter"><i id="map-health"></i></div><div class="meter armour"><i id="map-armour"></i></div></div>
+      <div class="map-caption"><span id="map-label">M · CITY OVERVIEW</span></div>
     </section>
     <section class="vehicle" aria-label="Vehicle or equipment">
       <p id="mode">NERI VOSS</p>
@@ -67,18 +69,19 @@
     </section>
     <div class="street-comms">
       <div id="toast" role="status"></div>
-      <aside id="mission-radio" aria-label="Crew dialogue" hidden>
+      <aside id="mission-radio" class="glass" aria-label="Crew dialogue" hidden>
         <div class="portrait" aria-hidden="true"><b></b><i></i></div>
         <div><strong id="radio-contact"></strong><span class="crew-radio-label">CREW RADIO</span><p id="radio-line"></p></div>
       </aside>
+      <p id="mission-waypoint" hidden></p>
       <div id="prompt" class="prompt"><kbd>E</kbd> Take the Driftline GT</div>
     </div>
     <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>F</kbd> Attack</span><span><kbd>TAB</kbd> Hold weapon wheel · <kbd>1 / 2</kbd> Quick select</span><span><kbd>R</kbd> Reload / recover</span><span><kbd>Q</kbd> Scan · <kbd>G</kbd> Yard</span></footer>
   </div>
   <div id="weapon-wheel" aria-label="Weapon wheel" hidden>
-    <div class="weapon-wheel-ring"><span class="wheel-center">ROOKTIDE<br><b>LOADOUT</b></span>
-      <button class="weapon-wheel-slot" type="button" data-weapon="1" aria-label="Select fists"><kbd>1</kbd><strong>FISTS</strong></button>
-      <button class="weapon-wheel-slot" type="button" data-weapon="2" aria-label="Select pistol"><kbd>2</kbd><strong>PISTOL</strong><small>12 / 36</small></button>
+    <div class="weapon-wheel-ring glass"><span class="wheel-center">ROOKTIDE<br><b>LOADOUT</b></span>
+      <button class="weapon-wheel-slot glass" type="button" data-weapon="1" aria-label="Select fists"><kbd>1</kbd><strong>FISTS</strong></button>
+      <button class="weapon-wheel-slot glass" type="button" data-weapon="2" aria-label="Select pistol"><kbd>2</kbd><strong>PISTOL</strong><small>12 / 36</small></button>
     </div>
     <span class="wheel-hint">MOVE TO PICK · RELEASE TAB TO CONFIRM</span>
   </div>

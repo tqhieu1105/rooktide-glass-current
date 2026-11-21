@@ -17,7 +17,7 @@ const drivingPrompt = '<kbd>E</kbd> Step out <span>·</span> <kbd>SPACE</kbd> Ha
 export function createStreetHUD(world, minimap) {
   const $ = id => document.getElementById(id);
   const elements = Object.fromEntries(['district', 'district-subtitle', 'explored', 'objective', 'prompt',
-    'speed', 'drive-gear', 'mode', 'condition', 'condition-value', 'drive-readout', 'weapon-readout', 'pistol-slot', 'weapon-ammo',
+    'speed', 'drive-gear', 'mode', 'condition', 'condition-value', 'drive-readout', 'weapon-readout', 'weapon-ammo', 'map-health', 'map-armour',
     'station-readout', 'station-name', 'station-track', 'toast', 'compass', 'status', 'map-label',
     'city-cash', 'city-rank', 'rank-meter', 'game-time', 'health-value', 'health-bar', 'armour-value', 'armour-bar', 'weapon-name', 'free-roam', 'mission-card', 'mission-chapter', 'mission-title', 'mission-step',
     'mission-stages', 'mission-objective', 'mission-waypoint', 'mission-next', 'mission-radio', 'radio-contact', 'radio-line',
@@ -26,6 +26,7 @@ export function createStreetHUD(world, minimap) {
   const rows = [...elements['dispatch-units'].children];
   const segments = [...elements['mission-stages'].children];
   const portrait = elements['mission-radio'].querySelector('.portrait');
+  const weaponIcon = elements['weapon-readout'].querySelector('path');
   const cache = {};
   function text(id, value) {
     if (cache[id] !== value) { cache[id] = value; elements[id].textContent = value; }
@@ -81,12 +82,15 @@ export function createStreetHUD(world, minimap) {
     }
     text('health-value', Math.ceil(player.health));
     if (cache.health !== player.health) {
-      elements['health-bar'].style.width = `${player.health}%`;
+      elements['health-bar'].style.width = elements['map-health'].style.width = `${player.health}%`;
       cache.health = player.health;
     }
     const armour = Math.max(0, Math.min(100, player.armour || 0));
     text('armour-value', Math.ceil(armour));
-    if (cache.armour !== armour) { elements['armour-bar'].style.width = `${armour}%`; cache.armour = armour; }
+    if (cache.armour !== armour) {
+      elements['armour-bar'].style.width = elements['map-armour'].style.width = `${armour}%`;
+      cache.armour = armour;
+    }
     updateMission(job);
     text('mode', driving ? VEHICLE_TUNING[car.type].name : 'NERI VOSS');
     elements['drive-readout'].hidden = elements['station-readout'].hidden = !driving;
@@ -105,15 +109,14 @@ export function createStreetHUD(world, minimap) {
       text('station-name', STATIONS[station].name);
       text('station-track', STATIONS[station].track);
     } else {
-      elements['pistol-slot'].hidden = false;
       elements['weapon-ammo'].hidden = combat.weapon !== 2;
-      elements['weapon-readout'].classList.toggle('pistol-equipped', combat.weapon === 2);
-      text('weapon-name', combat.weapon === 2 ? 'PISTOL' : 'FISTS');
-      elements['weapon-readout'].querySelector('.weapon-icon-frame').dataset.weapon = String(combat.weapon);
-      const iconPath = elements['weapon-readout'].querySelector('.weapon-icon-frame path');
-      iconPath.setAttribute('d', combat.weapon === 2
-        ? 'M4 12h16l2 2h5v5h-7l-2-2H4zM10 17h5l1 8h-5zM21 12V8h3v4z'
-        : 'M8 18c-2-1-3-3-2-5l2-4 3 1 2 3 2-6 3 1-1 5 2-4 3 1-2 6 2-3 3 2-4 8c-1 3-4 4-7 3l-4-2-4-5c-1-1-1-2 0-3Z');
+      if (cache.weapon !== combat.weapon) {
+        cache.weapon = combat.weapon;
+        text('weapon-name', combat.weapon === 2 ? '2 · PISTOL' : '1 · FISTS');
+        weaponIcon.setAttribute('d', combat.weapon === 2
+          ? 'M4 12h16l2 2h5v5h-7l-2-2H4zM10 17h5l1 8h-5zM21 12V8h3v4z'
+          : 'M8 18c-2-1-3-3-2-5l2-4 3 1 2 3 2-6 3 1-1 5 2-4 3 1-2 6 2-3 3 2-4 8c-1 3-4 4-7 3l-4-2-4-5c-1-1-1-2 0-3Z');
+      }
       text('weapon-ammo', combat.reload ? 'RELOADING' : `${combat.rounds} / ${combat.reserve}`);
     }
     const toast = world.messageTime > 0 ? world.message : '';
@@ -122,7 +125,7 @@ export function createStreetHUD(world, minimap) {
     }
     const degrees = Math.round(((rig.heading * 180 / Math.PI) % 360 + 360) % 360) % 360;
     text('compass', bearings[degrees]);
-    text('map-label', expanded ? 'BACK TO STREET MAP' : 'CITY OVERVIEW');
+    text('map-label', expanded ? 'M · BACK TO STREET MAP' : 'M · CITY OVERVIEW');
     const law = police.snapshot(), level = law.level;
     text('wanted-level', level ? law.state.toUpperCase() : 'ROUTINE');
     elements['heat-row'].hidden = !level;
@@ -160,7 +163,7 @@ export function createStreetHUD(world, minimap) {
   }
   function updateMission(job) {
     elements['free-roam'].hidden = job.active;
-    elements['mission-card'].hidden = !job.active;
+    elements['mission-card'].hidden = elements['mission-waypoint'].hidden = !job.active;
     if (job.active) {
       text('mission-chapter', job.replay ? `${job.chapter} / Replay` : job.chapter);
       text('mission-title', job.title);

@@ -10,12 +10,12 @@ export function createMinimap(canvas, world) {
   {
     const c = map.getContext('2d');
     c.translate(530, 440);
-    c.fillStyle = '#3c5553'; c.fillRect(-530, -440, 1019, 880);
+    c.fillStyle = '#395754'; c.fillRect(-530, -440, 1019, 880);
     c.fillStyle = '#827257'; c.fillRect(451, -440, 38, 880); c.fillRect(526, -305, 85, 130);
-    c.fillStyle = '#263b3c';
+    c.fillStyle = '#17323a';
     for (const h of world.buildings) c.fillRect(h.x - h.width / 2, h.z - h.depth / 2, h.width, h.depth);
     c.lineCap = 'square';
-    for (const [stroke, rim] of [['#273338', 2.5], ['#c2b9a2', 0]]) {
+    for (const [stroke, rim] of [['#10181c', 2.5], ['#d2c5a5', 0]]) {
       c.strokeStyle = stroke;
       for (const edge of world.roads.edges) {
         c.lineWidth = edge.width + rim; c.beginPath(); c.moveTo(edge.x1, edge.z1); c.lineTo(edge.x2, edge.z2); c.stroke();
@@ -48,7 +48,7 @@ export function createMinimap(canvas, world) {
     c.setTransform(2, 0, 0, 2, 0, 0); c.clearRect(0, 0, size, size);
     ring.classList.toggle('expanded', expanded);
     c.save(); c.beginPath(); c.arc(size / 2, size / 2, 104, 0, Math.PI * 2); c.clip();
-    c.fillStyle = '#163740'; c.fillRect(0, 0, size, size);
+    c.fillStyle = '#17323a'; c.fillRect(0, 0, size, size);
     c.translate(size / 2, size / 2); c.rotate(heading); c.scale(scale, scale); c.translate(-player.x, -player.z);
     c.drawImage(map, -530, -440, 1200, 880);
     if (police.wanted.state === 'search' && scan) {
@@ -57,7 +57,7 @@ export function createMinimap(canvas, world) {
       c.beginPath(); c.arc(lastSeen.x, lastSeen.z, searchRadius, 0, Math.PI * 2); c.fill(); c.stroke();
       edgePin(lastSeen, '#ffe08b', 5, 'diamond');
     }
-    const waypointColor = waypoint?.style === 'contact' ? '#ffd17f' : waypoint?.style === 'target' ? '#ff9c95' : '#a1ffda';
+    const waypointColor = waypoint?.style === 'contact' ? '#e8a33d' : waypoint?.style === 'target' ? '#ff9c95' : '#9ff4e5';
     if (waypoint) {
       c.lineWidth = 5.6 / scale; c.strokeStyle = '#152b2d'; c.lineCap = 'round'; c.lineJoin = 'round';
       c.beginPath(); c.moveTo(player.x, player.z);
@@ -95,12 +95,12 @@ export function createMinimap(canvas, world) {
     for (const block of police.roadblocks) if (block) marker(block, '#ffd05d', 5, 'square');
     c.restore();
     c.save(); c.translate(size / 2, size / 2); c.rotate(heading - player.heading);
-    c.fillStyle = '#f9e5b5'; c.strokeStyle = '#18383d'; c.lineWidth = 2;
+    c.fillStyle = '#f5e9c9'; c.strokeStyle = '#10181c'; c.lineWidth = 2;
     c.beginPath(); c.moveTo(0, -10); c.lineTo(7, 8); c.lineTo(0, 4); c.lineTo(-7, 8); c.closePath(); c.fill(); c.stroke(); c.restore();
     c.save(); c.translate(size / 2, size / 2); c.rotate(heading); c.translate(0, -86); c.rotate(-heading);
     c.font = '700 17px Barlow Condensed, Arial Narrow, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
-    c.strokeStyle = '#142328'; c.lineWidth = 4; c.strokeText('N', 0, 0);
-    c.fillStyle = '#fff0d3'; c.fillText('N', 0, 0); c.restore();
+    c.strokeStyle = '#10181c'; c.lineWidth = 4; c.strokeText('N', 0, 0);
+    c.fillStyle = '#f5e9c9'; c.fillText('N', 0, 0); c.restore();
   }
   document.fonts.ready.then(() => { lastVisited = -1; });
   return { drawRotatingMinimap };
