@@ -2,9 +2,9 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "6ba0412bfa9710c0dc32abbd2f882c0172b14759",
+    "baseCommit": "363f72b6d1e74120828e3130ab01599c09e60ad7",
     "workingTree": true,
-    "gameTreeSha256": "a1ed58cda1a47a3dbced6240594c058b453dd4bd8dd21180bb9a384627818940"
+    "gameTreeSha256": "881e4fbd73cca14bdb6d54e8c12ccb305aa8d462c3fd10511748952155501208"
   },
   "errors": [],
   "external": [],
@@ -18,8 +18,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 156695,
-      "sha256": "2ac5f6d5628341c6a3d1509f29880c0758ff6ea4d410fbbf74e86ecfdacb6425",
+      "bytes": 165439,
+      "sha256": "57ca3a292b990221c091f7f8a73716c9b09a6da5ec21297f47cbca69fada0954",
       "state": {
         "player": {
           "x": 426,
@@ -154,11 +154,11 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 101,
-          "triangles": 11354,
-          "geometries": 59,
-          "textures": 2,
-          "batches": 110,
+          "calls": 113,
+          "triangles": 31788,
+          "geometries": 83,
+          "textures": 8,
+          "batches": 111,
           "instances": 2766
         },
         "streaming": {
@@ -167,13 +167,13 @@
           "activeDistricts": 4,
           "detailedChunks": 10,
           "lowDetailChunks": 8,
-          "instances": 1375,
-          "batches": 87,
+          "instances": 2611,
+          "batches": 151,
           "maxLoadedChunks": 18,
           "settled": true,
           "builds": 19,
           "unloads": 1,
-          "cumulativeBuildMs": 12.6
+          "cumulativeBuildMs": 102.1
         },
         "population": {
           "cars": 14,
@@ -431,8 +431,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 132913,
-      "sha256": "8ae5b777eba00ae57d14f7d7c66095c8fe69d7ba3a8c27e05ef5691ffd255ad0",
+      "bytes": 134620,
+      "sha256": "794dae5096e65235dd761df743461d9cb675130551606b80a558116581937ea6",
       "state": {
         "player": {
           "x": 95.5,
@@ -552,11 +552,11 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 137,
-          "triangles": 12652,
-          "geometries": 64,
-          "textures": 2,
-          "batches": 110,
+          "calls": 170,
+          "triangles": 39542,
+          "geometries": 102,
+          "textures": 12,
+          "batches": 111,
           "instances": 2766
         },
         "streaming": {
@@ -565,13 +565,13 @@
           "activeDistricts": 3,
           "detailedChunks": 10,
           "lowDetailChunks": 8,
-          "instances": 1399,
-          "batches": 121,
+          "instances": 3062,
+          "batches": 206,
           "maxLoadedChunks": 18,
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 13
+          "cumulativeBuildMs": 92.6
         },
         "population": {
           "cars": 14,
@@ -776,8 +776,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 125700,
-      "sha256": "b2fc21111569e53262651fd38291b53a3116980f6b6502c75f7ab106e8827a9a",
+      "bytes": 135701,
+      "sha256": "420e59004a9d3ccb73b847c74a44c8d6ac857e0df7ebe7a09ff8d397cd6362bd",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -898,11 +898,11 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 55,
-          "triangles": 6776,
-          "geometries": 29,
-          "textures": 2,
-          "batches": 110,
+          "calls": 52,
+          "triangles": 16894,
+          "geometries": 42,
+          "textures": 5,
+          "batches": 111,
           "instances": 2766
         },
         "streaming": {
@@ -911,13 +911,13 @@
           "activeDistricts": 4,
           "detailedChunks": 9,
           "lowDetailChunks": 9,
-          "instances": 872,
-          "batches": 73,
+          "instances": 1714,
+          "batches": 120,
           "maxLoadedChunks": 18,
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 13
+          "cumulativeBuildMs": 82
         },
         "population": {
           "cars": 14,
