@@ -10,6 +10,7 @@
   --cream: #fff3e5; --muted: #f3d9e3; --ink: #111326; --teal: #17323a;
   --amber: #ffc69a; --mint: #9ff4e5; --coral: #ff8bab;
   --line: #fff3e53b; --panel: linear-gradient(120deg,rgba(9,15,34,.58),rgba(30,15,42,.52));
+  --street-shadow: 0 1px 2px #10181c, 0 0 5px #10181c;
   --edge: clamp(14px, 2.19vw, 28px);
   font-family: var(--body); color: var(--cream); font-synthesis: none;
 }
@@ -22,8 +23,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 [hidden]{display:none!important}
 #game{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
 #hud{position:fixed;inset:0;pointer-events:none;isolation:isolate;font-variant-numeric:tabular-nums;text-shadow:0 1px 2px var(--ink)}
-#hud::before,#hud::after{content:'';position:absolute;inset:0 0 auto;height:12%;z-index:-1;background:linear-gradient(#14224f33,transparent)}
-#hud::after{inset:auto 0 0;height:9%;background:linear-gradient(transparent,#341c3840)}
 .brand{position:absolute;top:var(--edge);left:var(--edge);display:flex;align-items:center;gap:11px}
 .gate-mark{display:block;flex:none;width:34px;height:34px;border:5px solid #ff82a8;border-right-color:transparent;border-radius:50%;transform:rotate(-28deg);position:relative;filter:drop-shadow(0 1px 2px var(--ink))}
 .gate-mark::after{content:'';width:13px;height:5px;background:#ffae7c;position:absolute;left:9px;top:9px;transform:rotate(28deg)}
@@ -65,7 +64,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .district-title h2{font-size:26px;letter-spacing:.14em;text-transform:uppercase}
 .district-title p{font-size:12px;font-weight:700;letter-spacing:.14em}
 .compass{top:81px;font:600 12px/1 var(--label);letter-spacing:.15em}
-.street-status{position:absolute;right:var(--edge);top:var(--edge);width:264px;font-family:var(--label);text-align:right;text-shadow:0 1px 2px #101326,0 0 5px #101326}
+.street-status{position:absolute;right:var(--edge);top:var(--edge);width:264px;font-family:var(--label);text-align:right;text-shadow:var(--street-shadow)}
 .status-topline{display:flex;align-items:center;justify-content:flex-end;gap:10px}
 .game-clock{display:flex;align-items:baseline;gap:8px;margin-right:auto;font:700 14px/1 var(--label);letter-spacing:.12em}
 .game-clock>span{font-size:11px;color:#fff0db;opacity:.9}
@@ -109,8 +108,8 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .heat-line{color:#ffc3ac;font-size:11px}.heat-line>div{height:3px;background:#fff4;flex:1}.heat-line i{display:block;height:100%;width:0;background:#ff75a8}
 #dispatch-readout{margin-top:5px;font:700 14px/1.12 var(--label);color:var(--cream)}
 .scan-status{margin-top:4px;color:var(--mint);font:700 11px/1 var(--label);letter-spacing:.08em}
-.dispatch-units{margin:4px 0 0;padding:0;list-style:none;font:700 13px/1.15 var(--label);letter-spacing:.045em;text-shadow:0 1px 2px #101326,0 0 5px #101326}
-.dispatch-units li{margin-bottom:3px;padding:1px 0;background:none;border:0;text-align:right;white-space:nowrap;color:#fff2e7}
+.dispatch-units{display:grid;gap:3px;margin:4px 0 0;padding:0;list-style:none;font:700 13px/1.15 var(--label);letter-spacing:.045em;color:var(--cream);text-shadow:var(--street-shadow)}
+.dispatch-units li{padding:1px 0;white-space:nowrap}
 .map-wrap{position:absolute;left:var(--edge);bottom:var(--edge);width:185px;text-align:center;--map-size:185px}
 .map-ring{border:1px solid #111326;border-radius:50%;padding:0;background:none;box-shadow:none;width:var(--map-size);height:var(--map-size);margin:0 auto;overflow:hidden}
 .map-ring canvas{display:block;border-radius:50%;width:100%;height:100%}
