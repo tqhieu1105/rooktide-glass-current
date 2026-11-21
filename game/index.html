@@ -12,24 +12,41 @@
   <canvas id="game" tabindex="0" aria-label="Rooktide 3D open city. WASD to walk or drive, E to enter or exit the car, mouse drag to look."></canvas>
   <div id="hud">
     <header class="brand"><i class="gate-mark"></i><div><h1><span class="wordmark" data-title="ROOKTIDE">ROOKTIDE</span><span class="brand-subtitle">GLASS CURRENT</span></h1></div></header>
-    <section class="explore panel"><div class="eyebrow"><b class="small-dot"></b> FREE ROAM <span></span></div><h2>Take the long way.</h2><p id="objective">Your next bad idea has four wheels.</p><div class="explore-footer"><span>DISTRICTS DISCOVERED</span><strong id="explored">01 / 06</strong></div></section>
+    <section class="explore panel" id="free-roam"><div class="eyebrow"><b class="small-dot"></b> FREE ROAM <span></span></div><h2>Take the long way.</h2><p id="objective">Your next bad idea has four wheels.</p><div class="explore-footer"><span>DISTRICTS DISCOVERED</span><strong id="explored">01 / 06</strong></div></section>
+    <section id="mission-card" class="explore panel" aria-label="Current mission" hidden>
+      <div class="eyebrow"><b class="small-dot"></b><b id="mission-chapter"></b><span id="mission-step"></span></div>
+      <h2 id="mission-title"></h2><div id="mission-stages" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <p id="mission-objective"></p><div id="mission-waypoint"></div><div id="mission-next"></div>
+    </section>
+    <div id="waypoint-label" aria-hidden="true" hidden><i></i><span id="waypoint-name"></span></div>
     <div class="district-title"><h2 id="district">Kiln Market</h2><p id="district-subtitle">CLAY / COFFEE / SMALL FAVOURS</p></div>
-    <div class="top-right"><span class="live-dot"></span> SALTGLASS GOLDEN HOUR <button id="help-button" title="Controls and pause">ESC <span>Ⅱ</span></button></div>
+    <div class="top-right"><span class="live-dot"></span> <span id="city-cash">$250</span><span id="city-rank">RUNNER</span> <button id="help-button" title="Controls and pause">ESC <span>Ⅱ</span></button></div>
     <section class="wanted" aria-label="Police response"><div class="wanted-heading"><span>RCP RESPONSE</span><strong id="wanted-level">ROUTINE</strong></div><div class="wanted-stars" id="wanted-stars" aria-label="Wanted level: zero stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><div class="heat-line"><span>HEAT</span><div><i id="heat-meter"></i></div></div><p id="dispatch-readout">Rooktide Civic Patrol / Area quiet</p></section>
     <ol class="dispatch-units" id="dispatch-units" aria-label="Responding units" hidden><li></li><li></li><li></li></ol>
     <div class="compass" id="compass">N / 000°</div>
-    <section class="map-wrap"><div class="map-ring"><canvas id="minimap" aria-label="Rooktide street minimap"></canvas></div><div class="map-caption"><i></i><span id="map-label">M · CITY OVERVIEW</span></div><div class="health"><span>NERI VOSS</span><div><i></i></div><b>100</b></div></section>
+    <section class="map-wrap"><div class="map-ring"><canvas id="minimap" aria-label="Rooktide street minimap"></canvas></div><div class="map-caption"><i></i><span id="map-label">M · CITY OVERVIEW</span></div><div class="health"><span>NERI VOSS</span><div><i id="health-bar"></i></div><b id="health-value">100</b></div></section>
     <section class="vehicle"><div class="mode-rule"></div><p id="mode">UNDERTOW COURIER</p><div class="speed-line"><strong id="speed">NERI</strong><span id="speed-unit">VOSS</span></div><div id="condition-row" hidden><div class="condition-track"><i id="condition"></i></div><span class="condition-caption">BODYWORK</span></div></section>
     <div id="toast" role="status"></div>
+    <div id="mission-payout" role="status" hidden></div>
+    <aside id="mission-radio" hidden><div class="portrait" aria-hidden="true"><b></b><i></i></div><div><strong id="radio-contact"></strong><p id="radio-line"></p></div></aside>
     <div id="prompt" class="prompt"><kbd>E</kbd> Take the Driftline GT</div>
     <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>SHIFT</kbd> Sprint</span><span><kbd>C</kbd> Camera</span><span>DRAG TO LOOK</span><span><kbd>R</kbd> Roadside recovery</span></footer>
   </div>
   <section id="pause" hidden>
-    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2>Catch your breath.</h2><p>One city. Six districts. Find the coast, cross to Glasshook, or take a wrong turn on purpose.</p><dl><dt>W A S D / Arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Enter / exit nearby car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Space while stopped</dt><dd>Hold to surrender near RCP</dd><dt>Mouse drag / Wheel</dt><dd>Orbit / camera distance</dd><dt>C / M</dt><dd>Camera preset / city overview</dd><dt>R</dt><dd>Recover to the nearest road</dd></dl><div class="pause-actions"><button id="resume-button">BACK TO THE STREET <span>→</span></button><button id="quality-button">QUALITY: HIGH</button></div><small>Witnesses call in stolen cars and serious crashes. When the stars pulse, stay out of sight until the search ends.</small></div>
+    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2>Catch your breath.</h2><p>One city. Six districts. Find the coast, cross to Glasshook, or take a wrong turn on purpose.</p><dl><dt>W A S D / Arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Interact / enter / exit car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Space while stopped</dt><dd>Hold to surrender near RCP</dd><dt>Mouse drag / Wheel</dt><dd>Orbit / camera distance</dd><dt>C / M</dt><dd>Camera preset / city overview</dd><dt>R</dt><dd>Roadside recovery / mission retry</dd><dt>F · 1 / 2</dt><dd>Attack · fists / pistol when unlocked</dd><dt>Q</dt><dd>Sava’s patrol scan when unlocked</dd></dl><div class="pause-actions"><button id="resume-button">BACK TO THE STREET <span>→</span></button><button id="quality-button">QUALITY: HIGH</button></div><small>Witnesses call in stolen cars and serious crashes. When the stars pulse, stay out of sight until the search ends.</small>
+      <p id="last-radio"></p>
+      <div class="mission-menu"><button id="abandon-mission" hidden>ABANDON JOB</button><label hidden>MISSION REPLAY <select id="mission-replay"><option value="">Choose a completed job</option></select></label></div>
+    </div>
   </section>
   <section id="chase-outcome" role="dialog" aria-modal="true" aria-labelledby="outcome-title" hidden>
     <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / ROADSIDE HELP</div><h2 id="outcome-title"></h2><p id="outcome-detail"></p>
       <div class="pause-actions"><button id="retry-chase">RETRY FROM CHECKPOINT</button><button id="return-yard">RETURN TO ILEX’S YARD</button></div></div>
+  </section>
+  <section id="campaign-ending" role="dialog" aria-modal="true" aria-labelledby="ending-title" hidden>
+    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / PUBLIC RECORD</div><h2 id="ending-title">Rooktide is listening.</h2>
+      <p id="ending-detail"></p><p>The ledger is on every radio in the city. The streets are open, and every job is available to replay from the pause menu.</p>
+      <div class="pause-actions"><button id="dismiss-ending">BACK TO THE STREET <span>→</span></button></div>
+    </div>
   </section>
   <div id="fatal" hidden><h2>The 3D renderer stopped.</h2><p id="fatal-message"></p><p>This game requires WebGL. Reload after checking browser graphics support.</p></div>
   <p id="status" class="screen-reader" role="status" aria-live="polite"></p>

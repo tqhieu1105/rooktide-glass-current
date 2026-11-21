@@ -35,7 +35,7 @@ export const MISSIONS = [
     stages: [
       { kind: 'reach', point: point(265, 285, 'Warehouse gate', 8), text: 'Reach the warehouse yard',
         line: 'There’s a case behind the gate. The Trust hired two guards and gave both the same lunch break.' },
-      { kind: 'collect', point: point(271, 300, 'Ledger case', 3), guards: [[268, 296], [274, 304]], checkpoint: true,
+      { kind: 'defeatGuards', collect: true, point: point(271, 300, 'Ledger case', 3), guards: [[268, 296], [274, 304]], checkpoint: true,
         text: 'Deal with the guards and take the case', line: 'On foot. Use F to swing, and pick up the case with E once the guards are down.' },
       { kind: 'enterVehicle', heat: 2, text: 'Load the case into the Rivet Panel',
         line: 'The van’s at the end of the lane. The case rides up front. It gets carsick.' },
@@ -101,11 +101,12 @@ export const MISSIONS = [
   {
     id: 'glass-current', title: 'Glass Current', chapter: 'Public Record', contact: 'Crew', cash: 3000, rp: 400,
     giver: point(438, -221, 'Undertow Relay · Bridge', 4.5),
+    vehicle: car(552, -253, 'compact', -Math.PI / 2, 0x79cbc0),
     finish: 'The city heard every word. Ilex has made commemorative keychains. They do not start any car.',
     stages: [
       { kind: 'collect', point: point(559, -272, 'Broadcast key', 4), text: 'Collect the key on Glasshook',
         line: 'Cross the bridge and grab the key by the relay hall. Leave your car pointing toward town.' },
-      { kind: 'reach', mode: 'car', heat: 4, checkpoint: true, text: 'Cross the bridge through the blockade',
+      { kind: 'reach', mode: 'car', heat: 4, bridgeBlock: true, checkpoint: true, text: 'Cross the bridge through the blockade',
         route: [point(513, -240, 'Roadblock gap', 10), point(432, -240, 'Mainland side', 13)],
         line: 'There’s a roadblock on the bridge. Coming toward town, aim for the right side of the gap.' },
       { kind: 'holdPosition', mode: 'car', text: 'Stop at both nodes for five-second transfers',

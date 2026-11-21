@@ -1,4 +1,5 @@
 import { DISTRICTS } from './config.js';
+import { findWaypointRoute } from './roads.js';
 
 // The only 2D drawing context in the game. All world rendering is WebGL.
 export function createMinimap(canvas, world) {
@@ -21,17 +22,23 @@ export function createMinimap(canvas, world) {
   let lastX = Infinity, lastZ = Infinity, lastHeading = Infinity, lastFacing = Infinity, lastCarX = Infinity, lastCarZ = Infinity;
   let lastCarHeading = Infinity, lastExpanded, lastDriving, lastVisited = -1;
   let lastPolice = false;
-  function drawRotatingMinimap(player, car, heading, expanded = false, police) {
+  let lastWaypoint = '', lastScan = false, route = [], routeOrigin = null, routeEnd = '';
+  function drawRotatingMinimap(player, car, heading, expanded = false, police, waypoint, scan = false) {
+    const waypointKey = waypoint ? `${Math.round(waypoint.x)}:${Math.round(waypoint.z)}:${waypoint.style}` : '';
+    if (waypoint && (waypointKey !== routeEnd || !routeOrigin || Math.hypot(player.x - routeOrigin.x, player.z - routeOrigin.z) >= 8)) {
+      route = findWaypointRoute(world.roads, player, waypoint);
+      routeOrigin = { x: player.x, z: player.z }; routeEnd = waypointKey;
+    }
     const policeActive = police.wanted.level > 0;
     const x = Math.round(player.x), z = Math.round(player.z);
     const angle = Math.round(heading * 90), facing = Math.round(player.heading * 90);
     const carX = Math.round(car.x), carZ = Math.round(car.z), carHeading = Math.round(car.heading * 90);
     if (x === lastX && z === lastZ && angle === lastHeading && facing === lastFacing && lastExpanded === expanded
-      && lastDriving === player.inVehicle && lastVisited === world.visited.size && !policeActive && !lastPolice
+      && waypointKey === lastWaypoint && scan === lastScan && lastDriving === player.inVehicle && lastVisited === world.visited.size && !policeActive && !lastPolice
       && (player.inVehicle || carX === lastCarX && carZ === lastCarZ && carHeading === lastCarHeading)) return;
     lastX = x; lastZ = z; lastHeading = angle; lastFacing = facing; lastExpanded = expanded;
     lastDriving = player.inVehicle; lastVisited = world.visited.size;
-    lastPolice = policeActive;
+    lastPolice = policeActive; lastWaypoint = waypointKey; lastScan = scan;
     lastCarX = carX; lastCarZ = carZ; lastCarHeading = carHeading;
     const c = context, scale = expanded ? 0.22 : 0.77;
     c.setTransform(2, 0, 0, 2, 0, 0); c.clearRect(0, 0, size, size);
@@ -43,6 +50,14 @@ export function createMinimap(canvas, world) {
       const { lastSeen, searchRadius } = police.wanted;
       c.fillStyle = '#f0745055'; c.strokeStyle = '#ffb472'; c.lineWidth = 1.5 / scale;
       c.beginPath(); c.arc(lastSeen.x, lastSeen.z, searchRadius, 0, Math.PI * 2); c.fill(); c.stroke();
+    }
+    const waypointColor = waypoint?.style === 'contact' ? '#ffd17f' : waypoint?.style === 'target' ? '#ff9c95' : '#a1ffda';
+    if (waypoint) {
+      c.lineWidth = 3 / scale; c.strokeStyle = '#245653'; c.lineCap = 'round'; c.lineJoin = 'round';
+      c.beginPath(); c.moveTo(player.x, player.z);
+      for (const node of route) c.lineTo(node.x, node.z);
+      c.lineTo(waypoint.x, waypoint.z); c.stroke();
+      c.lineWidth = 1.65 / scale; c.strokeStyle = waypointColor; c.stroke();
     }
     for (const district of DISTRICTS) {
       c.fillStyle = world.visited.has(district.id) ? '#ffe0a1' : '#92b7b0';
@@ -56,7 +71,16 @@ export function createMinimap(canvas, world) {
       c.fillStyle = fill; c.strokeStyle = '#18383d'; c.lineWidth = 1.5 / scale;
       c.beginPath(); c.arc(actor.x, actor.z, radius / scale, 0, Math.PI * 2); c.fill(); c.stroke();
     }
-    for (const unit of police.units) if (unit.active) marker(unit, '#fa746d', 4);
+    function edgePin(actor, fill, radius) {
+      const dx = actor.x - player.x, dz = actor.z - player.z;
+      const ratio = Math.min(1, 91 / (Math.hypot(dx, dz) * scale));
+      marker({ x: player.x + dx * ratio, z: player.z + dz * ratio }, fill, radius);
+    }
+    if (waypoint) edgePin(waypoint, waypointColor, 5.8);
+    for (const unit of police.units) if (unit.active) {
+      if (scan && policeActive) edgePin(unit, '#ffae89', 4.5);
+      else marker(unit, '#fa746d', 4);
+    }
     if (police.helicopter.active) marker(police.helicopter, '#8ce9ff', 5);
     for (const block of police.roadblocks) if (block) marker(block, '#ffd05d', 4.5);
     c.restore();

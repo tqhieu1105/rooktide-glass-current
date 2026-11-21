@@ -104,6 +104,7 @@ export function updateActorModels(player, car, visuals, alpha) {
   const stride = Math.sin(player.walkPhase) * Math.min(0.8, player.speed * 0.12);
   for (const { arm, leg, side } of pv.limbs) { arm.rotation.x = stride * side; leg.rotation.x = -stride * side; }
   pv.root.position.y += Math.abs(Math.sin(player.walkPhase * 2)) * Math.min(0.045, player.speed * 0.008);
+  cv.root.visible = car.type === 'sports';
   cv.root.position.set(car.previousX + (car.x - car.previousX) * alpha, 0.10 + car.bounce, car.previousZ + (car.z - car.previousZ) * alpha);
   cv.root.rotation.y = -car.heading;
   cv.chassis.rotation.z = car.roll; cv.chassis.rotation.x = car.pitch;

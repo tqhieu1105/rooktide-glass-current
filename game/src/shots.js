@@ -2,12 +2,21 @@ import { enterOrStealVehicle } from './player.js';
 
 // Seeded playable scenes use the same actors, simulation and renderer as free roam.
 export function stagePlayableScreenshot(name, game) {
-  const { player, car, rig, world } = game;
+  const { player, rig, world, missions } = game;
+  let car = game.car;
   if (!['strand', 'chase', 'market', 'bridge', 'quay'].includes(name)) throw new Error(`Unknown milestone view: ${name}`);
   if (name === 'strand' || name === 'chase') {
-    Object.assign(car, { x: 426, z: 74, heading: 0 });
-    Object.assign(player, { x: 429, z: 74 });
-    enterOrStealVehicle(player, car, world);
+    if (name === 'chase') {
+      missions.start('seawall-dividend', { capture: true });
+      car = missions.vehicle;
+      Object.assign(car, { x: 426, z: 74, heading: 0 });
+      Object.assign(player, { x: 429, z: 74 });
+      missions.interact();
+    } else {
+      Object.assign(car, { x: 426, z: 74, heading: 0 });
+      Object.assign(player, { x: 429, z: 74 });
+      enterOrStealVehicle(player, car, world);
+    }
     rig.heading = name === 'chase' ? 0.50 : 0.32; rig.orbitHold = 4;
     if (name === 'chase') {
       rig.preset = 1; rig.zoom = 3; rig.pitch = -0.12;

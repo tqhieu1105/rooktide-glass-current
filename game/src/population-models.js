@@ -66,7 +66,7 @@ export function createPopulationModels(scene, population) {
   return function updatePopulationModels(camera, chosen, alpha, low) {
     index = 0;
     const range = low ? 135 : 215;
-    for (const car of population.vehicles) if (car.active && car !== chosen && visible(car, camera, range)) carBody(car, alpha, !low);
+    for (const car of population.vehicles) if (car.active && (car !== chosen || car.type !== 'sports') && visible(car, camera, range)) carBody(car, alpha, !low);
     for (const p of population.people) if (p.active && visible(p, camera, range)) walker(p, alpha, !low || (p.x - camera.position.x) ** 2 + (p.z - camera.position.z) ** 2 < 47 ** 2);
     parts.count = index; parts.instanceMatrix.needsUpdate = parts.instanceColor !== null;
     if (parts.instanceColor) parts.instanceColor.needsUpdate = true;

@@ -63,20 +63,29 @@ export function createPoliceSystem(world, player, getCar, effects = {}) {
     const cooldown = kind === 'vehicle_theft' ? 0.35 : 2.5;
     if (!crime || wanted.outcome || world.clock - (lastCrime.get(kind) ?? -Infinity) < cooldown) return false;
     if (!witnessed && !units.some(unit => unit.active && dist(unit, { x, z }) < 36 && hasPoliceSight(world, unit, { x, z }, 1.6))) return false;
+    lastCrime.set(kind, world.clock);
+    raiseHeat(wanted.level * 100 + wanted.heat + crime[0], crime[1], x, z);
+    return true;
+  }
+
+  function reportMissionAlert(level, incident) {
+    const p = actor();
+    const total = wanted.level * 100 + wanted.heat;
+    if (!wanted.outcome) raiseHeat(Math.max(total, level * 100), incident, p.x, p.z);
+  }
+
+  function raiseHeat(total, incident, x, z) {
     const previous = wanted.level;
     if (!previous) wanted.checkpoint = locate();
-    const total = wanted.level * 100 + wanted.heat + crime[0];
     wanted.level = Math.min(5, Math.floor(total / 100));
     wanted.heat = total >= 500 ? 99 : total % 100;
-    wanted.incident = crime[1];
+    wanted.incident = incident;
     if (wanted.level) {
       Object.assign(wanted.lastSeen, { x, z }); wanted.unseen = 0;
       if (!wanted.seen) wanted.state = 'responding';
       if (wanted.level > previous) { nextDispatch = world.clock; dispatch(); }
     }
-    lastCrime.set(kind, world.clock);
-    showWorldMessage(world, `RCP DISPATCH / ${crime[1]} reported.`, 3);
-    return true;
+    showWorldMessage(world, `RCP DISPATCH / ${incident} reported.`, 3);
   }
 
   function placeUnit(unit, x, z, heading, speed = 0) {
@@ -171,17 +180,26 @@ export function createPoliceSystem(world, player, getCar, effects = {}) {
       if (score < bestScore) { best = { x, z, ux, uz }; bestScore = score; }
     }
     if (!best) return;
-    const block = { ...best, nx: -best.uz, nz: best.ux, warning: 0, segments: [] };
+    addRoadblock(best);
+    showWorldMessage(world, 'RCP ROADBLOCK / Leave the gap. Those cones are union.', 4);
+  }
+
+  function placeBridgeRoadblock() {
+    while (roadblocks.length) removeRoadblock(roadblocks.pop());
+    addRoadblock({ x: 499, z: -240, ux: -1, uz: 0 });
+  }
+
+  function addRoadblock(site) {
+    const block = { ...site, nx: -site.uz, nz: site.ux, warning: 0, segments: [] };
     // Leave a full 5.6 m gap on the right side of the direction of travel.
     for (const [left, right] of [[-10.6, 2.8], [8.4, 10.6]]) {
       const center = (left + right) / 2, length = right - left;
       const x = block.x + block.nx * center, z = block.z + block.nz * center;
-      const horizontal = best.ux === 0, xSize = horizontal ? length / 2 : 0.8, zSize = horizontal ? 0.8 : length / 2;
+      const horizontal = site.ux === 0, xSize = horizontal ? length / 2 : 0.8, zSize = horizontal ? 0.8 : length / 2;
       const box = world.grid.add({ minX: x - xSize, maxX: x + xSize, minZ: z - zSize, maxZ: z + zSize, height: 1.4, kind: 'roadblock' });
       block.segments.push({ x, z, length, horizontal, box });
     }
     roadblocks.push(block);
-    showWorldMessage(world, 'RCP ROADBLOCK / Leave the gap. Those cones are union.', 4);
   }
 
   function removeRoadblock(block) { for (const segment of block.segments) world.grid.remove(segment.box); }
@@ -328,7 +346,10 @@ export function createPoliceSystem(world, player, getCar, effects = {}) {
     for (const unit of units) if (unit.active) steerUnit(unit, p, dt);
   }
 
-  function reset() { clear(); wanted.outcome = ''; wanted.checkpoint = null; lastCrime.clear(); }
+  function reset(despawn = false) {
+    clear(); wanted.outcome = ''; wanted.checkpoint = null; lastCrime.clear();
+    if (despawn) for (const unit of units) unit.active = false;
+  }
   function snapshot() {
     const p = actor();
     return { ...wanted, heat: Math.round(wanted.heat), lastSeen: { ...wanted.lastSeen }, escapeSeconds: ESCAPE_SECONDS[wanted.level],
@@ -338,5 +359,5 @@ export function createPoliceSystem(world, player, getCar, effects = {}) {
         seen: helicopter.seen, distance: dist(helicopter, p) } : null,
       roadblocks: roadblocks.map(block => ({ x: block.x, z: block.z, distance: dist(block, p) })) };
   }
-  return { units, wanted, helicopter, roadblocks, reportCrime, restorePursuit, reset, step, snapshot };
+  return { units, wanted, helicopter, roadblocks, reportCrime, reportMissionAlert, placeBridgeRoadblock, restorePursuit, reset, step, snapshot };
 }

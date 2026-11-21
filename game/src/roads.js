@@ -45,3 +45,30 @@ export function findStreetRoute(graph, from, to) {
   for (let id = end; id >= 0; id = previous[id]) { route.unshift(graph.nodes[id]); if (id === start) break; }
   return route;
 }
+
+// Snap both ends to street segments. A marker halfway up an avenue should
+// route straight up the avenue, rather than back to the nearest intersection.
+export function findWaypointRoute(graph, from, to) {
+  function project(point) {
+    let nearest;
+    for (const edge of graph.edges) {
+      const dx = edge.x2 - edge.x1, dz = edge.z2 - edge.z1;
+      const t = Math.max(0, Math.min(1, ((point.x - edge.x1) * dx + (point.z - edge.z1) * dz) / (dx * dx + dz * dz)));
+      const x = edge.x1 + dx * t, z = edge.z1 + dz * t;
+      const distance = (point.x - x) ** 2 + (point.z - z) ** 2;
+      if (!nearest || distance < nearest.distance) nearest = { edge, x, z, distance };
+    }
+    return nearest;
+  }
+  const start = project(from), end = project(to);
+  if (start.edge === end.edge) return [start, end];
+  const length = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+  let shortest, shortestLength = Infinity;
+  for (const a of [start.edge.a, start.edge.b]) for (const b of [end.edge.a, end.edge.b]) {
+    const route = findStreetRoute(graph, graph.nodes[a], graph.nodes[b]);
+    const score = length(start, route[0]) + length(end, route.at(-1))
+      + route.slice(1).reduce((total, node, i) => total + length(route[i], node), 0);
+    if (score < shortestLength) { shortestLength = score; shortest = route; }
+  }
+  return [start, ...shortest, end];
+}

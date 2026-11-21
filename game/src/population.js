@@ -125,7 +125,7 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
   function findEnterable(player) {
     let closest = null, distance = PLAYER_TUNING.enterDistance ** 2;
     for (const car of vehicles) {
-      if (!car.active || car.speed > 5 || car.knock > 0) continue;
+      if (!car.active || car.locked || car.speed > 5 || car.knock > 0) continue;
       const d = distSq(player.x, player.z, car);
       if (d < distance) { closest = car; distance = d; }
     }
@@ -310,6 +310,7 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
       release(other); other.knock = .92; other.spin = Math.sign(side || 1) * (3.3 + approach * .12);
       other.vx += nx * approach * .54; other.vz += nz * approach * .54;
     }
+    if (other.missionTarget) other.missionTarget(approach);
     impacts++; throwSparks((car.x + other.x) / 2, (car.z + other.z) / 2, 14);
     alarmAt(other.x, other.z);
     showWorldMessage(world, 'That was constructive criticism.', 2);
@@ -321,7 +322,7 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
     for (const car of vehicles) {
       if (!car.active || car === chosen && player.inVehicle) continue;
       if (car.claimed || car === firstCar) {
-        if (car !== chosen && car.speed > .02) stepArcadeDriving(car, blank, world, dt, false);
+        if (car !== chosen && !car.missionTarget && car.speed > .02) stepArcadeDriving(car, blank, world, dt, false);
       } else tickTraffic(car, player, dt, think);
       if (player.inVehicle && distSq(car.x, car.z, chosen) < 28) bumpCar(chosen, car);
     }

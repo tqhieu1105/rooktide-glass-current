@@ -55,3 +55,40 @@ kbd{font-size:12px}
 #chase-outcome{position:fixed;inset:0;display:grid;place-items:center;background:#153338b8;backdrop-filter:blur(6px)}
 #chase-outcome .pause-actions{margin-top:24px}
 @media(max-width:800px){.wanted{top:114px;right:18px;width:157px;padding:7px 9px}.wanted-stars{font-size:18px}.wanted-heading,.heat-line,#dispatch-readout{font-size:9px}.dispatch-units{top:190px;right:18px;width:157px;font-size:9px}}
+
+/* Undertow Relay mission panels share the street HUD's typography and margins. */
+#city-cash{font-size:21px;font-weight:700;line-height:1;letter-spacing:.02em;color:#fff2cf}
+#city-rank{color:#ffdf9e;white-space:nowrap}
+#mission-card{border-left-color:#9cf9cd;width:310px}
+#mission-card .eyebrow{color:#a9f4d2;text-transform:uppercase}
+#mission-card .small-dot{background:#a9f4d2;transform:rotate(45deg)}
+#mission-card h2{margin:7px 0 10px;font-size:26px}
+#mission-stages{display:flex;gap:4px;margin-bottom:9px}
+#mission-stages i{flex:1;height:3px;background:#405354}
+#mission-stages .current{background:#a9f4d2;box-shadow:0 0 8px #9df6d37a}
+#mission-stages .done{background:#519f8a}
+#mission-card #mission-objective{font:700 23px/1.05 var(--numbers);max-width:none;color:#fff1d7}
+#mission-waypoint,#mission-next{font:600 12px/1.2 var(--numbers);letter-spacing:.055em;text-transform:uppercase}
+#mission-waypoint{color:#b7f7d8;margin-top:8px}
+#mission-next{color:#e1d7bd;border-top:1px solid #ffffdf33;margin-top:10px;padding-top:8px}
+#waypoint-label{position:absolute;display:flex;align-items:center;gap:7px;transform:translate(-50%,-100%);padding:4px 9px;border:1px solid #a5f2cf73;border-radius:2px;background:#102426e8;color:#ddffed;font:700 13px/1.2 var(--numbers);letter-spacing:.04em;white-space:nowrap;text-transform:uppercase}
+#waypoint-label i{width:6px;height:6px;background:#a9f4d2;transform:rotate(45deg)}
+#mission-radio{position:absolute;left:50%;bottom:121px;transform:translateX(-50%);display:flex;align-items:center;gap:11px;width:max-content;max-width:min(590px,calc(100vw - 500px));padding:7px 13px 7px 7px;background:#10181ceb;border:1px solid #ffe8c445;border-left:3px solid #e8a33d}
+#mission-radio strong{font:700 13px/1.2 var(--numbers);letter-spacing:.09em;color:#ffe3a8;text-transform:uppercase}
+#mission-radio p{font-size:14px;line-height:1.25;color:#fff2d7}
+.portrait{position:relative;flex:0 0 36px;height:39px;overflow:hidden;background:linear-gradient(145deg,#543d42,#39666d);border:1px solid #ffe8c469}
+.portrait::before{content:'';position:absolute;left:4px;right:4px;bottom:-3px;height:18px;background:var(--coat);clip-path:polygon(50% 0,100% 35%,100% 100%,0 100%,0 35%)}
+.portrait b{position:absolute;left:9px;top:5px;width:17px;height:23px;background:var(--skin);clip-path:polygon(5% 10%,90% 0,100% 67%,73% 93%,34% 99%,5% 72%)}
+.portrait i{position:absolute;left:8px;top:4px;width:20px;height:13px;background:var(--hair);clip-path:polygon(0 25%,25% 4%,84% 0,100% 46%,83% 70%,13% 66%,10% 100%)}
+#mission-payout{position:absolute;top:105px;left:50%;transform:translateX(-50%);padding:7px 13px;color:#dcffe4;border-top:2px solid #9cf9cd;background:#102326eb;font:700 17px/1.2 var(--numbers);letter-spacing:.055em;text-align:center;white-space:nowrap}
+#hud:has(#mission-radio:not([hidden])) #toast{bottom:193px}
+#pause .pause-card{max-height:calc(100vh - 22px);overflow:auto}
+#last-radio:empty{display:none}
+#last-radio{margin-top:12px;color:#ffe0a0}
+.mission-menu button,.mission-menu select{margin-top:10px;padding:6px 9px;background:#163138;color:#ffe3ad;border:1px solid #ffe3ad75;font:600 13px var(--numbers)}
+.mission-menu label{font:700 13px var(--numbers);color:#ffe3ad}
+#campaign-ending{position:fixed;inset:0;display:grid;place-items:center;background:#153338b8;backdrop-filter:blur(6px)}
+#campaign-ending .pause-actions{margin-top:24px}
+#ending-detail{margin-bottom:12px;color:#a9f4d2}
+@media(max-width:1100px){#mission-card{width:260px}#mission-card #mission-objective{font-size:21px}#mission-radio{max-width:calc(100vw - 380px);bottom:105px}}
+@media(max-width:800px){#mission-card{width:207px}#mission-card h2{font-size:21px}#mission-card #mission-objective{font-size:18px}#mission-next,#mission-waypoint{font-size:10px}#city-cash{font-size:16px}#city-rank{display:none}#mission-radio{max-width:calc(100vw - 36px);bottom:91px}#mission-radio p{font-size:12px}#hud:has(#mission-radio:not([hidden])) #toast{bottom:155px}#mission-payout{top:49px;font-size:13px}}

@@ -5,7 +5,7 @@ import { findSafeSpawn, isDryLand, showWorldMessage } from './world.js';
 export function createVehicle(x = 91.5, z = 29) {
   return { id: 'driftline-01', type: 'sports', x, z, previousX: x, previousZ: z,
     heading: 0, vx: 0, vz: 0, speed: 0, steer: 0, wheelSpin: 0,
-    condition: 100, impactCooldown: 0, roll: 0, pitch: 0, bounce: 0, bounceVelocity: 0, braking: false };
+    condition: 100, recoveries: 0, impactCooldown: 0, roll: 0, pitch: 0, bounce: 0, bounceVelocity: 0, braking: false };
 }
 
 export function stepArcadeDriving(car, actions, world, dt, controlled) {
@@ -67,6 +67,7 @@ export function stepArcadeDriving(car, actions, world, dt, controlled) {
 }
 
 export function recoverVehicle(car, world) {
+  car.recoveries++;
   const safe = findSafeSpawn(world, car.x, car.z);
   Object.assign(car, safe, { vx: 0, vz: 0, speed: 0, condition: 100, bounce: 0, bounceVelocity: 0, roll: 0, pitch: 0 });
   car.previousX = car.x; car.previousZ = car.z;
