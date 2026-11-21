@@ -42,7 +42,7 @@ export function createMissionSystem({ world, player, police, population, getCar,
     for (const car of [run.vehicle, run.courier]) {
       if (!car) continue;
       delete car.missionTarget;
-      if (car === getCar()) car.locked = false;
+      if (car === getCar()) { car.locked = false; car.id = `${car.id}-${attempts}`; }
       else population.vehicles.splice(population.vehicles.indexOf(car), 1);
     }
     guards.length = 0;
@@ -54,8 +54,11 @@ export function createMissionSystem({ world, player, police, population, getCar,
     const selected = capture ? MISSIONS.find(mission => mission.id === id) : job;
     if (run || selected?.id !== id) return false;
     const seed = (world.seed >>> 0) + attempts++;
+    const deliveryId = `${id}-car`;
+    const oldCar = population.vehicles.find(car => car.id.startsWith(`${deliveryId}-`) && car !== getCar());
+    if (oldCar) population.vehicles.splice(population.vehicles.indexOf(oldCar), 1);
     run = { job: selected, index: 0, gate: 0, held: 0, lost: 0, failed: '', capture,
-      seed, replay: replay === selected, vehicle: addCar(selected.vehicle, `${id}-car-${attempts}`), courier: null, checkpoint: null };
+      seed, replay: replay === selected, vehicle: addCar(selected.vehicle, deliveryId), courier: null, checkpoint: null };
     if (run.vehicle) run.vehicle.locked = true;
     replay = null;
     payout = null;
@@ -148,9 +151,9 @@ export function createMissionSystem({ world, player, police, population, getCar,
     if (!prompt()) return false;
     if (!run) {
       if (player.inVehicle) {
-        if (police.wanted.level) showWorldMessage(world, 'Ilex / Lose the patrol first. I’m allergic to paperwork.');
-        else if (progress.cash < 150) showWorldMessage(world, 'Ilex / That’s a $150 repair.');
-        else { payFee(150); getCar().condition = 100; showWorldMessage(world, 'Ilex / Good as new from at least one angle.'); }
+        payFee(150);
+        getCar().condition = 100;
+        showWorldMessage(world, 'Ilex / Good as new from at least one angle.');
       } else start(nextJob().id);
     } else if (isPickup(activeStage()) && distance(player, targetPoint()) <= (targetPoint().radius || 4)
       && guards.every(guard => !guard.hp)) advance();

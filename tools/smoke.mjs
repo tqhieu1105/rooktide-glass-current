@@ -83,11 +83,35 @@ try {
   check('R safely recovers the on-foot player', !(await snapshot()).paused && !(await snapshot()).player.inVehicle);
   await browser.screenshot('verification/on-foot-tested.jpg', 'jpeg');
 
+  // Start and retry the first job with ordinary keyboard controls.
+  await navigate();
+  check('Fresh free roam shows Ilex and leaves the campaign inactive', (await snapshot()).mission.point.style === 'contact' && !(await snapshot()).mission.active);
+  await browser.key('KeyW');
+  await browser.waitFor('window.__rooktide.snapshot().player.z < 9', 15000);
+  await browser.key('KeyW', false);
+  await browser.key('KeyD');
+  await browser.waitFor('document.getElementById("prompt").textContent.includes("Speak to Ilex")', 5000);
+  await browser.key('KeyD', false);
+  await browser.tap('KeyE');
+  const firstJob = await snapshot();
+  check('A single E at Ilex starts Borrowed Voltage without entering a car', firstJob.mission.active && firstJob.mission.index === 0
+    && firstJob.mission.id === 'borrowed-voltage' && !firstJob.player.inVehicle
+    && await browser.evaluate('!document.getElementById("mission-card").hidden'));
+  await browser.tap('KeyR');
+  check('Manual mission recovery opens the checkpoint dialog', !!(await snapshot()).mission.failed
+    && await browser.evaluate('!document.getElementById("chase-outcome").hidden'));
+  await browser.evaluate('document.getElementById("retry-chase").click()');
+  check('Retry restores the same job stage and clears the dialog', !(await snapshot()).mission.failed && (await snapshot()).mission.index === 0
+    && await browser.evaluate('document.getElementById("chase-outcome").hidden'));
+
   // Sixty real wall-clock seconds of keyboard-controlled driving on normal roads.
   await navigate('?shot=chase&seed=20261121');
   const chaseStart = await snapshot();
   check('Cover starts in a live three-star pursuit with three patrols and a helicopter', chaseStart.frozen
     && chaseStart.police.level === 3 && chaseStart.police.units.length === 3 && chaseStart.police.helicopter);
+  check('Cover shows the live Seawall Dividend gate and mission card', chaseStart.mission.id === 'seawall-dividend'
+    && chaseStart.mission.index === 1 && chaseStart.mission.point.label === 'Seawall checkpoint'
+    && await browser.evaluate('!document.getElementById("waypoint-label").hidden && !document.getElementById("mission-card").hidden'));
   check('Wanted stars and air dispatch are visible', await browser.evaluate(`document.querySelectorAll('#wanted-stars .lit').length === 3
     && [...document.querySelectorAll('#dispatch-units li')].some(row => !row.hidden && row.textContent.includes('SPOTLIGHT'))`));
   const waypoints = [[426, -360], [252, -360], [252, 360], [420, 360], [420, 0]];
@@ -122,7 +146,8 @@ try {
   await keys([]);
   const performanceState = await snapshot();
   await browser.screenshot('verification/drive-60s.jpg', 'jpeg');
-  check('Screenshot scenario resumes under normal keys', !performanceState.frozen && performanceState.tick > 91);
+  check('Screenshot mission resumes and advances through both gates under normal keys', !performanceState.frozen && performanceState.tick > 91
+    && performanceState.mission.index >= 2);
   check('60-second drive has no stalls trapping input', travelled > 350 && performanceState.performance.samples > 60);
   check('60-second drive stays intact', performanceState.car.condition > 70);
   const simulation = runSimulationChecks();

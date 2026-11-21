@@ -28,7 +28,7 @@ wants the evidence buried.
 - **Glasshook:** a service island reached by bridge, crowned by a broken-ring
   floodgate gantry.
 
-## Milestone 3 — Rooktide Civic Patrol
+## Street play and Rooktide Civic Patrol
 
 The six districts share one road graph and one continuous city. Neri can walk,
 sprint, take an available car, drive across Glasshook Bridge, and leave a car
@@ -49,10 +49,32 @@ The high preset uses one 512×512 sun shadow map. On a 1280×720 viewport the
 software preset draws the city at 576×324, with the HUD at viewport resolution.
 Use the pause menu to switch presets.
 
-The three browser captures show a playable three-star pursuit along Saffron
-Strand, Kiln Market on foot, and the Glasshook Bridge approach. See
-`CHECKPOINT-5.md` for the police, driving, and packaging checks. The campaign
-is a future milestone.
+## Undertow Relay campaign
+
+Walk to the amber marker beside the Kiln Market plaza and press **E** to talk to
+Ilex. You can explore first. Each job has four stages. Follow the mint route on
+the minimap, or press **M** for a wider view. Watch the stage card for the next
+stop, guard count, or time remaining. If a job fails, retry from its checkpoint
+or head to Ilex Auto. You can also abandon a job from the pause menu.
+
+| Job | What you do | Reward |
+| --- | --- | ---: |
+| Borrowed Voltage | Take a marked compact and lose a one-star patrol. | $700 / 100 RP |
+| The Quiet Ledger | Clear the quay guards, collect the case and lose two stars. | $1,100 / 150 RP |
+| Split Invoice | Disable a moving courier, take the fragment, and reach Sava’s drop. | $1,400 / 200 RP |
+| Seawall Dividend | Hit two seawall checkpoints under helicopter pursuit. | $1,800 / 250 RP |
+| Dead Channel | Hold the mast upload zone and get the uplink to Glasshook. | $2,200 / 300 RP |
+| Glass Current | Take the broadcast key through a bridge blockade and stop at two relays. | $3,000 / 400 RP |
+
+The routes, fights and pursuits are designed for roughly 25–35 minutes on a
+first run. The first job unlocks paid bodywork at Ilex Auto. The second unlocks
+Sava’s patrol scan and a pistol for use in mission encounters. Cash and
+completed jobs save locally on the same browser. Once the broadcast goes out,
+the pause menu lets you replay any job. Each first completion pays once.
+
+The browser captures show the playable three-star **Seawall Dividend** chase,
+Kiln Market on foot, and the Glasshook Bridge approach. See `CHECKPOINT-6.md`
+for the campaign, driving, capture comparison and package checks.
 
 ## Controls
 
@@ -60,12 +82,14 @@ is a future milestone.
 | --- | --- |
 | WASD / arrow keys | Move on foot; accelerate, brake/reverse and steer in the car |
 | Shift | Sprint on foot |
-| E | Enter a nearby parked or stopped car, or exit at low speed |
+| E | Talk, collect, repair, or enter or exit a car at low speed |
+| F / 1 / 2 | Attack on foot in a mission encounter, select fists or the unlocked pistol |
+| Q | Sava’s patrol scan after The Quiet Ledger |
 | Space | Handbrake while driving, or hold while stopped to surrender near RCP |
 | Mouse drag | Orbit the camera without pointer lock |
 | C / mouse wheel | Cycle camera preset / adjust distance |
 | M | Expand / close the city map |
-| R | Roadside recovery |
+| R | Roadside recovery or open the mission retry menu |
 | Escape | Pause / resume |
 
 ## Run and package
@@ -98,6 +122,7 @@ node tools/smoke.mjs
 node tools/drive-loop.mjs
 node tools/population-check.mjs
 node tools/police-check.mjs
+node tools/mission-check.mjs
 node tools/timing-probe.mjs
 node tools/capture-shots.mjs --base http://127.0.0.1:8080 --quality 84
 node tools/verify-package.mjs

@@ -40,7 +40,7 @@ export const MISSIONS = [
       { kind: 'enterVehicle', heat: 2, text: 'Load the case into the Rivet Panel',
         line: 'The van’s at the end of the lane. The case rides up front. It gets carsick.' },
       { kind: 'deliver', clear: true, vehicle: true, text: 'Lose RCP and deliver the case',
-        route: [point(84, 240, 'Quay underpass'), point(-252, 120, 'Ceramics road'), point(-252, -120, 'Sorting depot', 12, 2)],
+        route: [point(84, 360, 'Quay underpass'), point(-252, 240, 'Ceramics road'), point(-252, -120, 'Sorting depot', 12, 2)],
         line: 'Lose the patrol before the handoff. I’ll count the invoices and try to keep a straight face.' },
     ],
   },
@@ -51,7 +51,7 @@ export const MISSIONS = [
     courierRoute: [point(-78, -4), point(-244, -4), point(-244, -116), point(-78, -116)],
     finish: 'We have both halves of the invoice. The line item marked “miscellaneous” is a seawall.',
     stages: [
-      { kind: 'reach', point: point(-83, -120, 'Courier route', 15), mode: 'car', text: 'Drive to the courier route',
+      { kind: 'reach', route: [point(-251, 0, 'Lookout crossing', 14), point(-83, -120, 'Courier route', 15)], mode: 'car', text: 'Drive to the courier route',
         line: 'Follow the purple saloon. Get a little closer before you start negotiating with its bumper.' },
       { kind: 'disableVehicle', checkpoint: true, text: 'Disable the purple courier car',
         line: 'A few solid bumps will do it. Stay within 180 metres or the courier gets away.' },
@@ -101,13 +101,13 @@ export const MISSIONS = [
   {
     id: 'glass-current', title: 'Glass Current', chapter: 'Public Record', contact: 'Crew', cash: 3000, rp: 400,
     giver: point(438, -221, 'Undertow Relay · Bridge', 4.5),
-    vehicle: car(552, -253, 'compact', -Math.PI / 2, 0x79cbc0),
+    vehicle: car(574, -244, 'compact', -Math.PI / 2, 0x79cbc0),
     finish: 'The city heard every word. Ilex has made commemorative keychains. They do not start any car.',
     stages: [
       { kind: 'collect', point: point(559, -272, 'Broadcast key', 4), text: 'Collect the key on Glasshook',
         line: 'Cross the bridge and grab the key by the relay hall. Leave your car pointing toward town.' },
       { kind: 'reach', mode: 'car', heat: 4, bridgeBlock: true, checkpoint: true, text: 'Cross the bridge through the blockade',
-        route: [point(513, -240, 'Roadblock gap', 10), point(432, -240, 'Mainland side', 13)],
+        route: [point(506, -245.6, 'Roadblock gap', 5), point(432, -240, 'Mainland side', 13)],
         line: 'There’s a roadblock on the bridge. Coming toward town, aim for the right side of the gap.' },
       { kind: 'holdPosition', mode: 'car', text: 'Stop at both nodes for five-second transfers',
         route: [point(252, -360, 'North relay · Transfer', 12, 5), point(-84, 120, 'Market relay · Transfer', 12, 5)],
