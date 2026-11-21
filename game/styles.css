@@ -27,7 +27,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .brand{position:absolute;top:var(--edge);left:var(--edge);display:flex;align-items:center;gap:11px}
 .gate-mark{display:block;flex:none;width:34px;height:34px;border:5px solid var(--amber);border-right-color:transparent;border-radius:50%;transform:rotate(-28deg);position:relative;filter:drop-shadow(0 1px 2px var(--ink))}
 .gate-mark::after{content:'';width:13px;height:5px;background:var(--amber);position:absolute;left:9px;top:9px;transform:rotate(28deg)}
-.wordmark{display:block;font:400 38px/1 var(--display);letter-spacing:.025em;color:#ffe0a5;position:relative;isolation:isolate}
+.wordmark{display:block;font:400 38px/1 var(--display);letter-spacing:.025em;color:#ffe0a5;position:relative;isolation:isolate;text-shadow:none}
 .wordmark::before,.wordmark::after{content:attr(data-title);position:absolute;inset:0}
 .wordmark::before{z-index:-1;color:var(--ink);-webkit-text-stroke:4px var(--ink);text-shadow:0 3px 7px var(--ink)}
 .wordmark::after{background:linear-gradient(#fff6de 29%,#f7c87b);background-clip:text;color:transparent}
@@ -41,7 +41,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .explore p{color:var(--cream);font:600 17px/1.17 var(--label)}
 .explore-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:8px;margin-top:10px;color:var(--muted);font:600 12px/1 var(--label);letter-spacing:.07em}
 .explore-footer strong{color:var(--amber);font-size:15px}
-#mission-card{border-left-color:var(--mint);width:320px}
+#mission-card{border-left-color:var(--mint);width:295px}
 #mission-card .eyebrow,#mission-waypoint{color:var(--mint)}
 #mission-card h2{font-size:26px;margin-bottom:9px}
 #mission-stages{display:flex;gap:4px;margin-bottom:9px}
@@ -105,7 +105,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 #weapon-readout{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px;margin-top:7px;font:700 14px/1.1 var(--label)}
 #weapon-readout:not(.pistol-equipped)>span:first-child,#weapon-readout.pistol-equipped #pistol-slot{color:var(--mint)}
 #weapon-ammo{color:var(--amber)}
-.street-comms{position:absolute;display:flex;flex-direction:column;align-items:center;gap:7px;left:50%;bottom:53px;transform:translateX(-50%);width:min(560px,calc(100vw - 465px))}
+.street-comms{position:absolute;display:flex;flex-direction:column;align-items:center;gap:7px;left:50%;bottom:53px;transform:translateX(-50%);width:min(600px,calc(100vw - 465px))}
 .prompt{max-width:100%;padding:6px 11px;background:#10181cef;border:1px solid var(--line);font:700 16px/1.15 var(--label);text-align:center}
 .prompt>span{margin:0 6px;color:var(--mint)}
 kbd{font:700 12px/1 var(--label);display:inline-block;padding:3px 5px;margin-right:4px;color:var(--cream);border:1px solid #fff0d370;border-radius:2px;background:#182f38}
@@ -166,7 +166,7 @@ kbd{font:700 12px/1 var(--label);display:inline-block;padding:3px 5px;margin-rig
 #fatal{position:fixed;inset:0;background:var(--teal);padding:15vh 15vw;z-index:10}
 #fatal h2{font:400 36px/1.2 var(--display);margin-bottom:16px}#fatal p{font-size:16px;line-height:1.5;margin-bottom:12px}
 .screen-reader{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-@media(min-width:1001px){.map-wrap.expanded ~ .street-comms{left:calc(50% + 68px);width:min(560px,calc(100vw - 650px))}}
+@media(min-width:1001px){.map-wrap.expanded ~ .street-comms{left:calc(50% + 68px);width:min(600px,calc(100vw - 650px))}}
 @media(max-width:1000px){
   .explore,#mission-card{width:clamp(190px,29vw,280px)}
   .street-status,.vehicle{width:clamp(140px,19vw,190px)}

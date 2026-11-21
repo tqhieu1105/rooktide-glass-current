@@ -82,7 +82,7 @@ try {
   await delay(250);
   check('Mouse drag orbits without pointer lock', Math.abs((await snapshot()).camera.heading - orbitStart) > 0.1);
   await browser.tap('KeyM');
-  check('M expands the live city map', await browser.evaluate('document.getElementById("map-label").textContent.includes("TO CLOSE")'));
+  check('M expands the live city map', await browser.evaluate('document.querySelector(".map-wrap.expanded .map-ring")?.offsetWidth >= 300'));
   await browser.tap('KeyM');
   await browser.tap('Escape');
   const paused = await snapshot(); await delay(350);
