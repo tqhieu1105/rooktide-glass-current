@@ -1,134 +1,126 @@
-// Boot and the one loop: input is read every frame, the world advances in fixed 1/60 s steps
-// (several in a slow frame, none in a fast one), and the renderer paints what is there. The game
-// moves between four screens: title, play, paused and game over.
-//
-// ?seed=N fixes the falling pattern. ?shot=start|play|end (with &seed=N) stages that scene
-// instead of running the loop, paints it twice and sets window.__shotReady for a screenshot.
-import { BEST_KEY, LIVES, STEP } from './config.js';
-import { createRandom } from './random.js';
-import { createWorld, EVENT_HIT, EVENT_OVER } from './world.js';
-import { ACTION_CONFIRM, ACTION_PAUSE, createInput } from './input.js';
-import { createRenderer, SCREEN_OVER, SCREEN_PAUSED, SCREEN_PLAY, SCREEN_TITLE } from './render.js';
-import { stageShot } from './shots.js';
+import { createRooktideCity, getDistrictAt, findSafeSpawn, showWorldMessage } from './world.js';
+import { createCityRenderer } from './render.js';
+import { createOnFootPlayer, updateOnFootPlayer, enterOrStealVehicle, exitVehicleSafely } from './player.js';
+import { createVehicle, stepArcadeDriving, recoverVehicle } from './vehicles.js';
+import { createPlayerModel, createVehicleModel, updateActorModels } from './models.js';
+import { createThirdPersonCamera, updateChaseCamera } from './camera.js';
+import { createInput } from './input.js';
+import { createMinimap } from './minimap.js';
+import { createStreetHUD } from './hud.js';
+import { stagePlayableScreenshot, signalShotReady } from './shots.js';
+import { STEP } from './config.js';
 
-/** The longest frame the loop catches up on; a longer stall (a hidden tab) is dropped, not replayed. */
-const MAX_FRAME = 0.25;
-
-const params = new URLSearchParams(window.location.search);
-const shot = params.get('shot');
-const seedParam = Number.parseInt(params.get('seed') ?? '', 10);
-const seed = Number.isInteger(seedParam) ? seedParam : Math.floor(Math.random() * 4294967296);
-
-const canvas = document.getElementById('game');
-const status = document.getElementById('status');
-const world = createWorld(createRandom(seed));
-const renderer = createRenderer(canvas);
-
-function readBest() {
-  try {
-    return Number.parseInt(window.localStorage.getItem(BEST_KEY) ?? '0', 10) || 0;
-  } catch {
-    return 0;
-  }
-}
-
-function saveBest(value) {
-  try {
-    window.localStorage.setItem(BEST_KEY, String(value));
-  } catch {
-    // Storage can be off (private windows): the best score then lasts this visit only.
-  }
-}
-
-function runShot(name) {
-  const scene = stageShot(name, world);
-  let painted = 0;
-  function paint() {
-    renderer.draw(world.state, scene.screen, scene.best);
-    painted += 1;
-    if (painted < 2) requestAnimationFrame(paint);
-    else window.__shotReady = true;
-  }
-  requestAnimationFrame(paint);
-}
-
-function runGame() {
+export function bootOpenWorldCrimeGame() {
+  const query = new URLSearchParams(location.search);
+  const seed = Number(query.get('seed')) || 20261121;
+  const canvas = document.getElementById('game');
+  const world = createRooktideCity(seed);
+  const view = createCityRenderer(canvas, world);
+  const player = createOnFootPlayer();
+  const car = createVehicle();
+  const visuals = { player: createPlayerModel(), car: createVehicleModel() };
+  view.scene.add(visuals.player.root, visuals.car.root);
+  const rig = createThirdPersonCamera(view.camera);
   const input = createInput(canvas);
-  let screen = SCREEN_TITLE;
-  let best = readBest();
-  let accumulator = 0;
-  let last = performance.now();
+  const minimap = createMinimap(document.getElementById('minimap'), world);
+  const hud = createStreetHUD(world, minimap);
+  const blank = { forward: 0, right: 0, sprint: false, handbrake: false, interact: false, camera: false,
+    pause: false, recover: false, map: false, orbitX: 0, orbitY: 0, zoom: 0 };
+  let paused = false, expanded = false, lowQuality = view.diagnostics().quality === 'low';
+  document.getElementById('quality-button').textContent = lowQuality ? 'QUALITY: LOW' : 'QUALITY: HIGH';
+  let last = performance.now(), accumulator = 0, frames = 0;
+  const frameTimes = [];
+  const game = { player, car, world, rig, frozen: false, advanceFixedStep, renderFrame };
 
-  // Screen readers (and anyone watching the page's text) hear the screen changes and each hit.
-  function announce(message) {
-    status.textContent = message;
+  function advanceFixedStep(actions) {
+    stepArcadeDriving(car, actions, world, STEP, player.inVehicle);
+    updateOnFootPlayer(player, actions, rig.heading, world, car, STEP);
+    world.clock += STEP; world.tick++;
+    world.messageTime = Math.max(0, world.messageTime - STEP);
+    const next = getDistrictAt(player.x, player.z);
+    if (next.id !== world.district.id) { world.district = next; showWorldMessage(world, next.name.toUpperCase() + ' / ' + next.subtitle, 4); }
+    world.visited.add(next.id);
   }
 
-  function startGame() {
-    world.reset();
-    accumulator = 0;
-    screen = SCREEN_PLAY;
-    announce(`Playing. ${LIVES} lives.`);
+  function renderFrame(alpha, dt, actions = blank) {
+    updateActorModels(player, car, visuals, alpha);
+    updateChaseCamera(rig, player, car, actions, world, dt);
+    view.renderWorldFrame(player.inVehicle ? car : player);
+    hud.updateStreetHUD(player, car, rig, Math.max(dt, 0.1), paused, expanded);
   }
 
-  function endGame() {
-    screen = SCREEN_OVER;
-    if (world.state.score > best) {
-      best = world.state.score;
-      saveBest(best);
-    }
-    announce(`Game over. Score ${world.state.score}. Best ${best}.`);
+  function setPaused(value) {
+    paused = value; accumulator = 0; input.clearHeldInputs();
+    document.getElementById('pause').hidden = !paused;
+    if (!paused) canvas.focus({ preventScroll: true });
   }
-
-  function handleActions() {
-    const actions = input.takeActions();
-    if (actions & ACTION_CONFIRM && (screen === SCREEN_TITLE || screen === SCREEN_OVER)) startGame();
-    else if (actions & ACTION_PAUSE && screen === SCREEN_PLAY) {
-      screen = SCREEN_PAUSED;
-      announce('Paused.');
-    } else if (actions & (ACTION_PAUSE | ACTION_CONFIRM) && screen === SCREEN_PAUSED) {
-      screen = SCREEN_PLAY;
-      announce('Playing.');
-    }
-  }
-
-  function step() {
-    if (screen === SCREEN_TITLE) {
-      world.step(STEP, 0, true);
-      return;
-    }
-    const events = world.step(STEP, input.direction(), false);
-    if (events & EVENT_OVER) endGame();
-    else if (events & EVENT_HIT) announce(world.state.lives === 1 ? 'Hit. 1 life left.' : `Hit. ${world.state.lives} lives left.`);
-  }
+  document.getElementById('help-button').addEventListener('click', () => setPaused(true));
+  document.getElementById('resume-button').addEventListener('click', () => setPaused(false));
+  document.getElementById('quality-button').addEventListener('click', e => {
+    lowQuality = !lowQuality; view.setRenderQuality(lowQuality ? 'low' : 'high');
+    e.currentTarget.textContent = lowQuality ? 'QUALITY: LOW' : 'QUALITY: HIGH';
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && !game.frozen) setPaused(true); });
 
   function frame(now) {
-    requestAnimationFrame(frame);
-    accumulator += Math.min((now - last) / 1000, MAX_FRAME);
-    last = now;
-    handleActions();
-    if (screen === SCREEN_TITLE || screen === SCREEN_PLAY) {
-      while (accumulator >= STEP && (screen === SCREEN_TITLE || screen === SCREEN_PLAY)) {
-        step();
-        accumulator -= STEP;
+    try {
+      const frameMs = Math.max(0, now - last); last = now;
+      const elapsed = Math.min(0.1, frameMs / 1000);
+      if (frames > 20 && !paused && !game.frozen) {
+        frameTimes.push(frameMs); if (frameTimes.length > 3600) frameTimes.shift();
       }
-    } else {
-      accumulator = 0;
-    }
-    renderer.draw(world.state, screen, best);
+      const actions = input.readPlayerActions();
+      if (actions.pause) setPaused(!paused);
+      const activeInput = actions.forward || actions.right || actions.interact || actions.recover || actions.sprint
+        || actions.handbrake || actions.camera || actions.map || actions.orbitX || actions.orbitY || actions.zoom;
+      if (game.frozen && activeInput) { game.frozen = false; accumulator = 0; }
+      if (!paused && !game.frozen) {
+        if (actions.interact) {
+          if (player.inVehicle) exitVehicleSafely(player, car, world);
+          else enterOrStealVehicle(player, car, world);
+          rig.orbitHold = 0;
+        }
+        if (actions.recover) {
+          if (player.inVehicle) recoverVehicle(car, world);
+          else { Object.assign(player, findSafeSpawn(world, player.x, player.z)); player.previousX = player.x; player.previousZ = player.z; }
+          showWorldMessage(world, 'Back on the road. No paperwork.');
+        }
+        if (actions.map) expanded = !expanded;
+        accumulator += elapsed;
+        let steps = 0;
+        while (accumulator >= STEP && steps < 5) { advanceFixedStep(actions); accumulator -= STEP; steps++; }
+        if (steps === 5) accumulator = 0;
+      } else accumulator = 0;
+      renderFrame(game.frozen ? 1 : accumulator / STEP, game.frozen ? 0 : elapsed || STEP, paused ? blank : actions);
+      frames++;
+      if (frames === 3) { window.__gameReady = true; signalShotReady(); }
+      requestAnimationFrame(frame);
+    } catch (error) { showFatalError(error); }
   }
 
-  // Leaving the tab pauses a running game rather than letting blocks fall unseen.
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && screen === SCREEN_PLAY) {
-      screen = SCREEN_PAUSED;
-      announce('Paused.');
-    }
-  });
-
-  announce('Block Dodger. Press Space or click to start.');
+  window.__rooktide = {
+    snapshot: () => ({ player: { ...player }, car: { ...car }, tick: world.tick, district: world.district.name,
+      visited: [...world.visited], paused, frozen: game.frozen, camera: { heading: rig.heading, preset: rig.preset,
+        type: view.camera.type, position: view.camera.position.toArray() }, renderer: view.diagnostics(),
+      world: { buildings: world.buildings.length, palms: world.palms.length, districts: 6, roadNodes: world.roads.nodes.length },
+      performance: { samples: frameTimes.length, medianMs: percentile(frameTimes, 0.5), p95Ms: percentile(frameTimes, 0.95) } }),
+  };
+  advanceFixedStep(blank);
+  if (query.has('shot')) stagePlayableScreenshot(query.get('shot'), game);
   requestAnimationFrame(frame);
 }
 
-if (shot) runShot(shot);
-else runGame();
+function percentile(values, part) {
+  if (!values.length) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  return Math.round(sorted[Math.floor((sorted.length - 1) * part)] * 100) / 100;
+}
+
+function showFatalError(error) {
+  console.error(error);
+  document.getElementById('fatal').hidden = false;
+  document.getElementById('fatal-message').textContent = error.message || String(error);
+  window.__renderFailed = true;
+}
+
+try { bootOpenWorldCrimeGame(); } catch (error) { showFatalError(error); }

@@ -1,0 +1,7 @@
+out/
+out-*/
+node_modules/
+*.log
+verification/*.tmp
+verification/*.png
+verification/*.jpg

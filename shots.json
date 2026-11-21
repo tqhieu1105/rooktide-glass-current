@@ -1,5 +1,5 @@
 [
-  { "name": "1-start.jpg", "query": "?shot=start&seed=1" },
-  { "name": "2-play.jpg", "query": "?shot=play&seed=1" },
-  { "name": "3-end.jpg", "query": "?shot=end&seed=1" }
+  { "name": "01-cover-chase.jpg", "query": "?shot=chase&seed=20261121" },
+  { "name": "02-kiln-streets.jpg", "query": "?shot=market&seed=20261121" },
+  { "name": "03-glasshook-bridge.jpg", "query": "?shot=bridge&seed=20261121" }
 ]

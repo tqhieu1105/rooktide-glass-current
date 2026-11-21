@@ -1,26 +1,30 @@
-// A working gta6-01 entry (Node 22, standard library only): the game is this directory's
-// game/ folder, plain static files a desktop browser loads offline (game/index.html and its ES
-// modules, no library and no network request), and the program hands it in. It copies game/ and
-// screenshots/ from beside this file to /output and writes /output/dossier.json, the summary the
-// judge reads, with the vendored make.fun library. Only the plumbing, not an open world: Block
-// Dodger, a plain 2D canvas game where a paddle dodges falling blocks and catches coins, with a
-// title screen, score, lives and levels, game over and restart, flat colours and no sound. Build
-// your own open-world crime game in its place (three.js or any library you vendor under game/),
-// put your 3 or 4 PNG or JPEG screenshots in screenshots/ (the first by name is the cover) and run it.
-//
-// Serve it locally with `node serve.ts`, then open http://localhost:8080.
-// Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
-//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+// Deterministic standard-library packaging for Rooktide's static Three.js game.
+// Browser captures are made during development, never by this entrypoint.
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { cpSync, existsSync, mkdirSync, writeFileSync, rmSync, realpathSync, statSync } from 'node:fs';
+import { join, resolve, sep, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-game.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
-const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+function canonicalPath(path: string): string {
+  const absolute = resolve(path);
+  return existsSync(absolute) ? realpathSync(absolute) : join(canonicalPath(dirname(absolute)), basename(absolute));
+}
+const source = canonicalPath(here);
+const out = canonicalPath(process.env.MAKEFUN_OUTPUT_DIR ?? '/output');
+const contains = (parent: string, child: string) => child === parent || child.startsWith(parent.endsWith(sep) ? parent : parent + sep);
+if (contains(out, source) || ['game', 'screenshots', 'vendor', '.git', 'tools', 'verification'].some(name => contains(join(source, name), out))) {
+  throw new Error('Output directory must not overlap source files or contain the repository.');
+}
+for (const name of ['game/index.html', 'game/src/main.js', 'game/vendor/three.module.min.js', 'game/vendor/LICENSE']) {
+  if (!existsSync(join(source, name)) || !statSync(join(source, name)).isFile()) throw new Error(`Required game file missing: ${name}`);
+}
 
 mkdirSync(out, { recursive: true });
+// Clean only our two generated subtrees, preserving unrelated output files.
+rmSync(join(out, 'game'), { recursive: true, force: true });
+rmSync(join(out, 'screenshots'), { recursive: true, force: true });
 cpSync(join(here, 'game'), join(out, 'game'), { recursive: true });
 mkdirSync(join(out, 'screenshots'), { recursive: true });
 if (existsSync(join(here, 'screenshots'))) cpSync(join(here, 'screenshots'), join(out, 'screenshots'), { recursive: true });
