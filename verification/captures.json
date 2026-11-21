@@ -2,23 +2,24 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "18c97bf189d7f93cde09d94617ab1f0020db5eb1",
+    "baseCommit": "65b43365ea136bd39d8ea1efea92acc6aa2a8f38",
     "workingTree": true,
-    "gameTreeSha256": "dc3a698fa18e23663eefa70fabba294080fc29c37a2e4bb91723feb507041637"
+    "gameTreeSha256": "3b61f7afcc850edf10f4aa05842293ed337ac47231c531f35ddad50ea38f0d62"
   },
   "errors": [],
   "external": [],
+  "localFontFaces": 5,
   "records": [
     {
-      "path": "/tmp/rooktide-m2-preview/01-cover-chase.jpg",
+      "path": "screenshots/01-cover-chase.jpg",
       "url": "http://127.0.0.1:8080/?shot=chase&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 134663,
-      "sha256": "006097f904ca01c1e90dd43ae74656f33bdee603cd26ede7d1a54a41c46f925d",
+      "bytes": 135191,
+      "sha256": "422d7434f94a5587152b8f6ebaac73e1750d1a4f4d3c71a971029d2d04f73fe1",
       "state": {
         "player": {
           "x": 426,
@@ -58,12 +59,12 @@
         "tick": 91,
         "district": "Saffron Strand",
         "staticImpacts": 0,
+        "paused": false,
+        "frozen": true,
         "visited": [
           "market",
           "strand"
         ],
-        "paused": false,
-        "frozen": true,
         "camera": {
           "heading": 0.32,
           "preset": 0,
@@ -264,15 +265,15 @@
       }
     },
     {
-      "path": "/tmp/rooktide-m2-preview/02-kiln-streets.jpg",
+      "path": "screenshots/02-kiln-streets.jpg",
       "url": "http://127.0.0.1:8080/?shot=market&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 124287,
-      "sha256": "64343593771c65ba4914d95cbba62de7cb12cd5dc184574ff71d1f2699273c35",
+      "bytes": 124496,
+      "sha256": "56eb19a0de315a7b98b49af3cc0d458d6f94bdd9eca7afe5a96582ebf265c417",
       "state": {
         "player": {
           "x": 95.5,
@@ -312,11 +313,11 @@
         "tick": 91,
         "district": "Kiln Market",
         "staticImpacts": 0,
+        "paused": false,
+        "frozen": true,
         "visited": [
           "market"
         ],
-        "paused": false,
-        "frozen": true,
         "camera": {
           "heading": -0.3,
           "preset": 0,
@@ -517,15 +518,15 @@
       }
     },
     {
-      "path": "/tmp/rooktide-m2-preview/03-glasshook-bridge.jpg",
+      "path": "screenshots/03-glasshook-bridge.jpg",
       "url": "http://127.0.0.1:8080/?shot=bridge&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 116942,
-      "sha256": "1994e020b858a25f067795d859c2b338432d80165dd6cad8489db36eab365bef",
+      "bytes": 117207,
+      "sha256": "879c9bf6802827416d90d858f17f4cb348a6058f0070724f4bb68876e6fbfc4a",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -565,12 +566,12 @@
         "tick": 91,
         "district": "Saffron Strand",
         "staticImpacts": 0,
+        "paused": false,
+        "frozen": true,
         "visited": [
           "market",
           "strand"
         ],
-        "paused": false,
-        "frozen": true,
         "camera": {
           "heading": 1.2707963267948965,
           "preset": 0,
