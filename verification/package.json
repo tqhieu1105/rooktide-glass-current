@@ -3,53 +3,53 @@
   "runs": [
     {
       "run": 1,
-      "milliseconds": 99
+      "milliseconds": 178
     },
     {
       "run": 2,
-      "milliseconds": 92
+      "milliseconds": 149
     }
   ],
-  "outputTreeSha256": "796e7623b1aeec16c6df77ebcb1e8a10e60d59da8cdd8110d36cf27ac0cc82ba",
-  "dossierSha256": "a1461e7f8da69f4fc7d214b8ade2ae856c407e6f6c25d431b6a0504bf9aa0d02",
+  "outputTreeSha256": "46bdc4e27b694026abbc27ba73e58aeddb9be0919331777a2a48c544af6a74b5",
+  "dossierSha256": "6c3c2ffce0db97d9f657e220020e438ebc2776229f94541f7edc9bfb19063d2d",
   "dossierSchema": "makefun/dossier/v1",
   "kitLibrarySha256": "dc67187521b24025ff952f8c231485a6eb92d6d71d29edd2a08154ffb4376129",
   "thirdPartyThreeSha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
-  "gameFiles": 35,
-  "gameBytes": 910304,
+  "gameFiles": 37,
+  "gameBytes": 946522,
   "screenshots": [
     {
       "name": "01-cover-chase.jpg",
       "width": 1280,
       "height": 720,
-      "bytes": 135191,
-      "sha256": "422d7434f94a5587152b8f6ebaac73e1750d1a4f4d3c71a971029d2d04f73fe1"
+      "bytes": 138491,
+      "sha256": "82a1709b80c022495b7928093784fe6eea7b7527024e920207106f4932bfd510"
     },
     {
       "name": "02-kiln-streets.jpg",
       "width": 1280,
       "height": 720,
-      "bytes": 124496,
-      "sha256": "56eb19a0de315a7b98b49af3cc0d458d6f94bdd9eca7afe5a96582ebf265c417"
+      "bytes": 126196,
+      "sha256": "c4bb2ed3a7e3c282921fb81bd099de624ac98c9fb561acd0d5b756f607d0c559"
     },
     {
       "name": "03-glasshook-bridge.jpg",
       "width": 1280,
       "height": 720,
-      "bytes": 117207,
-      "sha256": "879c9bf6802827416d90d858f17f4cb348a6058f0070724f4bb68876e6fbfc4a"
+      "bytes": 120450,
+      "sha256": "fb3bb60be71c2f36d248cb157b298094118ff7fae809c8fe925d917acde6cc57"
     }
   ],
   "files": [
     {
       "path": "dossier.json",
-      "bytes": 624410,
-      "sha256": "a1461e7f8da69f4fc7d214b8ade2ae856c407e6f6c25d431b6a0504bf9aa0d02"
+      "bytes": 672407,
+      "sha256": "6c3c2ffce0db97d9f657e220020e438ebc2776229f94541f7edc9bfb19063d2d"
     },
     {
       "path": "game/index.html",
-      "bytes": 3677,
-      "sha256": "29de685f428c69c9e7f72c9928b546be92eee8f607baecf53c59810fbe1fa894"
+      "bytes": 4772,
+      "sha256": "c212aec517bc15b6a1fbedeab87eedc6d58654758acb73ccf0f4f8759df8a054"
     },
     {
       "path": "game/src/art-direction.js",
@@ -78,8 +78,8 @@
     },
     {
       "path": "game/src/collision.js",
-      "bytes": 3378,
-      "sha256": "bb564597a86acde4db2f4f37197c50e97444c78186bcfff5321bdb964eb3944b"
+      "bytes": 4026,
+      "sha256": "4ecafadbb425dd88e5640e74215108d573969f68a966f9b17094f04c87f461c3"
     },
     {
       "path": "game/src/config.js",
@@ -93,8 +93,8 @@
     },
     {
       "path": "game/src/hud.js",
-      "bytes": 3292,
-      "sha256": "473e0b4d4cb38f8da172a7128c7bfe50176378606b4d9f5d5b2069a9869237b5"
+      "bytes": 5384,
+      "sha256": "d9cdea1c9de13a9111f80a972db54eb0c85acff6667b6e1713edefe4e44aef2b"
     },
     {
       "path": "game/src/input.js",
@@ -103,13 +103,13 @@
     },
     {
       "path": "game/src/main.js",
-      "bytes": 7965,
-      "sha256": "2f8d161bf8beb4b569993d1a9ef065bc1780e2a539f45883508b0380e0b5da3b"
+      "bytes": 10259,
+      "sha256": "a7bdb2bb02ff934e4a9f58b21e31e1bb4bb5c588bbbab44d5a250cef6ecb1262"
     },
     {
       "path": "game/src/minimap.js",
-      "bytes": 3485,
-      "sha256": "ada46e1dc63239219803058c1e72264e28c38fad7a5aba9ccb08af058a0b1f5e"
+      "bytes": 4400,
+      "sha256": "365e32361f521eaa23105c70321511046e2b18ddd5d00f4e780adae96c8e347a"
     },
     {
       "path": "game/src/models.js",
@@ -120,6 +120,16 @@
       "path": "game/src/player.js",
       "bytes": 4320,
       "sha256": "f72937ac01cc517bbcbf7fe3846fad5b6aab1d7e8e73e45fd24d317fb5f7cd3e"
+    },
+    {
+      "path": "game/src/police-models.js",
+      "bytes": 7061,
+      "sha256": "147a9c60b8993d5c9c55045504b884eab90bd5a36e97407a460b3ac8cd22da52"
+    },
+    {
+      "path": "game/src/police.js",
+      "bytes": 19494,
+      "sha256": "4255ec277a8b51d81b7016a2f3d5a7e3764f85345af0084855573b208b9720ed"
     },
     {
       "path": "game/src/population-models.js",
@@ -133,8 +143,8 @@
     },
     {
       "path": "game/src/population.js",
-      "bytes": 17563,
-      "sha256": "2ef889c4d46243f41dca651ab8a6daeacb7572007f222e2ed4af9017199535e0"
+      "bytes": 18425,
+      "sha256": "74782e52bf48dba4cc57dd6388c0a51b8a5fafa87d35e450668bb87841cf15b7"
     },
     {
       "path": "game/src/random.js",
@@ -153,8 +163,8 @@
     },
     {
       "path": "game/src/shots.js",
-      "bytes": 1810,
-      "sha256": "6bfd45e362167d889b1ae70d46c6dcf92a8339da77dc62267ed2a89f840475f6"
+      "bytes": 2043,
+      "sha256": "e93f27445422c8f8e6a781d22caec6ecb931e65bad0a9504ac2488cf1c44d9ae"
     },
     {
       "path": "game/src/vehicles.js",
@@ -168,8 +178,8 @@
     },
     {
       "path": "game/styles.css",
-      "bytes": 12190,
-      "sha256": "5c7b286b5d69106ff6c4681343ea459ffa0db5f1edc7db93b199622b35ec7389"
+      "bytes": 13714,
+      "sha256": "e42461e26682e05486bf54e00cb7c548774d859f8ffe704153e1fe910eb8d718"
     },
     {
       "path": "game/vendor/LICENSE",
@@ -223,18 +233,18 @@
     },
     {
       "path": "screenshots/01-cover-chase.jpg",
-      "bytes": 135191,
-      "sha256": "422d7434f94a5587152b8f6ebaac73e1750d1a4f4d3c71a971029d2d04f73fe1"
+      "bytes": 138491,
+      "sha256": "82a1709b80c022495b7928093784fe6eea7b7527024e920207106f4932bfd510"
     },
     {
       "path": "screenshots/02-kiln-streets.jpg",
-      "bytes": 124496,
-      "sha256": "56eb19a0de315a7b98b49af3cc0d458d6f94bdd9eca7afe5a96582ebf265c417"
+      "bytes": 126196,
+      "sha256": "c4bb2ed3a7e3c282921fb81bd099de624ac98c9fb561acd0d5b756f607d0c559"
     },
     {
       "path": "screenshots/03-glasshook-bridge.jpg",
-      "bytes": 117207,
-      "sha256": "879c9bf6802827416d90d858f17f4cb348a6058f0070724f4bb68876e6fbfc4a"
+      "bytes": 120450,
+      "sha256": "fb3bb60be71c2f36d248cb157b298094118ff7fae809c8fe925d917acde6cc57"
     }
   ]
 }

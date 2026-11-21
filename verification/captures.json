@@ -2,9 +2,9 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "65b43365ea136bd39d8ea1efea92acc6aa2a8f38",
+    "baseCommit": "0ed6c8fabc410b11f4af5f3ebdee228fd19c868e",
     "workingTree": true,
-    "gameTreeSha256": "3b61f7afcc850edf10f4aa05842293ed337ac47231c531f35ddad50ea38f0d62"
+    "gameTreeSha256": "0a3de5bad767958733b580657ceef71d216af9faa95142f89cff98537d49b31f"
   },
   "errors": [],
   "external": [],
@@ -18,8 +18,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 135191,
-      "sha256": "422d7434f94a5587152b8f6ebaac73e1750d1a4f4d3c71a971029d2d04f73fe1",
+      "bytes": 138491,
+      "sha256": "82a1709b80c022495b7928093784fe6eea7b7527024e920207106f4932bfd510",
       "state": {
         "player": {
           "x": 426,
@@ -61,18 +61,19 @@
         "staticImpacts": 0,
         "paused": false,
         "frozen": true,
+        "cash": 250,
         "visited": [
           "market",
           "strand"
         ],
         "camera": {
-          "heading": 0.32,
-          "preset": 0,
+          "heading": 0.5,
+          "preset": 1,
           "type": "PerspectiveCamera",
           "position": [
-            422.86775585122984,
-            3.7,
-            69.76714906671899
+            417.53462338137507,
+            4.281119981233126,
+            75.8110634086792
           ]
         },
         "renderer": {
@@ -82,9 +83,9 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 87,
-          "triangles": 17198,
-          "geometries": 29,
+          "calls": 97,
+          "triangles": 16514,
+          "geometries": 43,
           "textures": 2,
           "batches": 310,
           "instances": 7736
@@ -251,6 +252,69 @@
             }
           ]
         },
+        "police": {
+          "level": 3,
+          "heat": 0,
+          "state": "pursuit",
+          "seen": true,
+          "unseen": 0,
+          "lastSeen": {
+            "x": 426,
+            "z": 60.31529544861458,
+            "heading": 0
+          },
+          "searchRadius": 56,
+          "incident": "Vehicle theft",
+          "arrest": 0,
+          "outcome": "",
+          "checkpoint": {
+            "x": 426,
+            "z": 74,
+            "heading": 0
+          },
+          "escapeSeconds": 20,
+          "units": [
+            {
+              "id": "RCP-01",
+              "x": 422.0401436173521,
+              "z": 63.31692848059197,
+              "speed": 23.119338996898694,
+              "mode": "ramming",
+              "condition": 100,
+              "ramTell": 0,
+              "distance": 4.968929807298056
+            },
+            {
+              "id": "RCP-02",
+              "x": 423.06088146215666,
+              "z": 47.67943388285742,
+              "speed": 12.784471731353689,
+              "mode": "ramming",
+              "condition": 100,
+              "ramTell": 0.34999999999999964,
+              "distance": 12.973180615734655
+            },
+            {
+              "id": "RCP-03",
+              "x": 423.55661901595306,
+              "z": 147.96910613920733,
+              "speed": 20.073213103687475,
+              "mode": "dispatch",
+              "condition": 100,
+              "ramTell": 0,
+              "distance": 87.68785913235352
+            }
+          ],
+          "helicopter": {
+            "id": "KITE-1",
+            "x": 464.3774587487694,
+            "y": 29.431131330471327,
+            "z": -31.357262069418052,
+            "seen": true,
+            "distance": 99.38152314142957
+          },
+          "roadblocks": []
+        },
         "world": {
           "buildings": 172,
           "palms": 216,
@@ -272,8 +336,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 124496,
-      "sha256": "56eb19a0de315a7b98b49af3cc0d458d6f94bdd9eca7afe5a96582ebf265c417",
+      "bytes": 126196,
+      "sha256": "c4bb2ed3a7e3c282921fb81bd099de624ac98c9fb561acd0d5b756f607d0c559",
       "state": {
         "player": {
           "x": 95.5,
@@ -315,6 +379,7 @@
         "staticImpacts": 0,
         "paused": false,
         "frozen": true,
+        "cash": 250,
         "visited": [
           "market"
         ],
@@ -337,7 +402,7 @@
           "height": 630,
           "calls": 134,
           "triangles": 19508,
-          "geometries": 43,
+          "geometries": 44,
           "textures": 2,
           "batches": 310,
           "instances": 7736
@@ -504,6 +569,26 @@
             }
           ]
         },
+        "police": {
+          "level": 0,
+          "heat": 0,
+          "state": "none",
+          "seen": false,
+          "unseen": 0,
+          "lastSeen": {
+            "x": 0,
+            "z": 0
+          },
+          "searchRadius": 0,
+          "incident": "",
+          "arrest": 0,
+          "outcome": "",
+          "checkpoint": null,
+          "escapeSeconds": 0,
+          "units": [],
+          "helicopter": null,
+          "roadblocks": []
+        },
         "world": {
           "buildings": 172,
           "palms": 216,
@@ -525,8 +610,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 117207,
-      "sha256": "879c9bf6802827416d90d858f17f4cb348a6058f0070724f4bb68876e6fbfc4a",
+      "bytes": 120450,
+      "sha256": "fb3bb60be71c2f36d248cb157b298094118ff7fae809c8fe925d917acde6cc57",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -568,6 +653,7 @@
         "staticImpacts": 0,
         "paused": false,
         "frozen": true,
+        "cash": 250,
         "visited": [
           "market",
           "strand"
@@ -591,7 +677,7 @@
           "height": 630,
           "calls": 51,
           "triangles": 7664,
-          "geometries": 21,
+          "geometries": 22,
           "textures": 2,
           "batches": 310,
           "instances": 7736
@@ -757,6 +843,26 @@
               "parked": false
             }
           ]
+        },
+        "police": {
+          "level": 0,
+          "heat": 0,
+          "state": "none",
+          "seen": false,
+          "unseen": 0,
+          "lastSeen": {
+            "x": 0,
+            "z": 0
+          },
+          "searchRadius": 0,
+          "incident": "",
+          "arrest": 0,
+          "outcome": "",
+          "checkpoint": null,
+          "escapeSeconds": 0,
+          "units": [],
+          "helicopter": null,
+          "roadblocks": []
         },
         "world": {
           "buildings": 172,
