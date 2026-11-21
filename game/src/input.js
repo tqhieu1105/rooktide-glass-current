@@ -4,8 +4,8 @@ export function createInput(canvas) {
   const weaponIds = [...document.querySelectorAll('#weapon-wheel [data-weapon]')].map(slot => Number(slot.dataset.weapon));
   const used = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
     'KeyE', 'KeyC', 'KeyR', 'KeyM', 'KeyF', 'KeyQ', 'KeyV', 'Digit1', 'Digit2', 'Tab', 'ShiftLeft', 'ShiftRight', 'Space', 'Escape']);
-  let drag = false, orbitX = 0, orbitY = 0, zoom = 0, wheelPick = 1, wheelCommit = 0, equipped = 1, pointerX = innerWidth / 2, pointerY = innerHeight / 2;
-  function clearHeldInputs() { held.clear(); pressed.clear(); drag = false; orbitX = orbitY = zoom = 0; wheelCommit = 0; }
+  let drag = false, orbitX = 0, orbitY = 0, zoom = 0, wheelPick = 1, queuedWeapon = 0, equipped = 1, pointerX = innerWidth / 2, pointerY = innerHeight / 2;
+  function clearHeldInputs() { held.clear(); pressed.clear(); drag = false; orbitX = orbitY = zoom = 0; queuedWeapon = 0; }
   function pickWheel(x, y) {
     const dx = x - innerWidth / 2, dy = y - innerHeight / 2;
     if (Math.hypot(dx, dy) < 35) return;
@@ -20,14 +20,14 @@ export function createInput(canvas) {
     e.preventDefault();
     if (!e.repeat) pressed.add(e.code);
     held.add(e.code);
+    const keyWeapon = Number(e.code.slice(5));
     if (held.has('Tab')) {
-      const keyWeapon = Number(e.code.slice(5));
       if (weaponIds.includes(keyWeapon)) wheelPick = keyWeapon;
       if (e.code === 'Tab') wheelPick = equipped;
-    }
+    } else if (weaponIds.includes(keyWeapon)) queuedWeapon = keyWeapon;
   });
   window.addEventListener('keyup', e => {
-    if (e.code === 'Tab' && held.has('Tab')) wheelCommit = wheelPick;
+    if (e.code === 'Tab' && held.has('Tab')) queuedWeapon = wheelPick;
     held.delete(e.code);
   });
   window.addEventListener('blur', clearHeldInputs);
@@ -49,13 +49,17 @@ export function createInput(canvas) {
       value.sprint = held.has('ShiftLeft') || held.has('ShiftRight'); value.handbrake = held.has('Space');
       value.interact = pressed.has('KeyE'); value.camera = pressed.has('KeyC'); value.pause = pressed.has('Escape');
       value.attack = held.has('KeyF'); value.scan = held.has('KeyQ');
-      value.weapon = wheelCommit || (held.has('Digit2') ? 2 : held.has('Digit1') ? 1 : 0);
+      value.weapon = queuedWeapon || (held.has('Digit2') ? 2 : held.has('Digit1') ? 1 : 0);
       value.weaponWheelOpen = held.has('Tab'); value.weaponWheelPick = wheelPick;
       value.recover = pressed.has('KeyR'); value.map = pressed.has('KeyM'); value.radio = pressed.has('KeyV');
       value.orbitX = orbitX; value.orbitY = orbitY; value.zoom = zoom;
-      pressed.clear(); orbitX = 0; orbitY = 0; zoom = 0; wheelCommit = 0;
+      pressed.clear(); orbitX = 0; orbitY = 0; zoom = 0;
       return value;
     }, clearHeldInputs,
-    setWheelSelection(weapon) { equipped = weapon; if (!held.has('Tab')) wheelPick = weapon; },
+    setWheelSelection(weapon) {
+      equipped = weapon;
+      if (queuedWeapon === weapon) queuedWeapon = 0;
+      if (!held.has('Tab')) wheelPick = weapon;
+    },
   };
 }

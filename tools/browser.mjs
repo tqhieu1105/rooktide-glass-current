@@ -81,6 +81,7 @@ export async function openChromium({ width = 1280, height = 720, headed = false 
     await click('#new-game');
     if (await evaluate('!document.getElementById("new-confirm").hidden')) await click('#confirm-new');
     await waitFor('window.__rooktide.snapshot().menu === null');
+    await waitFor('window.__rooktide.snapshot().streaming.settled');
   }
   async function screenshot(path, format = 'png', quality = 84) {
     const shot = await send('Page.captureScreenshot', { format, ...(format === 'jpeg' ? { quality } : {}), captureBeyondViewport: false, fromSurface: true });
