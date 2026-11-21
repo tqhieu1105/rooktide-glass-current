@@ -3,58 +3,58 @@
   "runs": [
     {
       "run": 1,
-      "milliseconds": 108
+      "milliseconds": 114
     },
     {
       "run": 2,
-      "milliseconds": 101
+      "milliseconds": 114
     }
   ],
-  "outputTreeSha256": "30d7071659143cb138ba9341a005328a4be05493449de8725bfc31d82869877f",
-  "dossierSha256": "e15f04673132e925a91343d5693a68e32f7dba17b46ef77b1745e0c6b4a80939",
+  "outputTreeSha256": "38023327b63c98b7ab9f7a436ddd558c0ddf0f29d89100fdadf13d772b469d78",
+  "dossierSha256": "6ffb5663872fcdcf78b497d85156e82c4b3eb41bc490ae88af6d52dffa33277d",
   "dossierSchema": "makefun/dossier/v1",
   "kitLibrarySha256": "dc67187521b24025ff952f8c231485a6eb92d6d71d29edd2a08154ffb4376129",
   "thirdPartyThreeSha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
   "gameFiles": 46,
-  "gameBytes": 1094492,
+  "gameBytes": 1092711,
   "screenshots": [
     {
       "name": "01-cover-chase.jpg",
       "width": 1280,
       "height": 720,
-      "bytes": 167063,
-      "sha256": "22a9d5e03962a995d8e8d5280b2ffedb7eac89e0a426395514fe8ac4a751319c"
+      "bytes": 168890,
+      "sha256": "d15d81f8ccfda9e28732ce29a637b09a257d46a1ba84e37ef89ab842ae1a00c8"
     },
     {
       "name": "02-kiln-streets.jpg",
       "width": 1280,
       "height": 720,
-      "bytes": 137114,
-      "sha256": "d3cfea56c3f4dbd2c2d24476132370cb6ec2cb01bf9af21503b17bb0f042542d"
+      "bytes": 139831,
+      "sha256": "a1d49de47286952b29df7ca267287d9ee2b2f1aaf7cb724eb23de46b4b7c33ba"
     },
     {
       "name": "03-glasshook-bridge.jpg",
       "width": 1280,
       "height": 720,
-      "bytes": 137327,
-      "sha256": "bf03218c3e379f00ceaa20ed641959aca942a71bb6f8db90559fb583d7db81cb"
+      "bytes": 147421,
+      "sha256": "1c6274cdd82b8b10147ee5fff9793f5e0889f237f3e2316d8c258c6467685201"
     }
   ],
   "files": [
     {
       "path": "dossier.json",
-      "bytes": 756717,
-      "sha256": "e15f04673132e925a91343d5693a68e32f7dba17b46ef77b1745e0c6b4a80939"
+      "bytes": 776207,
+      "sha256": "6ffb5663872fcdcf78b497d85156e82c4b3eb41bc490ae88af6d52dffa33277d"
     },
     {
       "path": "game/index.html",
-      "bytes": 14455,
-      "sha256": "fc74945551deaa6f58890f1daee10c4315949d3464cf2aaaf6b4d6ee85666ca6"
+      "bytes": 14560,
+      "sha256": "1d41ab41cbb78242b1717ce74cead5a5e69577dc2956d60fbdb278d7602fe4dc"
     },
     {
       "path": "game/src/art-direction.js",
       "bytes": 703,
-      "sha256": "5ef2623831aaed510ebcb9a021e71a581a3e5fa4e3f814e75b09c534b05b31bb"
+      "sha256": "d55ac63f64eb4d9d494ca98209833fe400dc38fbda468b753eb614ea4730cdb9"
     },
     {
       "path": "game/src/atlas.js",
@@ -63,8 +63,8 @@
     },
     {
       "path": "game/src/buildings.js",
-      "bytes": 9320,
-      "sha256": "fb5d868e083f1efc1d49b37cd07a6031a2c23919d8224ba6d616df173e625a58"
+      "bytes": 9442,
+      "sha256": "3085dd52642a2432dd481c2fc625b7f53e785fe2cda43a73a439b2fcb6427751"
     },
     {
       "path": "game/src/camera.js",
@@ -93,18 +93,18 @@
     },
     {
       "path": "game/src/config.js",
-      "bytes": 1839,
-      "sha256": "725fbe55125175c8ac32e52e8ebcab9bae7c1d5d605c34aa24f5077ff2e920b9"
+      "bytes": 1906,
+      "sha256": "880d5461d4cae126b9c6649e3425042c5fafaa2242e798c00d7a177748f7d2b3"
     },
     {
       "path": "game/src/geometry.js",
-      "bytes": 15600,
-      "sha256": "f18dbefa803aa8b37afd97eb6bf4f573c4080628f1db1bfdf8b7e88792bdde5f"
+      "bytes": 15577,
+      "sha256": "e4828d62b788533c32c392d1ee6eba068b17cd7f5c871b8a7c8ad137fe2e9a9f"
     },
     {
       "path": "game/src/hud.js",
-      "bytes": 12165,
-      "sha256": "154e24b7947017d99faeeeb6a8e5c6a84154b9b959675cc91e55a2ddbad8c56d"
+      "bytes": 12176,
+      "sha256": "9cb3d61c84023198af83cfc873f8520ed1eb55ff7f43fe5876aa9205e55f05ee"
     },
     {
       "path": "game/src/input.js",
@@ -124,7 +124,7 @@
     {
       "path": "game/src/minimap.js",
       "bytes": 6599,
-      "sha256": "a4d779ff675cffecf02824392771c2eb07b98c032294213fef2a08763bdd49d4"
+      "sha256": "8fce021f189f8cf5c75af335a9a22e414b7a97c10c7af35e2b33148de78fe2e4"
     },
     {
       "path": "game/src/mission-data.js",
@@ -143,8 +143,8 @@
     },
     {
       "path": "game/src/models.js",
-      "bytes": 15078,
-      "sha256": "b6a9c4adef7b18d15409694755e833d966c6d4e1e28a31ab03e19dd195c02a1b"
+      "bytes": 15111,
+      "sha256": "d777b0a34629b1594da49c9047287cbbd41a0b0c68543991584e68b67d15a727"
     },
     {
       "path": "game/src/player.js",
@@ -154,7 +154,7 @@
     {
       "path": "game/src/police-models.js",
       "bytes": 7061,
-      "sha256": "147a9c60b8993d5c9c55045504b884eab90bd5a36e97407a460b3ac8cd22da52"
+      "sha256": "6a72ab30e1ab5f7315bc8d5320c985dfad36d8449977ee11f53a8ccd6b7169cf"
     },
     {
       "path": "game/src/police.js",
@@ -188,8 +188,8 @@
     },
     {
       "path": "game/src/render.js",
-      "bytes": 7461,
-      "sha256": "e86ae4ef3ec592e315a2328277e02b48e04fddf9479793b1244cb0440d919328"
+      "bytes": 7606,
+      "sha256": "cd855fcb8456db03677c8bf5d7a74a3adbaf106cb255022bfabb6e78cb38b776"
     },
     {
       "path": "game/src/roads.js",
@@ -198,8 +198,8 @@
     },
     {
       "path": "game/src/shots.js",
-      "bytes": 2443,
-      "sha256": "17f4f2a0aebb88838449b90fdddb92f2fff3ba5a44c1d9de866c86c96191e5fa"
+      "bytes": 2464,
+      "sha256": "9be99b2924ba76a394f7a614d6720f2451be1db58273eed122620e9938ac9228"
     },
     {
       "path": "game/src/streaming.js",
@@ -218,13 +218,13 @@
     },
     {
       "path": "game/src/world.js",
-      "bytes": 4506,
-      "sha256": "881f15ee2ee746328db1f1d2a64dacc6a96166544291dabfc2efdebe5305f127"
+      "bytes": 5229,
+      "sha256": "a5684dd2c74607287ed45ea9165981e9d71559a418d758cd50d2c0a84776d948"
     },
     {
       "path": "game/styles.css",
-      "bytes": 21974,
-      "sha256": "130ecf462fc3703aadbd7475facc0b86b53edaa03b11b00fab2a6218a9ee9f0c"
+      "bytes": 18989,
+      "sha256": "3acb1f93157020c73b71dc9a4ac25dc535e8070e76586fc338bd57184c8e550b"
     },
     {
       "path": "game/vendor/LICENSE",
@@ -278,18 +278,18 @@
     },
     {
       "path": "screenshots/01-cover-chase.jpg",
-      "bytes": 167063,
-      "sha256": "22a9d5e03962a995d8e8d5280b2ffedb7eac89e0a426395514fe8ac4a751319c"
+      "bytes": 168890,
+      "sha256": "d15d81f8ccfda9e28732ce29a637b09a257d46a1ba84e37ef89ab842ae1a00c8"
     },
     {
       "path": "screenshots/02-kiln-streets.jpg",
-      "bytes": 137114,
-      "sha256": "d3cfea56c3f4dbd2c2d24476132370cb6ec2cb01bf9af21503b17bb0f042542d"
+      "bytes": 139831,
+      "sha256": "a1d49de47286952b29df7ca267287d9ee2b2f1aaf7cb724eb23de46b4b7c33ba"
     },
     {
       "path": "screenshots/03-glasshook-bridge.jpg",
-      "bytes": 137327,
-      "sha256": "bf03218c3e379f00ceaa20ed641959aca942a71bb6f8db90559fb583d7db81cb"
+      "bytes": 147421,
+      "sha256": "1c6274cdd82b8b10147ee5fff9793f5e0889f237f3e2316d8c258c6467685201"
     }
   ]
 }

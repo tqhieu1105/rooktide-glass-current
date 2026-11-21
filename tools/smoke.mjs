@@ -241,7 +241,9 @@ try {
   await browser.tap('Digit2');
   await browser.waitFor('window.__rooktide.snapshot().combat.weapon === 2 && !document.getElementById("aim-reticle").hidden');
   check('Weapon 2 selects the live pistol and its aiming reticle', (await snapshot()).combat.weapon === 2
-    && await browser.evaluate('!document.getElementById("aim-reticle").hidden && !document.getElementById("pistol-slot").hidden'));
+    && await browser.evaluate(`!document.getElementById('aim-reticle').hidden
+      && !document.getElementById('weapon-readout').hidden && !document.getElementById('weapon-ammo').hidden
+      && document.getElementById('weapon-name').textContent === '2 · PISTOL'`));
   const wheelTick = (await snapshot()).tick;
   await browser.key('Tab'); await delay(220);
   await browser.waitFor('!document.getElementById("weapon-wheel").hidden');

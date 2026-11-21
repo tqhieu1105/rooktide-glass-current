@@ -2,9 +2,9 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "c48123aeec74060dd639a67572fae0045fa0ad78",
+    "baseCommit": "fff71ebf2743c03b37fa93e4afd37aafe640f13f",
     "workingTree": true,
-    "gameTreeSha256": "99ced78811fa7d442ade22f1aee369a217b96ef8e3552da0357bd8254f538e91"
+    "gameTreeSha256": "46b932cf6050d4976e4a5b9504707ab7e2ccca0a4999045f123fabea72ae4037"
   },
   "errors": [],
   "external": [],
@@ -18,8 +18,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 167063,
-      "sha256": "22a9d5e03962a995d8e8d5280b2ffedb7eac89e0a426395514fe8ac4a751319c",
+      "bytes": 168890,
+      "sha256": "d15d81f8ccfda9e28732ce29a637b09a257d46a1ba84e37ef89ab842ae1a00c8",
       "state": {
         "player": {
           "x": 426,
@@ -144,13 +144,13 @@
           "strand"
         ],
         "camera": {
-          "heading": 0.5,
+          "heading": 0.47,
           "preset": 1,
           "type": "PerspectiveCamera",
           "position": [
-            417.53462338137507,
-            4.281119981233126,
-            75.8110634086792
+            418.5466993685944,
+            4.754266651027605,
+            74.98813209630742
           ]
         },
         "renderer": {
@@ -160,10 +160,10 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 113,
-          "triangles": 31788,
-          "geometries": 83,
-          "textures": 8,
+          "calls": 115,
+          "triangles": 31914,
+          "geometries": 84,
+          "textures": 9,
           "batches": 111,
           "instances": 2766
         },
@@ -179,7 +179,7 @@
           "settled": true,
           "builds": 19,
           "unloads": 1,
-          "cumulativeBuildMs": 91.1
+          "cumulativeBuildMs": 90.3
         },
         "population": {
           "cars": 14,
@@ -437,8 +437,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 137114,
-      "sha256": "d3cfea56c3f4dbd2c2d24476132370cb6ec2cb01bf9af21503b17bb0f042542d",
+      "bytes": 139831,
+      "sha256": "a1d49de47286952b29df7ca267287d9ee2b2f1aaf7cb724eb23de46b4b7c33ba",
       "state": {
         "player": {
           "x": 95.5,
@@ -548,13 +548,13 @@
           "market"
         ],
         "camera": {
-          "heading": -0.3,
+          "heading": -0.34,
           "preset": 0,
           "type": "PerspectiveCamera",
           "position": [
-            97.2435692193019,
+            97.5842943258801,
             2.8,
-            34.636485285841076
+            34.89221665955216
           ]
         },
         "renderer": {
@@ -564,8 +564,8 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 170,
-          "triangles": 39542,
+          "calls": 168,
+          "triangles": 40226,
           "geometries": 102,
           "textures": 12,
           "batches": 111,
@@ -583,7 +583,7 @@
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 96.7
+          "cumulativeBuildMs": 91
         },
         "population": {
           "cars": 14,
@@ -788,8 +788,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 137327,
-      "sha256": "bf03218c3e379f00ceaa20ed641959aca942a71bb6f8db90559fb583d7db81cb",
+      "bytes": 147421,
+      "sha256": "1c6274cdd82b8b10147ee5fff9793f5e0889f237f3e2316d8c258c6467685201",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -900,13 +900,13 @@
           "strand"
         ],
         "camera": {
-          "heading": 1.2707963267948965,
+          "heading": 1.3007963267948965,
           "preset": 0,
           "type": "PerspectiveCamera",
           "position": [
-            431.3060910668828,
-            2.1451199812331256,
-            -236.1708461293369
+            431.5823119980287,
+            2.1931199812331257,
+            -236.65056439730515
           ]
         },
         "renderer": {
@@ -935,7 +935,7 @@
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 87.3
+          "cumulativeBuildMs": 89.5
         },
         "population": {
           "cars": 14,

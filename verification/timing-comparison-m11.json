@@ -1,0 +1,207 @@
+{
+  "method": "Separate Chromium/SwiftShader sessions, same 1280×720 viewport and 576×324 WebGL buffer. M10 alternations served a byte-identical 388460f game tree over a second loopback port. No browser tests ran concurrently.",
+  "runs": [
+    {
+      "run": "m10-recheck",
+      "commit": "388460f",
+      "market": {
+        "samples": 187,
+        "medianMs": 33.5,
+        "p95Ms": 83.3,
+        "meanMs": 43.05,
+        "drawCalls": 117,
+        "triangles": 24496
+      },
+      "drive": {
+        "samples": 202,
+        "medianMs": 33.4,
+        "p95Ms": 83.3,
+        "meanMs": 39.93,
+        "drawCalls": 57,
+        "triangles": 13616
+      }
+    },
+    {
+      "run": "final-initial",
+      "commit": "152fd4a",
+      "market": {
+        "samples": 178,
+        "medianMs": 50,
+        "p95Ms": 83.3,
+        "meanMs": 45.22,
+        "drawCalls": 116,
+        "triangles": 25024
+      },
+      "drive": {
+        "samples": 200,
+        "medianMs": 33.4,
+        "p95Ms": 66.7,
+        "meanMs": 40.25,
+        "drawCalls": 57,
+        "triangles": 13616
+      }
+    },
+    {
+      "run": "m10-a",
+      "commit": "388460f",
+      "market": {
+        "samples": 184,
+        "medianMs": 49.9,
+        "p95Ms": 66.7,
+        "meanMs": 43.75,
+        "drawCalls": 117,
+        "triangles": 24496
+      },
+      "drive": {
+        "samples": 197,
+        "medianMs": 33.4,
+        "p95Ms": 83.3,
+        "meanMs": 40.69,
+        "drawCalls": 57,
+        "triangles": 13616
+      }
+    },
+    {
+      "run": "final-b",
+      "commit": "152fd4a",
+      "market": {
+        "samples": 178,
+        "medianMs": 49.9,
+        "p95Ms": 83.4,
+        "meanMs": 45.22,
+        "drawCalls": 116,
+        "triangles": 25024
+      },
+      "drive": {
+        "samples": 187,
+        "medianMs": 33.3,
+        "p95Ms": 100,
+        "meanMs": 42.96,
+        "drawCalls": 48,
+        "triangles": 7484
+      }
+    },
+    {
+      "run": "m10-c",
+      "commit": "388460f",
+      "market": {
+        "samples": 181,
+        "medianMs": 49.9,
+        "p95Ms": 83.3,
+        "meanMs": 44.47,
+        "drawCalls": 117,
+        "triangles": 24496
+      },
+      "drive": {
+        "samples": 184,
+        "medianMs": 33.4,
+        "p95Ms": 83.4,
+        "meanMs": 43.57,
+        "drawCalls": 57,
+        "triangles": 13616
+      }
+    },
+    {
+      "run": "final-d",
+      "commit": "152fd4a",
+      "market": {
+        "samples": 188,
+        "medianMs": 49.9,
+        "p95Ms": 66.6,
+        "meanMs": 42.91,
+        "drawCalls": 116,
+        "triangles": 25024
+      },
+      "drive": {
+        "samples": 189,
+        "medianMs": 33.4,
+        "p95Ms": 66.7,
+        "meanMs": 42.59,
+        "drawCalls": 57,
+        "triangles": 13616
+      }
+    },
+    {
+      "run": "optimized-e",
+      "commit": "fff71eb",
+      "market": {
+        "samples": 203,
+        "medianMs": 33.4,
+        "p95Ms": 66.7,
+        "meanMs": 39.65,
+        "drawCalls": 116,
+        "triangles": 25024
+      },
+      "drive": {
+        "samples": 180,
+        "medianMs": 33.4,
+        "p95Ms": 99.9,
+        "meanMs": 45,
+        "drawCalls": 44,
+        "triangles": 4574
+      }
+    },
+    {
+      "run": "optimized-f",
+      "commit": "fff71eb",
+      "market": {
+        "samples": 186,
+        "medianMs": 33.4,
+        "p95Ms": 83.3,
+        "meanMs": 43.37,
+        "drawCalls": 116,
+        "triangles": 25024
+      },
+      "drive": {
+        "samples": 200,
+        "medianMs": 33.3,
+        "p95Ms": 83.3,
+        "meanMs": 40.25,
+        "drawCalls": 56,
+        "triangles": 13166
+      }
+    }
+  ],
+  "preChangeMarketMainThreadProfile": [
+    {
+      "function": "(idle)",
+      "file": "",
+      "percent": 93.37
+    },
+    {
+      "function": "(program)",
+      "file": "",
+      "percent": 2.96
+    },
+    {
+      "function": "requestAnimationFrame",
+      "file": "",
+      "percent": 0.4
+    },
+    {
+      "function": "bindBuffer",
+      "file": "",
+      "percent": 0.25
+    },
+    {
+      "function": "Xt",
+      "file": "three.module.min.js",
+      "percent": 0.16
+    },
+    {
+      "function": "bufferSubData",
+      "file": "",
+      "percent": 0.16
+    },
+    {
+      "function": "(garbage collector)",
+      "file": "",
+      "percent": 0.15
+    },
+    {
+      "function": "(anonymous)",
+      "file": "three.module.min.js",
+      "percent": 0.13
+    }
+  ]
+}
