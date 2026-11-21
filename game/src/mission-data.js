@@ -1,0 +1,3 @@
+import {MISSIONS} from './config.js';
+export const STORY_MISSIONS=MISSIONS.map((row,i)=>({id:i,title:row[0],contact:['Ilex Renn','Daro Venn','Sava Pell','Ilex Renn','Daro Venn','Undertow Relay'][i],stages:row.slice(1),payout:[700,1100,1400,1800,2200,3000][i],rp:[100,150,200,250,300,400][i]}));
+export const MISSION_DIALOGUE=[['Ilex Renn','Keep the Nacre clean. The patrol knows that plate.'],['Daro Venn','Case is inside the yard. Two guards between you and the ledger.'],['Sava Pell','Courier is cutting through the central grid. Box it in.'],['Ilex Renn','The Strand is clear. Three stars means the Kite is overhead.'],['Daro Venn','Hold the mast uplink. We need one clean transmission.'],['Undertow Relay','One bridge, two relay stops. Then the whole coast hears it.']];

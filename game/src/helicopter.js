@@ -1,0 +1,2 @@
+export function updatePoliceHelicopter(world,dt){if(world.wanted<3){world.heli.active=false;return}world.heli.active=true;world.heli.t+=dt;world.heli.x=world.player.x+Math.cos(world.heli.t*.35)*120;world.heli.z=world.player.z+Math.sin(world.heli.t*.35)*100;world.heli.y=90+Math.sin(world.heli.t)*8}
+export function aimSearchlightAtLastSeen(world){return world.heli.active?{x:world.player.x,z:world.player.z}:null}

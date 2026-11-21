@@ -1,0 +1,4 @@
+import {moveBodyWithCollisions} from './collision.js';
+export function updateOnFootPlayer(player,axis,dt,world){const speed=player.sprinting?8.5:5.1;moveBodyWithCollisions(player,axis.x*speed*dt,axis.z*speed*dt,world);player.walk=Math.min(1,player.walk+dt*(axis.x||axis.z?8:2));return player}
+export function enterOrStealVehicle(player,world){const near=world.vehicles.find(c=>!c.police&&Math.hypot(c.x-player.x,c.z-player.z)<18);if(!near)return false;player.inVehicle=near.id;near.parked=false;world.wanted=Math.max(world.wanted,1);world.toast='VEHICLE STOLEN  + heat';return true}
+export function exitVehicleSafely(player,world){const car=world.vehicles.find(c=>c.id===player.inVehicle);if(!car)return false;player.x=car.x+Math.cos(car.angle)*10;player.z=car.z+Math.sin(car.angle)*10;player.inVehicle=null;car.speed=0;return true}

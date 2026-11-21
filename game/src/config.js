@@ -1,61 +1,8 @@
-// Every tuning number and colour in one place. The playfield is a fixed 1280x720 logical area;
-// the renderer scales it to the window, so no rule below depends on the screen size.
-
-export const FIELD = { width: 1280, height: 720, groundY: 664 };
-
-/** The simulation's fixed step, in seconds: 60 updates a second whatever the display's rate. */
-export const STEP = 1 / 60;
-
-export const PLAYER = {
-  width: 72,
-  height: 24,
-  speed: 560,
-  invulnerable: 1.5,
-};
-
-export const LIVES = 3;
-
-export const BLOCK = {
-  minWidth: 40,
-  maxWidth: 110,
-  height: 36,
-  speed: 240,
-  speedPerLevel: 30,
-  speedJitter: 90,
-  interval: 0.55,
-  intervalScale: 0.88,
-  minInterval: 0.14,
-  dodgePoints: 1,
-};
-
-export const COIN = {
-  size: 24,
-  speed: 190,
-  speedPerLevel: 14,
-  interval: 1.4,
-  intervalJitter: 0.8,
-  points: 10,
-};
-
-/** Seconds of play per level, and the last level: speeds and spawn rates stop growing there. */
-export const LEVEL = { seconds: 12, max: 12 };
-
-/** How many falling things can exist at once; the pool is allocated once, at boot. */
-export const POOL_SIZE = 64;
-
-export const PALETTE = {
-  backdrop: '#11141b',
-  sky: '#1b1f2a',
-  ground: '#2a3040',
-  player: '#4fc3f7',
-  block: '#e5534b',
-  coin: '#f2c94c',
-  panel: '#252b38',
-  text: '#eef1f5',
-  muted: '#8b93a3',
-};
-
-export const FONT = 'system-ui, -apple-system, "Segoe UI", sans-serif';
-
-/** Where the best score is kept between visits (this browser only). */
-export const BEST_KEY = 'block-dodger.best';
+export const STEP=1/60;
+export const VIEW={w:1280,h:720};
+export const WORLD={minX:-600,maxX:600,minZ:-500,maxZ:500,oceanX:440};
+export const PALETTE={skyTop:'#f39f73',skyBottom:'#f8d79b',sea:'#1a8794',seaDeep:'#10566c',sand:'#e4bd82',road:'#273b46',roadEdge:'#6e8b87',sidewalk:'#b9aa8b',building:['#e4d6bd','#d8b29a','#c5d2c7','#d6c488','#b8c4cb'],roof:'#6f5b58',window:'#74c6c9',trim:'#f4a35f',neon:'#64e6e2',police:'#d8f6fa',policeRed:'#ff6879',policeBlue:'#5bd5e7',text:'#f6fbff'};
+export const VEHICLE_TUNING={sports:{name:'Driftline GT',max:155,accel:27,grip:7,color:'#cf536e',durability:100},saloon:{name:'Morrow Four',max:125,accel:21,grip:8,color:'#4b88a5',durability:120},compact:{name:'Nacre Sprint',max:115,accel:23,grip:9,color:'#e4bd5e',durability:90},van:{name:'Rivet Panel',max:95,accel:15,grip:6,color:'#b9c3b9',durability:160},pickup:{name:'Cask Utility',max:105,accel:18,grip:7,color:'#b76d4e',durability:150}};
+export const DISTRICTS=[['Saffron Strand',-100,-360,360,-80],['Kiln Market',-360,-100,0,120],['Relay Quay',-300,140,120,500],['Cinderbank',-600,100,-300,500],['Switchback Heights',-600,-500,-80,-300],['Glasshook',400,-340,600,-120]];
+export const MISSIONS=[['Borrowed Voltage','Meet Ilex at Kiln Market','Steal the marked Nacre Sprint','Lose the patrol','Deliver it to Cinderbank'],['The Quiet Ledger','Reach the quay warehouse','Recover the ledger case','Load the Rivet Panel','Deliver with heat cleared'],['Split Invoice','Intercept the courier','Disable its car','Recover the fragment','Reach the changing drop'],['Seawall Dividend','Collect the Driftline GT','Cross the coast route','Break sight from RCP','Deliver at the service ramp'],['Dead Channel','Reach the relay mast','Hold upload zone','Retrieve the uplink car','Lose four stars at the bridge'],['Glass Current','Collect the broadcast key','Cross the floodgate bridge','Transfer at two relay nodes','Escape to Cinderbank']];
+export const RANKS=[['RUNNER',0],['WHEELHAND',150],['LINK',400],['FIXER',800],['CURRENT',1400]];

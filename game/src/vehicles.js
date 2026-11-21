@@ -1,0 +1,4 @@
+import {VEHICLE_TUNING} from './config.js';
+export function createVehicle(type,x,z,opts={}){const t=VEHICLE_TUNING[type]||VEHICLE_TUNING.saloon;return{id:opts.id||`car-${Math.random().toString(36).slice(2,7)}`,type,x,z,angle:opts.angle||0,speed:opts.speed||0,condition:t.durability,maxCondition:t.durability,color:opts.color||t.color,police:!!opts.police,parked:!!opts.parked,owned:!!opts.owned}}
+export function stepArcadeDriving(car,axis,dt){const t=VEHICLE_TUNING[car.type]||VEHICLE_TUNING.saloon;car.speed+=-axis.z*t.accel*dt;car.speed*=Math.pow(.985,dt*60);car.speed=Math.max(-t.max*.32,Math.min(t.max,car.speed));car.angle+=axis.x*(.7+Math.abs(car.speed)/t.max)*dt*(car.speed>=0?1:-1);car.x+=Math.sin(car.angle)*car.speed*dt*.38;car.z+=-Math.cos(car.angle)*car.speed*dt*.38;return car}
+export function applyVehicleDamage(car,amount){car.condition=Math.max(0,car.condition-amount);return car.condition===0}
