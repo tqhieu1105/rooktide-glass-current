@@ -55,10 +55,12 @@ const screenshots = images.map(name => {
   return { name, ...size, bytes: bytes.length, sha256: sha256(bytes) };
 });
 const gameFiles = runs[1].files.filter(file => file.path.startsWith('game/'));
+const gameBytes = gameFiles.reduce((n, file) => n + file.bytes, 0);
+assert.ok(gameFiles.length <= caps.game_max_files && gameBytes <= caps.game_max_bytes, 'Game stays under both packaging caps');
 const report = { deterministic: true, runs: runs.map(({ files, ...run }) => run),
   outputTreeSha256: sha256(JSON.stringify(runs[1].files)), dossierSha256: sha256(dossierBytes),
   dossierSchema: dossier.schema, kitLibrarySha256: kitHash, thirdPartyThreeSha256: engineHash,
-  gameFiles: gameFiles.length, gameBytes: gameFiles.reduce((n, file) => n + file.bytes, 0), screenshots,
+  gameFiles: gameFiles.length, gameBytes, screenshots,
   files: runs[1].files };
 mkdirSync('verification', { recursive: true });
 writeFileSync('verification/package.json', JSON.stringify(report, null, 2) + '\n');

@@ -1,35 +1,38 @@
 import * as THREE from '../vendor/three.module.min.js';
+import { createCityAtlas } from './atlas.js';
 import { ART_DIRECTION as A } from './art-direction.js';
 import { createGeometryBuilder } from './geometry.js';
 import { createDistrictBuildings } from './buildings.js';
 import { createBeachAndHarbour } from './coast.js';
 
+const SUN = new THREE.Vector3(67, 38, -73);
+
 export function createCityRenderer(canvas, world) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.25;
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMappingExposure = 1.13;
+  renderer.shadowMap.type = THREE.BasicShadowMap;
+  renderer.shadowMap.autoUpdate = false;
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(A.fog, 210, 950);
-  const camera = new THREE.PerspectiveCamera(60, 16 / 9, 0.15, 3600);
-  scene.add(new THREE.HemisphereLight(A.fill, A.groundFill, 2.3));
-  const sun = new THREE.DirectionalLight(A.sun, 3.2);
+  scene.fog = new THREE.Fog(A.fog, 110, 340);
+  const camera = new THREE.PerspectiveCamera(60, 16 / 9, 0.15, 1100);
+  scene.add(new THREE.HemisphereLight(A.fill, A.groundFill, 2.0));
+  const sun = new THREE.DirectionalLight(A.sun, 2.5);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024);
-  Object.assign(sun.shadow.camera, { left: -48, right: 48, top: 48, bottom: -48, near: 1, far: 220 });
-  sun.shadow.normalBias = 0.04; sun.shadow.bias = -0.0004;
+  sun.position.copy(SUN);
+  sun.shadow.mapSize.set(512, 512);
+  Object.assign(sun.shadow.camera, { left: -51, right: 51, top: 51, bottom: -51, near: 1, far: 219 });
+  sun.shadow.normalBias = 0.075; sun.shadow.bias = -0.0005;
   scene.add(sun, sun.target);
+  const atlas = createCityAtlas(world.seed);
   const sky = createSky(); scene.add(sky);
-  const sunDisk = new THREE.Mesh(new THREE.SphereGeometry(56, 20, 12), new THREE.MeshBasicMaterial({ color: 0xffe1a1, fog: false }));
-  sunDisk.position.set(1450, 490, -1900); scene.add(sunDisk);
-  const sea = createSea(); scene.add(sea);
-  const builder = createGeometryBuilder(scene);
+  const sea = createSea(atlas); scene.add(sea);
+  const builder = createGeometryBuilder(scene, atlas);
   createBeachAndHarbour(world, builder);
   createDistrictBuildings(world, builder);
   const { updateDrawDistance, ...staticStats } = builder.finish();
-  let scale = 1;
+  let scale = 1, shadowX = Infinity, shadowZ = Infinity;
   const gl = renderer.getContext();
   const extension = gl.getExtension('WEBGL_debug_renderer_info');
   const rendererName = extension ? gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
@@ -37,26 +40,36 @@ export function createCityRenderer(canvas, world) {
   let quality = /swiftshader|llvmpipe|software/i.test(rendererName) ? 'low' : 'high';
   function resize() {
     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.25));
-    renderer.setSize(Math.round(innerWidth * scale), Math.round(innerHeight * scale), false);
+    const ratio = Math.min(scale, 1280 * scale / innerWidth, 720 * scale / innerHeight);
+    renderer.setSize(Math.max(1, Math.round(innerWidth * ratio)), Math.max(1, Math.round(innerHeight * ratio)), false);
   }
   window.addEventListener('resize', resize); resize();
   let contextLost = false;
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); contextLost = true; });
   function renderWorldFrame(target) {
     if (contextLost) throw new Error('WebGL context lost. Reload to restore the 3D renderer.');
-    sun.target.position.set(target.x, 0, target.z);
-    sun.position.set(target.x - 65, 95, target.z + 45);
+    if (renderer.shadowMap.enabled) {
+      const x = Math.round(target.x / 16) * 16, z = Math.round(target.z / 16) * 16;
+      if (x !== shadowX || z !== shadowZ || renderer.shadowMap.needsUpdate) {
+        shadowX = x; shadowZ = z;
+        sun.target.position.set(x, 0, z);
+        sun.position.copy(SUN).add(sun.target.position);
+        renderer.shadowMap.needsUpdate = true;
+      }
+    }
     sea.material.uniforms.time.value = world.clock;
-    sky.position.set(camera.position.x, 0, camera.position.z);
-    updateDrawDistance(camera, quality === 'low' ? 450 : Infinity);
+    sky.position.set(camera.position.x, camera.position.y, camera.position.z);
+    updateDrawDistance(camera, quality === 'low' ? 245 : 420);
     renderer.render(scene, camera);
   }
   function setRenderQuality(value) {
     quality = value;
-    scale = value === 'low' ? 0.75 : 1;
-    scene.fog.far = value === 'low' ? 420 : 950;
-    renderer.shadowMap.enabled = value !== 'low'; resize();
+    scale = value === 'low' ? 0.45 : 0.875;
+    scene.fog.near = value === 'low' ? 90 : 150;
+    scene.fog.far = value === 'low' ? 245 : 420;
+    renderer.shadowMap.enabled = value !== 'low';
+    renderer.shadowMap.needsUpdate = renderer.shadowMap.enabled;
+    resize();
   }
   setRenderQuality(quality);
   return { scene, camera, renderer, renderWorldFrame, setRenderQuality,
@@ -67,27 +80,34 @@ export function createCityRenderer(canvas, world) {
 }
 
 function createSky() {
-  return new THREE.Mesh(new THREE.SphereGeometry(3000, 20, 12), new THREE.ShaderMaterial({
+  return new THREE.Mesh(new THREE.SphereGeometry(950, 16, 10), new THREE.ShaderMaterial({
     side: THREE.BackSide, depthWrite: false,
-    uniforms: { top: { value: new THREE.Color(A.skyTop) }, horizon: { value: new THREE.Color(A.skyHorizon) } },
+    uniforms: { top: { value: new THREE.Color(A.skyTop) }, horizon: { value: new THREE.Color(A.skyHorizon) },
+      sun: { value: SUN.clone().normalize() } },
     vertexShader: 'varying vec3 vDirection; void main(){vDirection=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-    fragmentShader: `varying vec3 vDirection; uniform vec3 top; uniform vec3 horizon;
-      void main(){float h=max(normalize(vDirection).y,0.);gl_FragColor=vec4(mix(horizon,top,pow(h,.55)),1.);
+    fragmentShader: `varying vec3 vDirection; uniform vec3 top; uniform vec3 horizon; uniform vec3 sun;
+      void main(){vec3 dir=normalize(vDirection); float h=smoothstep(-.035,.48,dir.y);
+      float angle=dot(dir,sun); float glow=smoothstep(.94,.999,angle);
+      float disc=smoothstep(.9991,.9995,angle);
+      gl_FragColor=vec4(mix(horizon,top,h)+vec3(1.,.49,.17)*glow*.65+vec3(3.,2.,1.2)*disc,1.);
       #include <tonemapping_fragment>
       #include <colorspace_fragment>
       }`,
   }));
 }
-function createSea() {
-  const geometry = new THREE.PlaneGeometry(7000, 7000);
+function createSea(atlas) {
+  const geometry = new THREE.PlaneGeometry(2600, 2600);
   geometry.rotateX(-Math.PI / 2);
   const material = new THREE.ShaderMaterial({
-    uniforms: { time: { value: 0 }, color: { value: new THREE.Color(A.sea) }, haze: { value: new THREE.Color(A.fog) } },
+    uniforms: { time: { value: 0 }, color: { value: new THREE.Color(A.sea) }, haze: { value: new THREE.Color(A.fog) },
+      deep: { value: new THREE.Color(A.seaDeep) }, atlas: { value: atlas } },
     vertexShader: 'varying vec3 vWorld; varying float vDepth; void main(){vec4 p=modelMatrix*vec4(position,1.);vWorld=p.xyz;vec4 mv=viewMatrix*p;vDepth=-mv.z;gl_Position=projectionMatrix*mv;}',
-    fragmentShader: `uniform float time; uniform vec3 color; uniform vec3 haze; varying vec3 vWorld; varying float vDepth;
-      void main(){float a=sin(vWorld.z*.72+sin(vWorld.x*.09+time*.3)*1.8+time*.5);float b=sin(vWorld.x*.18-vWorld.z*.38+time*.7);
-      float ripple=smoothstep(.90,1.,a*b)*.12;vec3 c=color+vec3(ripple*.7,ripple,ripple*.9);
-      c=mix(c,haze,smoothstep(200.,2200.,vDepth)*.72);gl_FragColor=vec4(c,1.);
+    fragmentShader: `uniform float time; uniform vec3 color; uniform vec3 deep; uniform vec3 haze; uniform sampler2D atlas;
+      varying vec3 vWorld; varying float vDepth;
+      void main(){vec2 wave=vWorld.xz*vec2(.031,.090)+vec2(.021,.012)*time;
+      float sparkle=textureGrad(atlas, vec2(.2666,.5166)+fract(wave)*.217,dFdx(wave)*.217,dFdy(wave)*.217).g;
+      vec3 sea=mix(color,deep,smoothstep(480.,760.,vWorld.x)) + vec3(.20,.26,.20)*sparkle;
+      gl_FragColor=vec4(mix(sea,haze,smoothstep(140.,920.,vDepth)*.67),1.);
       #include <tonemapping_fragment>
       #include <colorspace_fragment>
       }`,

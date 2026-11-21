@@ -8,7 +8,7 @@ export function createRooktideCity(seed = 20261121) {
   const roads = buildRoadGraph();
   const buildings = [], colliders = [], palms = [], lamps = [], signs = [];
   const world = { seed, roads, buildings, colliders, palms, lamps, signs, clock: 0, tick: 0,
-    district: DISTRICTS[1], visited: new Set(), message: '', messageTime: 0 };
+    district: DISTRICTS[1], visited: new Set(), message: '', messageTime: 0, staticImpacts: 0 };
   for (let a = 0; a < AVENUES.length - 1; a++) for (let s = 0; s < STREETS.length - 1; s++) {
     const centerX = (AVENUES[a] + AVENUES[a + 1]) / 2;
     const centerZ = (STREETS[s] + STREETS[s + 1]) / 2;

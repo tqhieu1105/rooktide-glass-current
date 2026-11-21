@@ -1,0 +1,26 @@
+{
+  "low": {
+    "seconds": 120,
+    "cars": 14,
+    "parked": 4,
+    "walkers": 24,
+    "crossings": 64,
+    "firstTraffic": 0.43333333333333335
+  },
+  "high": {
+    "seconds": 120,
+    "cars": 26,
+    "parked": 8,
+    "walkers": 48,
+    "crossings": 117,
+    "firstTraffic": 0
+  },
+  "live": {
+    "stationarySeconds": 120.044,
+    "crossings": 64,
+    "carStolen": "civilian-1",
+    "firstCarStillPresent": "driftline-01",
+    "witnessed": false,
+    "errors": []
+  }
+}

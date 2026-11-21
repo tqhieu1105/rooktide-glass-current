@@ -8,6 +8,8 @@ import { createInput } from './input.js';
 import { createMinimap } from './minimap.js';
 import { createStreetHUD } from './hud.js';
 import { stagePlayableScreenshot, signalShotReady } from './shots.js';
+import { createPopulation } from './population.js';
+import { createPopulationModels } from './population-models.js';
 import { STEP } from './config.js';
 
 export function bootOpenWorldCrimeGame() {
@@ -17,7 +19,11 @@ export function bootOpenWorldCrimeGame() {
   const world = createRooktideCity(seed);
   const view = createCityRenderer(canvas, world);
   const player = createOnFootPlayer();
-  const car = createVehicle();
+  const firstCar = createVehicle();
+  let car = firstCar;
+  const population = createPopulation(world, firstCar);
+  world.population = population;
+  const paintPopulation = createPopulationModels(view.scene, population);
   const visuals = { player: createPlayerModel(), car: createVehicleModel() };
   view.scene.add(visuals.player.root, visuals.car.root);
   const rig = createThirdPersonCamera(view.camera);
@@ -27,26 +33,31 @@ export function bootOpenWorldCrimeGame() {
   const blank = { forward: 0, right: 0, sprint: false, handbrake: false, interact: false, camera: false,
     pause: false, recover: false, map: false, orbitX: 0, orbitY: 0, zoom: 0 };
   let paused = false, expanded = false, lowQuality = view.diagnostics().quality === 'low';
+  population.setQuality(lowQuality ? 'low' : 'high');
   document.getElementById('quality-button').textContent = lowQuality ? 'QUALITY: LOW' : 'QUALITY: HIGH';
   let last = performance.now(), accumulator = 0, frames = 0;
-  const frameTimes = [];
-  const game = { player, car, world, rig, frozen: false, advanceFixedStep, renderFrame };
+  const frameTimes = new Float64Array(3600);
+  let frameSample = 0, frameSamples = 0;
+  const game = { player, car, world, rig, population, frozen: false, advanceFixedStep, renderFrame };
 
   function advanceFixedStep(actions) {
     stepArcadeDriving(car, actions, world, STEP, player.inVehicle);
     updateOnFootPlayer(player, actions, rig.heading, world, car, STEP);
     world.clock += STEP; world.tick++;
+    population.step(player, car, rig, STEP);
     world.messageTime = Math.max(0, world.messageTime - STEP);
     const next = getDistrictAt(player.x, player.z);
     if (next.id !== world.district.id) { world.district = next; showWorldMessage(world, next.name.toUpperCase() + ' / ' + next.subtitle, 4); }
-    world.visited.add(next.id);
+    if (!world.visited.has(next.id)) world.visited.add(next.id);
   }
 
   function renderFrame(alpha, dt, actions = blank) {
     updateActorModels(player, car, visuals, alpha);
     updateChaseCamera(rig, player, car, actions, world, dt);
+    rig.camera.updateMatrixWorld();
+    paintPopulation(rig.camera, car, alpha, lowQuality);
     view.renderWorldFrame(player.inVehicle ? car : player);
-    hud.updateStreetHUD(player, car, rig, Math.max(dt, 0.1), paused, expanded);
+    hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player));
   }
 
   function setPaused(value) {
@@ -58,6 +69,7 @@ export function bootOpenWorldCrimeGame() {
   document.getElementById('resume-button').addEventListener('click', () => setPaused(false));
   document.getElementById('quality-button').addEventListener('click', e => {
     lowQuality = !lowQuality; view.setRenderQuality(lowQuality ? 'low' : 'high');
+    population.setQuality(lowQuality ? 'low' : 'high');
     e.currentTarget.textContent = lowQuality ? 'QUALITY: LOW' : 'QUALITY: HIGH';
   });
   document.addEventListener('visibilitychange', () => { if (document.hidden && !game.frozen) setPaused(true); });
@@ -67,7 +79,9 @@ export function bootOpenWorldCrimeGame() {
       const frameMs = Math.max(0, now - last); last = now;
       const elapsed = Math.min(0.1, frameMs / 1000);
       if (frames > 20 && !paused && !game.frozen) {
-        frameTimes.push(frameMs); if (frameTimes.length > 3600) frameTimes.shift();
+        frameTimes[frameSample] = frameMs;
+        frameSample = (frameSample + 1) % frameTimes.length;
+        frameSamples = Math.min(frameSamples + 1, frameTimes.length);
       }
       const actions = input.readPlayerActions();
       if (actions.pause) setPaused(!paused);
@@ -77,7 +91,11 @@ export function bootOpenWorldCrimeGame() {
       if (!paused && !game.frozen) {
         if (actions.interact) {
           if (player.inVehicle) exitVehicleSafely(player, car, world);
-          else enterOrStealVehicle(player, car, world);
+          else {
+            const target = population.findEnterable(player);
+            if (target && enterOrStealVehicle(player, target, world)) { car = target; population.claim(car); }
+            else showWorldMessage(world, 'Get close to a parked or stopped car.');
+          }
           rig.orbitHold = 0;
         }
         if (actions.recover) {
@@ -99,21 +117,29 @@ export function bootOpenWorldCrimeGame() {
   }
 
   window.__rooktide = {
-    snapshot: () => ({ player: { ...player }, car: { ...car }, tick: world.tick, district: world.district.name,
-      visited: [...world.visited], paused, frozen: game.frozen, camera: { heading: rig.heading, preset: rig.preset,
-        type: view.camera.type, position: view.camera.position.toArray() }, renderer: view.diagnostics(),
-      world: { buildings: world.buildings.length, palms: world.palms.length, districts: 6, roadNodes: world.roads.nodes.length },
-      performance: { samples: frameTimes.length, medianMs: percentile(frameTimes, 0.5), p95Ms: percentile(frameTimes, 0.95) } }),
+    snapshot: () => {
+      const sorted = frameTimes.slice(0, frameSamples).sort();
+      // Route and turn pointers are internal and form a cyclic graph.
+      const { lane, turn, ...carState } = car;
+      return {
+        player: { ...player }, car: carState, tick: world.tick, district: world.district.name,
+        staticImpacts: world.staticImpacts, paused, frozen: game.frozen, visited: [...world.visited],
+        camera: { heading: rig.heading, preset: rig.preset, type: view.camera.type, position: view.camera.position.toArray() },
+        renderer: view.diagnostics(), population: population.snapshot(),
+        world: { buildings: world.buildings.length, palms: world.palms.length, districts: 6, roadNodes: world.roads.nodes.length },
+        performance: { samples: frameSamples, medianMs: percentile(sorted, 0.5), p95Ms: percentile(sorted, 0.95) },
+      };
+    },
   };
   advanceFixedStep(blank);
   if (query.has('shot')) stagePlayableScreenshot(query.get('shot'), game);
+  else population.seedNear(player);
   requestAnimationFrame(frame);
 }
 
 function percentile(values, part) {
   if (!values.length) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
-  return Math.round(sorted[Math.floor((sorted.length - 1) * part)] * 100) / 100;
+  return Math.round(values[Math.floor((values.length - 1) * part)] * 100) / 100;
 }
 
 function showFatalError(error) {

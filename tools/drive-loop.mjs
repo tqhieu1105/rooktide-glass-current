@@ -38,12 +38,12 @@ try {
   let impact;
   while (performance.now() - impactStart < 30000) {
     impact = await snapshot();
-    if (impact.car.condition < 100) break;
+    if (impact.staticImpacts > 0) break;
     await keys(steer(impact, [125, -34.5], 10).result);
     await delay(100);
   }
   await keys([]);
-  assert.ok(impact.car.condition < 100 && impact.car.x < 145, 'A real keyboard-driven building impact rebounds without tunneling');
+  assert.ok(impact.staticImpacts > 0 && impact.car.condition < 100 && impact.car.x < 145, 'A real keyboard-driven building impact rebounds without tunneling');
   await browser.screenshot('verification/building-impact.jpg', 'jpeg');
   console.log(`Building impact passed: x=${impact.car.x.toFixed(1)}, z=${impact.car.z.toFixed(1)}, condition=${impact.car.condition.toFixed(1)}`);
 

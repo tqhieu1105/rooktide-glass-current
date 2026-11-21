@@ -1,36 +1,58 @@
-import { VEHICLE_TUNING, PLAYER_TUNING } from './config.js';
+import { VEHICLE_TUNING } from './config.js';
+
+const DIRECTIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+const digits = Array.from({ length: 361 }, (_, n) => String(n).padStart(3, '0'));
+const bearings = digits.map((value, n) => `${DIRECTIONS[Math.round(n / 45) % 8]}  /  ${value}°`);
+const exploration = Array.from({ length: 7 }, (_, n) => `0${n} / 06`);
+const conditionWidths = Array.from({ length: 101 }, (_, n) => `${n}%`);
+const objectives = ['Six districts. One continuous city.', 'Your next bad idea has four wheels.', 'Find your own way through the city.'];
+const prompts = Object.fromEntries(Object.entries(VEHICLE_TUNING).map(([key, tuning]) => [key, `<kbd>E</kbd> Take the ${tuning.name}`]));
+const walking = '<kbd>SHIFT</kbd> Sprint <span>·</span> Drag to look';
+const drivingPrompt = '<kbd>E</kbd> Step out <span>·</span> <kbd>SPACE</kbd> Handbrake';
 
 export function createStreetHUD(world, minimap) {
   const $ = id => document.getElementById(id);
   const elements = Object.fromEntries(['district', 'district-subtitle', 'explored', 'objective', 'prompt',
-    'speed', 'speed-unit', 'mode', 'condition', 'condition-row', 'toast', 'compass', 'pause', 'status', 'map-label'].map(id => [id, $(id)]));
-  let timer = 0;
-  function updateStreetHUD(player, car, rig, dt, paused, expanded) {
+    'speed', 'speed-unit', 'mode', 'condition', 'condition-row', 'toast', 'compass', 'status', 'map-label'].map(id => [id, $(id)]));
+  const cache = {};
+  function text(id, value) {
+    if (cache[id] !== value) { cache[id] = value; elements[id].textContent = value; }
+  }
+  let timer = 1, prompt = -1, bodywork = -1;
+  function updateStreetHUD(player, car, rig, dt, expanded, target) {
     timer += dt;
-    if (timer < 0.09) return;
-    timer = 0;
+    const mapChanged = cache.expanded !== expanded;
+    if (timer < 0.08 && !mapChanged) return;
+    timer = 0; cache.expanded = expanded;
     const driving = player.inVehicle;
-    const near = Math.hypot(player.x - car.x, player.z - car.z) < PLAYER_TUNING.enterDistance;
-    elements.district.textContent = world.district.name;
-    elements['district-subtitle'].textContent = world.district.subtitle;
-    elements.explored.textContent = `${String(world.visited.size).padStart(2, '0')} / 06`;
-    elements.objective.textContent = driving ? 'Find your own way through the city.' : near ? 'Your next bad idea has four wheels.' : 'Six districts. One continuous city.';
-    elements.prompt.innerHTML = driving ? '<kbd>E</kbd> Step out <span>·</span> <kbd>SPACE</kbd> Handbrake'
-      : near ? '<kbd>E</kbd> Take the Driftline GT' : '<kbd>SHIFT</kbd> Sprint <span>·</span> Drag to look';
-    elements.speed.textContent = driving ? String(Math.round(car.speed * 3.6)).padStart(3, '0') : 'NERI';
-    elements['speed-unit'].textContent = driving ? 'KM / H' : 'VOSS';
-    elements.mode.textContent = driving ? VEHICLE_TUNING[car.type].name : 'UNDERTOW COURIER';
-    elements.condition.style.width = `${car.condition}%`;
-    elements['condition-row'].hidden = !driving;
-    elements.toast.textContent = world.messageTime > 0 ? world.message : '';
-    elements.toast.classList.toggle('visible', world.messageTime > 0);
-    const degrees = (rig.heading * 180 / Math.PI + 3600) % 360;
-    const direction = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round(degrees / 45) % 8];
-    elements.compass.textContent = `${direction}  /  ${String(Math.round(degrees)).padStart(3, '0')}°`;
-    elements.pause.hidden = !paused;
-    elements['map-label'].textContent = expanded ? 'CITY OVERVIEW · M TO CLOSE' : 'M · CITY OVERVIEW';
+    const near = !!target;
+    const mode = driving ? 2 : near ? 1 : 0;
+    const promptHTML = driving ? drivingPrompt : near ? prompts[target.type] : walking;
+    if (promptHTML !== prompt || cache.district !== world.district.name) {
+      elements.prompt.innerHTML = promptHTML;
+      text('status', `${world.district.name}. ${driving ? 'Driving' : 'On foot'}. ${near ? 'Press E to enter car.' : ''}`);
+      prompt = promptHTML;
+    }
+    text('district', world.district.name);
+    text('district-subtitle', world.district.subtitle);
+    text('explored', exploration[world.visited.size]);
+    text('objective', objectives[mode]);
+    text('speed', driving ? digits[Math.round(car.speed * 3.6)] : 'NERI');
+    text('speed-unit', driving ? 'KM / H' : 'VOSS');
+    text('mode', driving ? VEHICLE_TUNING[car.type].name : 'UNDERTOW COURIER');
+    const condition = Math.round(car.condition);
+    if (driving && condition !== bodywork) {
+      bodywork = condition; elements.condition.style.width = conditionWidths[condition];
+    }
+    if (elements['condition-row'].hidden === driving) elements['condition-row'].hidden = !driving;
+    const toast = world.messageTime > 0 ? world.message : '';
+    if (toast !== cache.toast) {
+      text('toast', toast); elements.toast.classList.toggle('visible', !!toast);
+    }
+    const degrees = Math.round(((rig.heading * 180 / Math.PI) % 360 + 360) % 360) % 360;
+    text('compass', bearings[degrees]);
+    text('map-label', expanded ? 'CITY OVERVIEW · M TO CLOSE' : 'M · CITY OVERVIEW');
     minimap.drawRotatingMinimap(player, car, rig.heading, expanded);
-    elements.status.textContent = `${world.district.name}. ${driving ? 'Driving' : 'On foot'}. ${near && !driving ? 'Press E to enter car.' : ''}`;
   }
   return { updateStreetHUD };
 }

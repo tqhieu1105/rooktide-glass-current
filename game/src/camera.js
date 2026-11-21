@@ -39,11 +39,17 @@ export function avoidCameraOcclusion(from, to, grid) {
   let limit = 1;
   for (const box of grid.query(from.x, from.z, Math.hypot(dx, dz) + 1)) {
     let near = 0, far = 1;
-    for (const [origin, delta, low, high] of [[from.x, dx, box.minX - 0.35, box.maxX + 0.35],
-      [from.z, dz, box.minZ - 0.35, box.maxZ + 0.35], [from.y, dy, 0, box.height + 0.4]]) {
-      if (Math.abs(delta) < 0.00001) { if (origin < low || origin > high) { near = 2; break; } }
-      else { const a = (low - origin) / delta, b = (high - origin) / delta;
-        near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+    for (let axis = 0; axis < 3; axis++) {
+      const origin = axis === 0 ? from.x : axis === 1 ? from.z : from.y;
+      const delta = axis === 0 ? dx : axis === 1 ? dz : dy;
+      const low = axis === 0 ? box.minX - 0.35 : axis === 1 ? box.minZ - 0.35 : 0;
+      const high = axis === 0 ? box.maxX + 0.35 : axis === 1 ? box.maxZ + 0.35 : box.height + 0.4;
+      if (Math.abs(delta) < 0.00001) {
+        if (origin < low || origin > high) { near = 2; break; }
+      } else {
+        const a = (low - origin) / delta, b = (high - origin) / delta;
+        near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
+      }
     }
     if (near <= far && near > 0) limit = Math.min(limit, Math.max(0.12, near - 0.07));
   }

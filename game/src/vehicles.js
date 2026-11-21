@@ -49,6 +49,7 @@ export function stepArcadeDriving(car, actions, world, dt, controlled) {
       car.condition = Math.max(0, car.condition - (impactSpeed - 4) * 1.3);
       car.bounceVelocity = Math.min(2.6, impactSpeed * 0.12);
       car.impactCooldown = 0.7;
+      if (controlled) world.staticImpacts++;
       showWorldMessage(world, impactSpeed > 15 ? 'That was load-bearing. R recovers the car.' : 'A little character in the bodywork.');
     }
   }

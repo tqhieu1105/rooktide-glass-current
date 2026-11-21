@@ -2,23 +2,23 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "112b3679324ad0844765a8197b2275b6d6a0c55a",
+    "baseCommit": "18c97bf189d7f93cde09d94617ab1f0020db5eb1",
     "workingTree": true,
-    "gameTreeSha256": "d569108bc7a22cb4ed11bbc61da2671e441a460fdbf155346a9fe8b6b0a540f9"
+    "gameTreeSha256": "dc3a698fa18e23663eefa70fabba294080fc29c37a2e4bb91723feb507041637"
   },
   "errors": [],
   "external": [],
   "records": [
     {
-      "path": "screenshots/01-cover-chase.jpg",
+      "path": "/tmp/rooktide-m2-preview/01-cover-chase.jpg",
       "url": "http://127.0.0.1:8080/?shot=chase&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 115342,
-      "sha256": "82a92bd93c84b4cdcd50a40f0d83a0fceedeac31785660b328cf1fa0435f0f81",
+      "bytes": 134663,
+      "sha256": "006097f904ca01c1e90dd43ae74656f33bdee603cd26ede7d1a54a41c46f925d",
       "state": {
         "player": {
           "x": 426,
@@ -52,10 +52,12 @@
           "pitch": -0.02599679134509374,
           "bounce": 0,
           "bounceVelocity": 0,
-          "braking": false
+          "braking": false,
+          "active": true
         },
         "tick": 91,
         "district": "Saffron Strand",
+        "staticImpacts": 0,
         "visited": [
           "market",
           "strand"
@@ -77,14 +79,176 @@
           "context": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
           "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
           "quality": "high",
-          "width": 1280,
-          "height": 720,
-          "calls": 73,
-          "triangles": 34816,
-          "geometries": 15,
-          "textures": 1,
-          "batches": 165,
-          "instances": 11385
+          "width": 1120,
+          "height": 630,
+          "calls": 87,
+          "triangles": 17198,
+          "geometries": 29,
+          "textures": 2,
+          "batches": 310,
+          "instances": 7736
+        },
+        "population": {
+          "cars": 14,
+          "walkers": 24,
+          "parked": 4,
+          "crossings": 0,
+          "stumbles": 0,
+          "impacts": 0,
+          "thefts": 0,
+          "lastWitness": false,
+          "vehicles": [
+            {
+              "id": "driftline-01",
+              "type": "sports",
+              "x": 426,
+              "z": 60.31529544861458,
+              "speed": 17.805130611137752,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-1",
+              "type": "compact",
+              "x": 408.79999999999995,
+              "z": 27.19083412908018,
+              "speed": 0,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-2",
+              "type": "saloon",
+              "x": 243,
+              "z": -31.284750169627372,
+              "speed": 0,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-3",
+              "type": "van",
+              "x": 214.8826074634865,
+              "z": -9,
+              "speed": 0,
+              "heading": -1.5707963267948966,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-4",
+              "type": "pickup",
+              "x": 243,
+              "z": -75.68065712593496,
+              "speed": 0,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-9",
+              "type": "compact",
+              "x": 212.66244255527073,
+              "z": 125.6,
+              "speed": 11.858368334238754,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-10",
+              "type": "saloon",
+              "x": 414.4,
+              "z": 54.86647635696901,
+              "speed": 8.340528028384757,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-11",
+              "type": "van",
+              "x": 218.6578165864209,
+              "z": 5.6,
+              "speed": 9.874430705155845,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-12",
+              "type": "pickup",
+              "x": 246.4,
+              "z": -34.884354155796174,
+              "speed": 11.633986102298245,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-13",
+              "type": "compact",
+              "x": 257.6,
+              "z": 64.73207120851369,
+              "speed": 12.278274201050959,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-14",
+              "type": "saloon",
+              "x": 359.60567278289193,
+              "z": 5.6,
+              "speed": 9.458452052514993,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-15",
+              "type": "van",
+              "x": 203.80146846769878,
+              "z": 5.6,
+              "speed": 9.643635865590712,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-16",
+              "type": "pickup",
+              "x": 170.23641503129468,
+              "z": 114.4,
+              "speed": 9.633809696426214,
+              "heading": -1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-17",
+              "type": "compact",
+              "x": 246.4,
+              "z": -71.08852047482736,
+              "speed": 12.177114366548714,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-18",
+              "type": "saloon",
+              "x": 189.69900179150693,
+              "z": 114.4,
+              "speed": 10.397257322924125,
+              "heading": -1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            }
+          ]
         },
         "world": {
           "buildings": 172,
@@ -100,15 +264,15 @@
       }
     },
     {
-      "path": "screenshots/02-kiln-streets.jpg",
+      "path": "/tmp/rooktide-m2-preview/02-kiln-streets.jpg",
       "url": "http://127.0.0.1:8080/?shot=market&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 116950,
-      "sha256": "65a689b8f0a26d296d0d5ba637592ba0092fd92c67e79287a776631311ecd2ae",
+      "bytes": 124287,
+      "sha256": "64343593771c65ba4914d95cbba62de7cb12cd5dc184574ff71d1f2699273c35",
       "state": {
         "player": {
           "x": 95.5,
@@ -142,10 +306,12 @@
           "pitch": 0,
           "bounce": 0,
           "bounceVelocity": 0,
-          "braking": false
+          "braking": false,
+          "active": true
         },
         "tick": 91,
         "district": "Kiln Market",
+        "staticImpacts": 0,
         "visited": [
           "market"
         ],
@@ -166,14 +332,176 @@
           "context": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
           "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
           "quality": "high",
-          "width": 1280,
-          "height": 720,
-          "calls": 117,
-          "triangles": 51722,
-          "geometries": 16,
-          "textures": 1,
-          "batches": 165,
-          "instances": 11385
+          "width": 1120,
+          "height": 630,
+          "calls": 134,
+          "triangles": 19508,
+          "geometries": 43,
+          "textures": 2,
+          "batches": 310,
+          "instances": 7736
+        },
+        "population": {
+          "cars": 14,
+          "walkers": 24,
+          "parked": 4,
+          "crossings": 0,
+          "stumbles": 0,
+          "impacts": 0,
+          "thefts": 0,
+          "lastWitness": false,
+          "vehicles": [
+            {
+              "id": "driftline-01",
+              "type": "sports",
+              "x": 91.5,
+              "z": 29,
+              "speed": 0,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-1",
+              "type": "compact",
+              "x": 138.74240180544555,
+              "z": 9,
+              "speed": 0,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-2",
+              "type": "saloon",
+              "x": -93,
+              "z": -70.88412171665578,
+              "speed": 0,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-3",
+              "type": "van",
+              "x": 75,
+              "z": -173.17995720718056,
+              "speed": 0,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-4",
+              "type": "pickup",
+              "x": 243,
+              "z": -62.48307448681444,
+              "speed": 0,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-9",
+              "type": "compact",
+              "x": 78.4,
+              "z": -26.66353866004235,
+              "speed": 11.858368334238754,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-10",
+              "type": "saloon",
+              "x": -114.17365943548758,
+              "z": 5.6,
+              "speed": 8.340528028384757,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-11",
+              "type": "van",
+              "x": -89.6,
+              "z": 90.87387025714017,
+              "speed": 9.874430705155845,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-12",
+              "type": "pickup",
+              "x": -101.45335800661385,
+              "z": 125.6,
+              "speed": 11.633986102298245,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-13",
+              "type": "compact",
+              "x": 78.4,
+              "z": -137.3558286175945,
+              "speed": 12.278274201050959,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-14",
+              "type": "saloon",
+              "x": -78.4,
+              "z": -98.33107560717458,
+              "speed": 9.458452052514993,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-15",
+              "type": "van",
+              "x": -78.4,
+              "z": -44.410435279109876,
+              "speed": 9.643635865590712,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-16",
+              "type": "pickup",
+              "x": 89.6,
+              "z": -198.58055082726906,
+              "speed": 9.633809696426214,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-17",
+              "type": "compact",
+              "x": 206.17267650676666,
+              "z": -114.4,
+              "speed": 12.177114366548714,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-18",
+              "type": "saloon",
+              "x": 20.27648395177735,
+              "z": 125.6,
+              "speed": 10.397257322924125,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            }
+          ]
         },
         "world": {
           "buildings": 172,
@@ -189,15 +517,15 @@
       }
     },
     {
-      "path": "screenshots/03-glasshook-bridge.jpg",
+      "path": "/tmp/rooktide-m2-preview/03-glasshook-bridge.jpg",
       "url": "http://127.0.0.1:8080/?shot=bridge&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 108587,
-      "sha256": "eed4a0d3be45823d1812a747fe780be2642822229ff6648ea4b5648832902080",
+      "bytes": 116942,
+      "sha256": "1994e020b858a25f067795d859c2b338432d80165dd6cad8489db36eab365bef",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -231,10 +559,12 @@
           "pitch": -0.02599679134509374,
           "bounce": 0,
           "bounceVelocity": 0,
-          "braking": false
+          "braking": false,
+          "active": true
         },
         "tick": 91,
         "district": "Saffron Strand",
+        "staticImpacts": 0,
         "visited": [
           "market",
           "strand"
@@ -256,14 +586,176 @@
           "context": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
           "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
           "quality": "high",
-          "width": 1280,
-          "height": 720,
-          "calls": 50,
-          "triangles": 12954,
-          "geometries": 15,
-          "textures": 1,
-          "batches": 165,
-          "instances": 11385
+          "width": 1120,
+          "height": 630,
+          "calls": 51,
+          "triangles": 7664,
+          "geometries": 21,
+          "textures": 2,
+          "batches": 310,
+          "instances": 7736
+        },
+        "population": {
+          "cars": 14,
+          "walkers": 24,
+          "parked": 4,
+          "crossings": 0,
+          "stumbles": 0,
+          "impacts": 0,
+          "thefts": 0,
+          "lastWitness": false,
+          "vehicles": [
+            {
+              "id": "driftline-01",
+              "type": "sports",
+              "x": 443.6847045513853,
+              "z": -240,
+              "speed": 17.805130611137752,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-1",
+              "type": "compact",
+              "x": 431.20000000000005,
+              "z": -309.33848656542597,
+              "speed": 0,
+              "heading": 0,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-2",
+              "type": "saloon",
+              "x": 217.5627824858576,
+              "z": -129,
+              "speed": 0,
+              "heading": -1.5707963267948966,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-3",
+              "type": "van",
+              "x": 213.16283284842967,
+              "z": -249,
+              "speed": 0,
+              "heading": -1.5707963267948966,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-4",
+              "type": "pickup",
+              "x": 243,
+              "z": -324.31313504945484,
+              "speed": 0,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": true
+            },
+            {
+              "id": "civilian-9",
+              "type": "compact",
+              "x": 414.4,
+              "z": -272.1274849781845,
+              "speed": 11.858368334238754,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-10",
+              "type": "saloon",
+              "x": 414.4,
+              "z": -291.9130701425813,
+              "speed": 8.340528028384757,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-11",
+              "type": "van",
+              "x": 195.54325568426498,
+              "z": -234.4,
+              "speed": 9.874430705155845,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-12",
+              "type": "pickup",
+              "x": 246.4,
+              "z": -283.91303737747165,
+              "speed": 11.633986102298245,
+              "heading": 3.141592653589793,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-13",
+              "type": "compact",
+              "x": 425.6,
+              "z": -299.3996234811401,
+              "speed": 12.278274201050959,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-14",
+              "type": "saloon",
+              "x": 491.2736658690587,
+              "z": -236,
+              "speed": 9.458452052514993,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-15",
+              "type": "van",
+              "x": 257.6,
+              "z": -318.51415287202724,
+              "speed": 9.643635865590712,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-16",
+              "type": "pickup",
+              "x": 462.89158715981677,
+              "z": -236,
+              "speed": 9.633809696426214,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-17",
+              "type": "compact",
+              "x": 257.6,
+              "z": -292.3963529636129,
+              "speed": 12.177114366548714,
+              "heading": 0,
+              "claimed": false,
+              "parked": false
+            },
+            {
+              "id": "civilian-18",
+              "type": "saloon",
+              "x": 220.02757331506177,
+              "z": -234.4,
+              "speed": 10.397257322924125,
+              "heading": 1.5707963267948966,
+              "claimed": false,
+              "parked": false
+            }
+          ]
         },
         "world": {
           "buildings": 172,

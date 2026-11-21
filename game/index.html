@@ -11,20 +11,19 @@
 <body>
   <canvas id="game" tabindex="0" aria-label="Rooktide 3D open city. WASD to walk or drive, E to enter or exit the car, mouse drag to look."></canvas>
   <div id="hud">
-    <header class="brand"><i class="gate-mark"></i><div><h1>ROOKTIDE<span>GLASS CURRENT</span></h1></div></header>
-    <section class="explore panel"><div class="eyebrow"><b class="small-dot"></b> FREE ROAM <span>STREET EDITION / 01</span></div><h2>Take the long way.</h2><p id="objective">Your next bad idea has four wheels.</p><div class="explore-footer"><span>DISTRICTS DISCOVERED</span><strong id="explored">01 / 06</strong></div></section>
+    <header class="brand"><i class="gate-mark"></i><div><h1><span class="wordmark" data-title="ROOKTIDE">ROOKTIDE</span><span class="brand-subtitle">GLASS CURRENT</span></h1></div></header>
+    <section class="explore panel"><div class="eyebrow"><b class="small-dot"></b> FREE ROAM <span></span></div><h2>Take the long way.</h2><p id="objective">Your next bad idea has four wheels.</p><div class="explore-footer"><span>DISTRICTS DISCOVERED</span><strong id="explored">01 / 06</strong></div></section>
     <div class="district-title"><h2 id="district">Kiln Market</h2><p id="district-subtitle">CLAY / COFFEE / SMALL FAVOURS</p></div>
-    <div class="top-right"><span class="live-dot"></span> SALTGLASS AFTERNOON <button id="help-button" title="Controls and pause">ESC <span>Ⅱ</span></button></div>
+    <div class="top-right"><span class="live-dot"></span> SALTGLASS GOLDEN HOUR <button id="help-button" title="Controls and pause">ESC <span>Ⅱ</span></button></div>
     <div class="compass" id="compass">N / 000°</div>
     <section class="map-wrap"><div class="map-ring"><canvas id="minimap" aria-label="Rooktide street minimap"></canvas></div><div class="map-caption"><i></i><span id="map-label">M · CITY OVERVIEW</span></div><div class="health"><span>NERI VOSS</span><div><i></i></div><b>100</b></div></section>
-    <div class="street-note"><span>EXPLORE WITHOUT A CLOCK</span><p>From kiln dust to salt air.</p></div>
     <section class="vehicle"><div class="mode-rule"></div><p id="mode">UNDERTOW COURIER</p><div class="speed-line"><strong id="speed">NERI</strong><span id="speed-unit">VOSS</span></div><div id="condition-row" hidden><div class="condition-track"><i id="condition"></i></div><span class="condition-caption">BODYWORK</span></div></section>
     <div id="toast" role="status"></div>
     <div id="prompt" class="prompt"><kbd>E</kbd> Take the Driftline GT</div>
     <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>SHIFT</kbd> Sprint</span><span><kbd>C</kbd> Camera</span><span>DRAG TO LOOK</span><span><kbd>R</kbd> Roadside recovery</span></footer>
   </div>
   <section id="pause" hidden>
-    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2>Catch your breath.</h2><p>One city. Six districts. Find the coast, cross to Glasshook, or take a wrong turn on purpose.</p><dl><dt>W A S D / Arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Enter / exit nearby car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Mouse drag / Wheel</dt><dd>Orbit / camera distance</dd><dt>C / M</dt><dd>Camera preset / city overview</dd><dt>R</dt><dd>Recover to the nearest road</dd></dl><div class="pause-actions"><button id="resume-button">BACK TO THE STREET <span>→</span></button><button id="quality-button">QUALITY: HIGH</button></div><small>Milestone 1 · City, walking and driving prototype.<br>Story, traffic, patrols and audio arrive in later milestones.</small></div>
+    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2>Catch your breath.</h2><p>One city. Six districts. Find the coast, cross to Glasshook, or take a wrong turn on purpose.</p><dl><dt>W A S D / Arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Enter / exit nearby car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Mouse drag / Wheel</dt><dd>Orbit / camera distance</dd><dt>C / M</dt><dd>Camera preset / city overview</dd><dt>R</dt><dd>Recover to the nearest road</dd></dl><div class="pause-actions"><button id="resume-button">BACK TO THE STREET <span>→</span></button><button id="quality-button">QUALITY: HIGH</button></div><small>Civilian drivers stop for pedestrians and the street lights. Parked and slow cars are fair game.</small></div>
   </section>
   <div id="fatal" hidden><h2>The 3D renderer stopped.</h2><p id="fatal-message"></p><p>This game requires WebGL. Reload after checking browser graphics support.</p></div>
   <p id="status" class="screen-reader" role="status" aria-live="polite"></p>

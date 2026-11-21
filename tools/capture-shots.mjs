@@ -47,7 +47,12 @@ try {
       // Exercise the ordinary pause-menu control; no screenshot-only renderer.
       await browser.evaluate('document.getElementById("help-button").click();document.getElementById("quality-button").click();document.getElementById("resume-button").click()');
     }
-    await browser.send('Runtime.evaluate', { expression: 'new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))', awaitPromise: true });
+    const fonts = await browser.evaluate(`Promise.all([
+      '400 42px Anton', '400 14px Barlow', '600 14px Barlow',
+      '600 14px "Barlow Condensed"', '700 72px "Barlow Condensed"',
+    ].map(spec => document.fonts.load(spec).then(faces => faces.length > 0)))`);
+    if (fonts.some(loaded => !loaded)) throw new Error('A local HUD font failed to load');
+    await browser.evaluate('document.fonts.ready.then(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>resolve(true)))))');
     const path = join(output, shot.name);
     let quality = initialQuality;
     for (const candidate of [initialQuality, 80, 76]) {
@@ -58,7 +63,8 @@ try {
     const bytes = await readFile(path);
     if (bytes.length > 262144) throw new Error(`Screenshot exceeds cap: ${path}`);
     const state = await browser.evaluate('window.__rooktide.snapshot()');
-    if (!state.frozen || state.paused || state.renderer.width !== 1280 || state.renderer.height !== 720) {
+    const viewport = await browser.evaluate('[innerWidth, innerHeight]');
+    if (!state.frozen || state.paused || viewport[0] !== 1280 || viewport[1] !== 720 || state.renderer.quality !== renderQuality) {
       throw new Error(`Capture is not a settled full-resolution game view: ${path}`);
     }
     records.push({ path, url, seed: 20261121, tick: state.tick, width: 1280, height: 720,
@@ -71,5 +77,5 @@ try {
   for (const file of await readdir(output)) {
     if (/\.(jpe?g|png)$/i.test(file) && !shots.some(shot => shot.name === file)) await unlink(join(output, file));
   }
-  await writeFile('verification/captures.json', JSON.stringify({ browser: version.product, source, errors, external, records }, null, 2) + '\n');
+  await writeFile('verification/captures.json', JSON.stringify({ browser: version.product, source, errors, external, localFontFaces: 5, records }, null, 2) + '\n');
 } finally { await browser.close(); }

@@ -69,7 +69,8 @@ export function createVehicleModel() {
   box(driver, -0.4, 1.10, 0.17, 0.23, 0.26, 0.2, 0xe0ab7f);
   box(driver, -0.4, 0.94, 0.20, 0.35, 0.26, 0.25, A.mustard);
   driver.visible = false;
-  return { root, chassis, wheels, brake, driver };
+  const paintMaterials = [material(paint, true), material(paint)];
+  return { root, chassis, wheels, brake, driver, paintMaterials, paint };
 }
 
 export function createPlayerModel() {
@@ -96,20 +97,24 @@ export function createPlayerModel() {
 }
 
 export function updateActorModels(player, car, visuals, alpha) {
-  const mix = (a, b) => a + (b - a) * alpha;
   const pv = visuals.player, cv = visuals.car;
   pv.root.visible = !player.inVehicle;
-  pv.root.position.set(mix(player.previousX, player.x), 0.13, mix(player.previousZ, player.z));
+  pv.root.position.set(player.previousX + (player.x - player.previousX) * alpha, 0.13, player.previousZ + (player.z - player.previousZ) * alpha);
   pv.root.rotation.y = -player.heading;
   const stride = Math.sin(player.walkPhase) * Math.min(0.8, player.speed * 0.12);
   for (const { arm, leg, side } of pv.limbs) { arm.rotation.x = stride * side; leg.rotation.x = -stride * side; }
   pv.root.position.y += Math.abs(Math.sin(player.walkPhase * 2)) * Math.min(0.045, player.speed * 0.008);
-  cv.root.position.set(mix(car.previousX, car.x), 0.10 + car.bounce, mix(car.previousZ, car.z));
+  cv.root.position.set(car.previousX + (car.x - car.previousX) * alpha, 0.10 + car.bounce, car.previousZ + (car.z - car.previousZ) * alpha);
   cv.root.rotation.y = -car.heading;
   cv.chassis.rotation.z = car.roll; cv.chassis.rotation.x = car.pitch;
   for (const w of cv.wheels) {
     w.pivot.rotation.y = w.front ? -car.steer * 0.45 : 0;
     w.tyre.rotation.x = car.wheelSpin; w.hub.rotation.x = car.wheelSpin;
+  }
+  const paint = car.paint || 0xc65f54;
+  if (paint !== cv.paint) {
+    for (const mat of cv.paintMaterials) mat.color.setHex(paint);
+    cv.paint = paint;
   }
   cv.brake.visible = car.braking;
   cv.driver.visible = player.inVehicle;

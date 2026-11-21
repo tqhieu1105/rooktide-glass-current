@@ -5,7 +5,7 @@ import { resolve, extname, sep } from 'node:path';
 const root = realpathSync(resolve(process.env.GAME_DIR || 'game'));
 const port = Number(process.env.PORT || 8080);
 const mime: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png' };
+  '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.jpg': 'image/jpeg', '.png': 'image/png', '.woff2': 'font/woff2' };
 createServer((req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url || '/', 'http://localhost').pathname);

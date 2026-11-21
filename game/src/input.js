@@ -19,15 +19,15 @@ export function createInput(canvas) {
   canvas.addEventListener('pointermove', e => { if (drag) { orbitX += e.movementX; orbitY += e.movementY; } });
   canvas.addEventListener('contextmenu', e => e.preventDefault());
   canvas.addEventListener('wheel', e => { zoom += Math.sign(e.deltaY); e.preventDefault(); }, { passive: false });
+  const value = {};
   return {
     readPlayerActions() {
-      const value = {
-        forward: Number(held.has('KeyW') || held.has('ArrowUp')) - Number(held.has('KeyS') || held.has('ArrowDown')),
-        right: Number(held.has('KeyD') || held.has('ArrowRight')) - Number(held.has('KeyA') || held.has('ArrowLeft')),
-        sprint: held.has('ShiftLeft') || held.has('ShiftRight'), handbrake: held.has('Space'),
-        interact: pressed.has('KeyE'), camera: pressed.has('KeyC'), pause: pressed.has('Escape'),
-        recover: pressed.has('KeyR'), map: pressed.has('KeyM'), orbitX, orbitY, zoom,
-      };
+      value.forward = Number(held.has('KeyW') || held.has('ArrowUp')) - Number(held.has('KeyS') || held.has('ArrowDown'));
+      value.right = Number(held.has('KeyD') || held.has('ArrowRight')) - Number(held.has('KeyA') || held.has('ArrowLeft'));
+      value.sprint = held.has('ShiftLeft') || held.has('ShiftRight'); value.handbrake = held.has('Space');
+      value.interact = pressed.has('KeyE'); value.camera = pressed.has('KeyC'); value.pause = pressed.has('Escape');
+      value.recover = pressed.has('KeyR'); value.map = pressed.has('KeyM');
+      value.orbitX = orbitX; value.orbitY = orbitY; value.zoom = zoom;
       pressed.clear(); orbitX = 0; orbitY = 0; zoom = 0;
       return value;
     }, clearHeldInputs,

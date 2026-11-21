@@ -1,6 +1,6 @@
 import { enterOrStealVehicle } from './player.js';
 
-// Milestone-1 evidence only: no invented missions, traffic, speed, heat or dispatch.
+// Seeded playable scenes use the same actors, simulation and renderer as free roam.
 export function stagePlayableScreenshot(name, game) {
   const { player, car, rig, world } = game;
   if (!['strand', 'chase', 'market', 'bridge', 'quay'].includes(name)) throw new Error(`Unknown milestone view: ${name}`);
@@ -26,6 +26,7 @@ export function stagePlayableScreenshot(name, game) {
   player.previousX = player.x; player.previousZ = player.z;
   const warm = { forward: player.inVehicle ? 1 : 0, right: 0, sprint: false, handbrake: false,
     interact: false, camera: false, pause: false, recover: false, map: false, orbitX: 0, orbitY: 0, zoom: 0 };
+  game.population.seedNear(player);
   for (let i = 0; i < 90; i++) game.advanceFixedStep(warm);
   world.messageTime = 0;
   rig.initialized = false;

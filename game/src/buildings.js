@@ -1,30 +1,14 @@
 import { ART_DIRECTION as A } from './art-direction.js';
-import { addPalm, districtSign, meshLettering } from './geometry.js';
+import { addPalm, districtSign, meshLettering, neonBoard } from './geometry.js';
 
 export function createDistrictBuildings(world, b) {
   const palette = [A.cream, A.sage, A.coral, A.blue, A.mustard];
   for (const house of world.buildings) {
     const { x, z, width: w, depth: d, height: h, floors, variant, district } = house;
     const color = district === 'strand' ? [A.cream, A.cream, A.coral, A.sage, A.cream][house.color] : palette[house.color];
-    b.box(x, h / 2, z, w, h, d, color);
-    b.box(x, 1.55, z, w + 0.12, 3.1, d + 0.12, variant % 2 ? A.terracotta : A.ink);
+    b.box(x, h / 2, z, w, h, d, color, 0, 'facade', [1 + variant, Math.round(w / 7), Math.round(d / 7), floors]);
     b.box(x, h + 0.25, z, w + 1, 0.5, d + 1, A.cream);
-    b.box(x + w * 0.18, h + 0.9, z, w * 0.38, 1.3, d * 0.36, A.metal);
-    for (let floor = 1; floor < floors; floor++) {
-      const y = floor * 3.3 + 1.45;
-      b.box(x, y, z + d / 2 + 0.08, w - 2.8, 1.5, 0.14, A.glass);
-      b.box(x, y, z - d / 2 - 0.08, w - 2.8, 1.5, 0.14, A.darkGlass);
-      b.box(x + w / 2 + 0.08, y, z, 0.14, 1.5, d - 2.8, A.glass);
-      b.box(x - w / 2 - 0.08, y, z, 0.14, 1.5, d - 2.8, A.darkGlass);
-      if (district === 'strand' || floor % 2 === 0) {
-        b.box(x, y - 0.95, z + d / 2 + 0.35, w + 0.5, 0.17, 0.85, color);
-        b.box(x + w / 2 + 0.35, y - 0.95, z, 0.85, 0.17, d + 0.5, color);
-      }
-    }
-    for (let i = -1; i <= 1; i++) {
-      b.box(x + i * w * 0.28, 1.5, z + d / 2 + 0.14, 3.4, 2.4, 0.18, A.glass);
-      if (variant === 0) b.box(x + i * w * 0.28, h / 2, z + d / 2 + 0.35, 0.3, h, 0.65, A.terracotta);
-    }
+    if (variant % 2 === 0) b.box(x + w * 0.18, h + 0.9, z, w * 0.38, 1.3, d * 0.36, A.metal);
     if (district === 'market') {
       for (let i = -1; i <= 1; i++) {
         b.box(x + i * w * 0.3, 2.7, z + d / 2 + 1.3, w * 0.28, 0.23, 2.7,
@@ -44,6 +28,10 @@ export function createDistrictBuildings(world, b) {
   }
   for (const sign of world.signs) districtSign(b, sign);
   instanceCityLandmarks(b);
+  neonBoard(b, 'HOT CLAY', 145, 6.2, 30.9, .39, Math.PI, 0xffd47a, 0xff776f);
+  neonBoard(b, 'HOT CLAY', 145, 6.2, 79, .39, 0, 0xffd47a, 0xff776f);
+  neonBoard(b, 'FISH DISCO', 316, 19.5, 306, .42, 0, 0x77fadc, 0xf985c1);
+  neonBoard(b, 'FISH DISCO', 316, 19.5, 302, .42, Math.PI, 0x77fadc, 0xf985c1);
 }
 
 export function instanceCityLandmarks(b) {
@@ -55,7 +43,6 @@ export function instanceCityLandmarks(b) {
   }
   b.add('ring', 184, 5, 62, 5, 5, 3, A.terracotta, 0, 0.4, 0.3);
   b.box(184, 0.8, 62, 11, 1.6, 6, A.ink);
-  meshLettering(b, 'KILN', 145, 6, 79, 0.7);
   // Cinderbank: an open workshop canopy and service bays.
   b.box(-354, 5.5, 300, 62, 0.8, 29, A.terracotta);
   for (const x of [-382, -326]) for (const z of [289, 311]) b.box(x, 2.7, z, 0.7, 5.4, 0.7, A.ink);
