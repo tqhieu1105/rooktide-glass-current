@@ -2,24 +2,24 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "2147f5bafa8d33710d9b66ca714a0231d22eecbf",
+    "baseCommit": "c48123aeec74060dd639a67572fae0045fa0ad78",
     "workingTree": true,
-    "gameTreeSha256": "881e4fbd73cca14bdb6d54e8c12ccb305aa8d462c3fd10511748952155501208"
+    "gameTreeSha256": "99ced78811fa7d442ade22f1aee369a217b96ef8e3552da0357bd8254f538e91"
   },
   "errors": [],
   "external": [],
   "localFontFaces": 5,
   "records": [
     {
-      "path": "/tmp/before-m10-shots/01-cover-chase.jpg",
+      "path": "screenshots/01-cover-chase.jpg",
       "url": "http://127.0.0.1:8080/?shot=chase&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 165439,
-      "sha256": "57ca3a292b990221c091f7f8a73716c9b09a6da5ec21297f47cbca69fada0954",
+      "bytes": 167063,
+      "sha256": "22a9d5e03962a995d8e8d5280b2ffedb7eac89e0a426395514fe8ac4a751319c",
       "state": {
         "player": {
           "x": 426,
@@ -111,6 +111,12 @@
           "done": 0,
           "replay": false,
           "ending": false,
+          "services": {
+            "ilexRepair": false,
+            "savaScan": false,
+            "daroBonus": false
+          },
+          "garage": null,
           "scan": 0,
           "scanCooldown": 0,
           "weapon": 1,
@@ -173,7 +179,7 @@
           "settled": true,
           "builds": 19,
           "unloads": 1,
-          "cumulativeBuildMs": 141.3
+          "cumulativeBuildMs": 91.1
         },
         "population": {
           "cars": 14,
@@ -424,15 +430,15 @@
       }
     },
     {
-      "path": "/tmp/before-m10-shots/02-kiln-streets.jpg",
+      "path": "screenshots/02-kiln-streets.jpg",
       "url": "http://127.0.0.1:8080/?shot=market&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 134620,
-      "sha256": "794dae5096e65235dd761df743461d9cb675130551606b80a558116581937ea6",
+      "bytes": 137114,
+      "sha256": "d3cfea56c3f4dbd2c2d24476132370cb6ec2cb01bf9af21503b17bb0f042542d",
       "state": {
         "player": {
           "x": 95.5,
@@ -514,6 +520,12 @@
           "done": 0,
           "replay": false,
           "ending": false,
+          "services": {
+            "ilexRepair": false,
+            "savaScan": false,
+            "daroBonus": false
+          },
+          "garage": null,
           "scan": 0,
           "scanCooldown": 0,
           "weapon": 1,
@@ -571,7 +583,7 @@
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 138.3
+          "cumulativeBuildMs": 96.7
         },
         "population": {
           "cars": 14,
@@ -769,15 +781,15 @@
       }
     },
     {
-      "path": "/tmp/before-m10-shots/03-glasshook-bridge.jpg",
+      "path": "screenshots/03-glasshook-bridge.jpg",
       "url": "http://127.0.0.1:8080/?shot=bridge&seed=20261121",
       "seed": 20261121,
       "tick": 91,
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 135701,
-      "sha256": "420e59004a9d3ccb73b847c74a44c8d6ac857e0df7ebe7a09ff8d397cd6362bd",
+      "bytes": 137327,
+      "sha256": "bf03218c3e379f00ceaa20ed641959aca942a71bb6f8db90559fb583d7db81cb",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -859,6 +871,12 @@
           "done": 0,
           "replay": false,
           "ending": false,
+          "services": {
+            "ilexRepair": false,
+            "savaScan": false,
+            "daroBonus": false
+          },
+          "garage": null,
           "scan": 0,
           "scanCooldown": 0,
           "weapon": 1,
@@ -917,7 +935,7 @@
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 87.8
+          "cumulativeBuildMs": 87.3
         },
         "population": {
           "cars": 14,
