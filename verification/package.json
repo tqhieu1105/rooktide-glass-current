@@ -3,20 +3,20 @@
   "runs": [
     {
       "run": 1,
-      "milliseconds": 178
+      "milliseconds": 138
     },
     {
       "run": 2,
-      "milliseconds": 149
+      "milliseconds": 105
     }
   ],
-  "outputTreeSha256": "46bdc4e27b694026abbc27ba73e58aeddb9be0919331777a2a48c544af6a74b5",
-  "dossierSha256": "6c3c2ffce0db97d9f657e220020e438ebc2776229f94541f7edc9bfb19063d2d",
+  "outputTreeSha256": "794855f06525581ab0d5c575060750ccfd531a2758d62e497a1bef47d48a40c9",
+  "dossierSha256": "a230cde29bef45ad7810cb40f1cecff17bd2d94e72da7fc510332221e7acbb04",
   "dossierSchema": "makefun/dossier/v1",
   "kitLibrarySha256": "dc67187521b24025ff952f8c231485a6eb92d6d71d29edd2a08154ffb4376129",
   "thirdPartyThreeSha256": "3e690ac7d180b0aadf0891bea39eec643e29e2d3e75c99b18689518665f69ba6",
   "gameFiles": 37,
-  "gameBytes": 946522,
+  "gameBytes": 946366,
   "screenshots": [
     {
       "name": "01-cover-chase.jpg",
@@ -36,15 +36,15 @@
       "name": "03-glasshook-bridge.jpg",
       "width": 1280,
       "height": 720,
-      "bytes": 120450,
-      "sha256": "fb3bb60be71c2f36d248cb157b298094118ff7fae809c8fe925d917acde6cc57"
+      "bytes": 120368,
+      "sha256": "533f88f0265606b69ae2d96ce065a0c1526d3e67f9e1ea26743e099beaceae86"
     }
   ],
   "files": [
     {
       "path": "dossier.json",
-      "bytes": 672407,
-      "sha256": "6c3c2ffce0db97d9f657e220020e438ebc2776229f94541f7edc9bfb19063d2d"
+      "bytes": 672140,
+      "sha256": "a230cde29bef45ad7810cb40f1cecff17bd2d94e72da7fc510332221e7acbb04"
     },
     {
       "path": "game/index.html",
@@ -128,8 +128,8 @@
     },
     {
       "path": "game/src/police.js",
-      "bytes": 19494,
-      "sha256": "4255ec277a8b51d81b7016a2f3d5a7e3764f85345af0084855573b208b9720ed"
+      "bytes": 19338,
+      "sha256": "59320aae70a871ca17489699f0e268fd1a5e09c7079bd040bbd2d5a44337082b"
     },
     {
       "path": "game/src/population-models.js",
@@ -243,8 +243,8 @@
     },
     {
       "path": "screenshots/03-glasshook-bridge.jpg",
-      "bytes": 120450,
-      "sha256": "fb3bb60be71c2f36d248cb157b298094118ff7fae809c8fe925d917acde6cc57"
+      "bytes": 120368,
+      "sha256": "533f88f0265606b69ae2d96ce065a0c1526d3e67f9e1ea26743e099beaceae86"
     }
   ]
 }
