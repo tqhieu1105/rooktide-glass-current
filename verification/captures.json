@@ -2,7 +2,7 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "363f72b6d1e74120828e3130ab01599c09e60ad7",
+    "baseCommit": "2147f5bafa8d33710d9b66ca714a0231d22eecbf",
     "workingTree": true,
     "gameTreeSha256": "881e4fbd73cca14bdb6d54e8c12ccb305aa8d462c3fd10511748952155501208"
   },
@@ -11,7 +11,7 @@
   "localFontFaces": 5,
   "records": [
     {
-      "path": "screenshots/01-cover-chase.jpg",
+      "path": "/tmp/before-m10-shots/01-cover-chase.jpg",
       "url": "http://127.0.0.1:8080/?shot=chase&seed=20261121",
       "seed": 20261121,
       "tick": 91,
@@ -173,7 +173,7 @@
           "settled": true,
           "builds": 19,
           "unloads": 1,
-          "cumulativeBuildMs": 102.1
+          "cumulativeBuildMs": 141.3
         },
         "population": {
           "cars": 14,
@@ -424,7 +424,7 @@
       }
     },
     {
-      "path": "screenshots/02-kiln-streets.jpg",
+      "path": "/tmp/before-m10-shots/02-kiln-streets.jpg",
       "url": "http://127.0.0.1:8080/?shot=market&seed=20261121",
       "seed": 20261121,
       "tick": 91,
@@ -571,7 +571,7 @@
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 92.6
+          "cumulativeBuildMs": 138.3
         },
         "population": {
           "cars": 14,
@@ -769,7 +769,7 @@
       }
     },
     {
-      "path": "screenshots/03-glasshook-bridge.jpg",
+      "path": "/tmp/before-m10-shots/03-glasshook-bridge.jpg",
       "url": "http://127.0.0.1:8080/?shot=bridge&seed=20261121",
       "seed": 20261121,
       "tick": 91,
@@ -917,7 +917,7 @@
           "settled": true,
           "builds": 20,
           "unloads": 2,
-          "cumulativeBuildMs": 82
+          "cumulativeBuildMs": 87.8
         },
         "population": {
           "cars": 14,

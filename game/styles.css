@@ -81,6 +81,8 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .rank-line{grid-column:1/-1;color:#ffe0b0;font-size:11px;justify-content:flex-end}
 .rank-track{width:54px;height:3px;background:#fff5;flex:none}
 .rank-track>i{height:100%;width:0;background:#ffd482;display:block}
+.crew-unlocks{display:flex;gap:7px;justify-content:flex-end;color:#b9d8cd;font:700 9px/1 var(--label);letter-spacing:.06em;white-space:nowrap}
+.crew-unlocks span{opacity:.72}.crew-unlocks span.unlocked{color:var(--mint);opacity:1}
 .status-bars{display:grid;gap:4px;margin:5px 0 2px}
 .stat-bar{display:grid;grid-template-columns:50px 1fr 2ch;align-items:center;gap:7px;font:700 12px/1 var(--label);letter-spacing:.08em;white-space:nowrap}
 .stat-bar>div{height:6px;background:#18203c88;box-shadow:0 0 3px #101326;overflow:hidden}
@@ -106,6 +108,7 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 @media(prefers-reduced-motion:reduce){.wanted-stars.searching .lit{animation:none}}
 .heat-line{color:#ffc3ac;font-size:11px}.heat-line>div{height:3px;background:#fff4;flex:1}.heat-line i{display:block;height:100%;width:0;background:#ff75a8}
 #dispatch-readout{margin-top:5px;font:700 14px/1.12 var(--label);color:var(--cream)}
+.scan-status{margin-top:4px;color:var(--mint);font:700 11px/1 var(--label);letter-spacing:.08em}
 .dispatch-units{margin:4px 0 0;padding:0;list-style:none;font:700 13px/1.15 var(--label);letter-spacing:.045em;text-shadow:0 1px 2px #101326,0 0 5px #101326}
 .dispatch-units li{margin-bottom:3px;padding:1px 0;background:none;border:0;text-align:right;white-space:nowrap;color:#fff2e7}
 .map-wrap{position:absolute;left:var(--edge);bottom:var(--edge);width:185px;text-align:center;--map-size:185px}
@@ -173,6 +176,9 @@ kbd{font:700 12px/1 var(--label);display:inline-block;padding:3px 5px;margin-rig
 .menu-card button span{float:right}
 .menu-note{margin-top:14px;color:var(--mint);font:600 14px/1.3 var(--label);letter-spacing:.055em}
 .menu-note:empty{display:none}
+.garage-unlocks{margin:6px 0 14px;color:var(--mint);font:700 12px/1.25 var(--label);letter-spacing:.05em}
+.garage-actions,.garage-palette{display:grid;gap:6px}.garage-palette{grid-template-columns:repeat(3,1fr);margin-top:10px}
+.garage-paint{border-top:4px solid var(--paint)!important;font-size:13px!important;padding:11px 8px!important}.garage-paint[aria-pressed="true"]{outline:2px solid var(--amber);outline-offset:1px}
 #replay-row{display:grid;align-items:center;gap:8px;margin-top:14px;grid-template-columns:auto 1fr;font:700 16px/1.2 var(--label)}
 .menu-card select{background:#152930;min-width:0}
 #last-transmission{border-top:1px solid var(--line);margin-top:14px;padding:9px 0 0}

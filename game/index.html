@@ -31,6 +31,7 @@
       <div class="wallet">
         <div><span class="wallet-label">CASH</span><div class="wallet-cash"><span aria-hidden="true">$</span><strong id="city-cash" aria-label="Cash: $250">250</strong></div></div>
         <div class="rank-line"><span id="city-rank">RUNNER · 0 RP</span><div class="rank-track"><i id="rank-meter"></i></div></div>
+        <div class="crew-unlocks" id="crew-unlocks" aria-label="Crew service unlocks"><span id="unlock-ilex">ILEX · LOCKED</span><span id="unlock-sava">SAVA · LOCKED</span><span id="unlock-daro">DARO · LOCKED</span></div>
       </div>
       <div id="weapon-readout" aria-label="Selected weapon">
         <span class="weapon-icon-frame" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M8 18c-2-1-3-3-2-5l2-4 3 1 2 3 2-6 3 1-1 5 2-4 3 1-2 6 2-3 3 2-4 8c-1 3-4 4-7 3l-4-2-4-5c-1-1-1-2 0-3Z"/></svg></span>
@@ -38,6 +39,7 @@
       </div>
       <section class="wanted" aria-label="Police response">
         <div class="wanted-heading"><span>ROOKTIDE CIVIC PATROL</span><strong id="wanted-level">ROUTINE</strong></div>
+        <div class="scan-status" id="scan-status" aria-live="polite" hidden></div>
         <div class="wanted-stars" id="wanted-stars" role="img" aria-label="Wanted level: zero stars">
           <svg aria-hidden="true" viewBox="0 0 28 26"><path id="wanted-star-shape" d="M14 2 17.5 9 25.4 10.2 19.7 15.8 21 23.8 14 20 7 23.8 8.3 15.8 2.6 10.2 10.5 9Z"/></svg>
           <svg aria-hidden="true" viewBox="0 0 28 26"><use href="#wanted-star-shape"/></svg>
@@ -71,7 +73,7 @@
       </aside>
       <div id="prompt" class="prompt"><kbd>E</kbd> Take the Driftline GT</div>
     </div>
-    <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>F</kbd> Attack</span><span><kbd>TAB</kbd> Hold weapon wheel · <kbd>1 / 2</kbd> Quick select</span><span><kbd>R</kbd> Reload / recover</span></footer>
+    <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>F</kbd> Attack</span><span><kbd>TAB</kbd> Hold weapon wheel · <kbd>1 / 2</kbd> Quick select</span><span><kbd>R</kbd> Reload / recover</span><span><kbd>Q</kbd> Scan · <kbd>G</kbd> Yard</span></footer>
   </div>
   <div id="weapon-wheel" aria-label="Weapon wheel" hidden>
     <div class="weapon-wheel-ring"><span class="wheel-center">ROOKTIDE<br><b>LOADOUT</b></span>
@@ -111,9 +113,22 @@
       <details id="last-transmission" hidden><summary>Last crew transmission</summary><p id="last-radio"></p></details>
       <p id="save-note" class="menu-note" role="status"></p>
     </section>
+    <section id="garage-screen" class="menu-card" data-screen="garage" hidden>
+      <div class="eyebrow">ILEX AUTO / CINDERBANK</div><h2 id="garage-heading">The yard.</h2>
+      <p class="menu-intro" id="garage-vehicle-state">Driftline GT · 100% bodywork</p>
+      <p class="garage-unlocks" id="garage-unlocks"></p>
+      <div class="garage-actions"><button id="garage-vehicle-action" class="primary" data-garage-action="store">Store current vehicle</button><button id="garage-repair" data-garage-action="repair">Repair bodywork · $150</button></div>
+      <div class="garage-palette" aria-label="Paint palettes">
+        <button id="garage-paint-copper" class="garage-paint" data-paint="copper" style="--paint:#c65f54">Copper Bloom</button>
+        <button id="garage-paint-saffron" class="garage-paint" data-paint="saffron" style="--paint:#e4ad45">Saffron Alloy</button>
+        <button id="garage-paint-quay" class="garage-paint" data-paint="quay" style="--paint:#55bfb5">Quay Ceramic</button>
+      </div>
+      <p id="garage-note" class="menu-note" role="status"></p>
+      <div class="menu-actions"><button data-back class="primary">Back to Street</button></div>
+    </section>
     <section id="controls-screen" class="menu-card" data-screen="controls" hidden>
       <div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2 id="controls-heading">Street controls.</h2>
-      <dl><dt>WASD / Arrows</dt><dd>Walk, accelerate, reverse or steer</dd><dt>E</dt><dd>Interact, enter or exit a stopped car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Hold Space while stopped</dt><dd>Surrender near RCP</dd><dt>Mouse drag / Wheel / C</dt><dd>Orbit, zoom or change camera preset</dd><dt>M / V</dt><dd>City overview / cycle car radio</dd><dt>F</dt><dd>Attack with the selected weapon</dd><dt>Hold Tab</dt><dd>Mouse or 1 / 2 to choose; release to confirm</dd><dt>1 / 2</dt><dd>Quick-select fists or pistol</dd><dt>R</dt><dd>Reload when the pistol is low; otherwise recover or retry</dd><dt>Q</dt><dd>Sava’s patrol scan, once unlocked</dd><dt>Esc</dt><dd>Pause or return</dd></dl>
+      <dl><dt>WASD / Arrows</dt><dd>Walk, accelerate, reverse or steer</dd><dt>E</dt><dd>Interact, enter or exit a stopped car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Hold Space while stopped</dt><dd>Surrender near RCP</dd><dt>Mouse drag / Wheel / C</dt><dd>Orbit, zoom or change camera preset</dd><dt>M / V</dt><dd>City overview / cycle car radio</dd><dt>F</dt><dd>Attack with the selected weapon</dd><dt>Hold Tab</dt><dd>Mouse or 1 / 2 to choose; release to confirm</dd><dt>1 / 2</dt><dd>Quick-select fists or pistol</dd><dt>R</dt><dd>Reload when the pistol is low; otherwise recover or retry</dd><dt>Q</dt><dd>Sava’s patrol scan, once unlocked</dd><dt>G</dt><dd>Open Ilex’s yard garage at the bay</dd><dt>Esc</dt><dd>Pause or return</dd></dl>
       <div class="menu-actions"><button data-back class="primary">Back</button></div>
     </section>
     <section id="settings-screen" class="menu-card" data-screen="settings" hidden>
@@ -138,6 +153,7 @@
       <div class="eyebrow" id="completion-label">UNDERTOW RELAY / JOB COMPLETE</div><h2 id="ending-title"></h2>
       <p class="result-job" id="completion-job"></p>
       <div class="reward" id="completion-reward"><div><span>PAYOUT</span><strong id="completion-cash"></strong></div><div><span>REPUTATION</span><strong id="completion-rp"></strong></div></div>
+      <p class="menu-note" id="completion-note"></p>
       <p class="menu-intro" id="ending-detail"></p><p class="menu-note" id="completion-progress"></p>
       <div class="menu-actions"><button id="dismiss-ending" class="primary">Back to the Street <span>→</span></button></div>
     </section>

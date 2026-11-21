@@ -3,7 +3,7 @@ export function createInput(canvas) {
   const pressed = new Set();
   const weaponIds = [...document.querySelectorAll('#weapon-wheel [data-weapon]')].map(slot => Number(slot.dataset.weapon));
   const used = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-    'KeyE', 'KeyC', 'KeyR', 'KeyM', 'KeyF', 'KeyQ', 'KeyV', 'Digit1', 'Digit2', 'Tab', 'ShiftLeft', 'ShiftRight', 'Space', 'Escape']);
+    'KeyE', 'KeyC', 'KeyR', 'KeyM', 'KeyF', 'KeyQ', 'KeyV', 'KeyG', 'Digit1', 'Digit2', 'Tab', 'ShiftLeft', 'ShiftRight', 'Space', 'Escape']);
   let drag = false, orbitX = 0, orbitY = 0, zoom = 0, wheelPick = 1, queuedWeapon = 0, equipped = 1, pointerX = innerWidth / 2, pointerY = innerHeight / 2;
   function clearHeldInputs() { held.clear(); pressed.clear(); drag = false; orbitX = orbitY = zoom = 0; queuedWeapon = 0; }
   function pickWheel(x, y) {
@@ -44,6 +44,7 @@ export function createInput(canvas) {
   const value = {};
   return {
     readPlayerActions() {
+      value.garage = pressed.has('KeyG');
       value.forward = Number(held.has('KeyW') || held.has('ArrowUp')) - Number(held.has('KeyS') || held.has('ArrowDown'));
       value.right = Number(held.has('KeyD') || held.has('ArrowRight')) - Number(held.has('KeyA') || held.has('ArrowLeft'));
       value.sprint = held.has('ShiftLeft') || held.has('ShiftRight'); value.handbrake = held.has('Space');

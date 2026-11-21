@@ -123,7 +123,7 @@ check('The hot van cannot finish delivery while wanted', state().index === 3 && 
 escape(2, -498, -426); deliver();
 assert.equal(state().done, 2);
 tick(1, { scan: true });
-check('The Quiet Ledger grants its payout, pistol and timed patrol scan', state().cash === 1900 && state().rp === 250 && state().scan === 10);
+check('The Quiet Ledger grants its payout, Daro bonus and timed patrol scan', state().cash === 2010 && state().rp === 250 && state().scan === 10);
 
 start(MISSIONS[2]); deliver();
 const courierStart = state().point;
@@ -140,7 +140,7 @@ for (let i = 0; i < 2 && state().index === 1; i++) {
 }
 check('Real controlled car contacts disable the courier and expose its fragment', state().index === 2 && target.condition === 0 && population.snapshot().impacts > 0);
 collect(); deliver();
-check('Split Invoice uses a concrete changing drop and pays its reward', state().done === 3 && state().cash === 3300 && state().rp === 450);
+check('Split Invoice uses a concrete changing drop and pays its reward', state().done === 3 && state().cash === 3410 && state().rp === 450);
 
 start(MISSIONS[3]); enterMarked();
 check('Seawall Dividend summons the existing helicopter system at three stars', police.wanted.level === 3 && police.helicopter.active);
@@ -178,12 +178,19 @@ deliverUntilLast();
 check('Final delivery blocks while RCP still has heat', state().active && state().index === 3 && police.wanted.level > 0);
 escape(4, -498, 413); deliver();
 check('The ending pays the sixth mission and opens free roam', state().ending && !state().active && state().done === 6
-  && state().cash === 10300 && state().rp === 1400 && state().rank === 'Current');
+  && state().cash === 10630 && state().rp === 1400 && state().rank === 'Current');
 missions.dismissEnding();
-check('Campaign progress and cash survive recreating the runtime', createCampaign().snapshot().done === 6 && createCampaign().snapshot().cash === 10300);
+check('Campaign progress and cash survive recreating the runtime', createCampaign().snapshot().done === 6 && createCampaign().snapshot().cash === 10630);
 assert.ok(missions.chooseReplay(MISSIONS[0].id));
 start(MISSIONS[0]); foot(state().point.x, state().point.z); tick(); enterMarked(); escape(1, -497, 414); deliver();
-check('A full replay does not mint a second payout or re-lock free roam', state().payout.cash === 0 && state().cash === 10300 && !state().active && !state().ending);
+check('A full replay does not mint a second payout or re-lock free roam', state().payout.cash === 0 && state().cash === 10630 && !state().active && !state().ending);
+driving(GARAGE.x, GARAGE.z);
+const cashBeforeGarage = state().cash;
+assert.ok(missions.garageAction('store').ok);
+check('Garage stores one owned vehicle and leaves a usable replacement car', state().garage?.stored && !player.inVehicle && car.active);
+assert.ok(missions.garageAction('paint', 'quay').ok);
+assert.ok(missions.garageAction('recall').ok);
+check('Garage recalls the stored vehicle with its selected original paint', player.inVehicle && car.paint === 0x55bfb5 && !state().garage.stored && state().cash === cashBeforeGarage);
 
 function deliverUntilLast() {
   for (let i = 0; i < 3; i++) {

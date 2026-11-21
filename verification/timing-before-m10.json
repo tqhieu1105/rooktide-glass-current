@@ -1,0 +1,48 @@
+{
+  "chromium": "Chrome/154.0.8037.57",
+  "viewport": [
+    1280,
+    720
+  ],
+  "market": {
+    "samples": 60,
+    "medianMs": 133.3,
+    "p95Ms": 266.6,
+    "meanMs": 136.66,
+    "renderer": {
+      "engine": "Three.js r160",
+      "context": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "quality": "low",
+      "width": 576,
+      "height": 324,
+      "calls": 117,
+      "triangles": 24184,
+      "geometries": 71,
+      "textures": 2,
+      "batches": 111,
+      "instances": 2766
+    }
+  },
+  "drive": {
+    "samples": 59,
+    "medianMs": 116.7,
+    "p95Ms": 266.7,
+    "meanMs": 137.85,
+    "renderer": {
+      "engine": "Three.js r160",
+      "context": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "gpu": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "quality": "low",
+      "width": 576,
+      "height": 324,
+      "calls": 71,
+      "triangles": 15182,
+      "geometries": 73,
+      "textures": 2,
+      "batches": 111,
+      "instances": 2766
+    },
+    "endTick": 383
+  }
+}

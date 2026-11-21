@@ -11,7 +11,7 @@
     "Fists clear the warehouse guards through the combat controller",
     "The hot van cannot finish delivery while wanted",
     "Mission heat 2 clears only after its 15s RCP window",
-    "The Quiet Ledger grants its payout, pistol and timed patrol scan",
+    "The Quiet Ledger grants its payout, Daro bonus and timed patrol scan",
     "The courier drives its own route and the range timer leaves time to catch up",
     "Missing the courier for 30 seconds fails and resets its route at retry",
     "Real controlled car contacts disable the courier and expose its fragment",
@@ -29,7 +29,9 @@
     "The ending pays the sixth mission and opens free roam",
     "Campaign progress and cash survive recreating the runtime",
     "Mission heat 1 clears only after its 10s RCP window",
-    "A full replay does not mint a second payout or re-lock free roam"
+    "A full replay does not mint a second payout or re-lock free roam",
+    "Garage stores one owned vehicle and leaves a usable replacement car",
+    "Garage recalls the stored vehicle with its selected original paint"
   ],
   "pursuits": [
     {
@@ -59,7 +61,7 @@
   ],
   "final": {
     "done": 6,
-    "cash": 10300,
+    "cash": 10630,
     "rp": 1400
   },
   "method": "Fixed-step coverage with encounter positions staged between segments. Not a timed uninterrupted playthrough."

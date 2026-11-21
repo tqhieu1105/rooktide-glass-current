@@ -51,10 +51,11 @@ export function createMinimap(canvas, world) {
     c.fillStyle = '#163740'; c.fillRect(0, 0, size, size);
     c.translate(size / 2, size / 2); c.rotate(heading); c.scale(scale, scale); c.translate(-player.x, -player.z);
     c.drawImage(map, -530, -440, 1200, 880);
-    if (police.wanted.state === 'search') {
+    if (police.wanted.state === 'search' && scan) {
       const { lastSeen, searchRadius } = police.wanted;
       c.fillStyle = '#f0745055'; c.strokeStyle = '#ffb472'; c.lineWidth = 1.5 / scale;
       c.beginPath(); c.arc(lastSeen.x, lastSeen.z, searchRadius, 0, Math.PI * 2); c.fill(); c.stroke();
+      edgePin(lastSeen, '#ffe08b', 5, 'diamond');
     }
     const waypointColor = waypoint?.style === 'contact' ? '#ffd17f' : waypoint?.style === 'target' ? '#ff9c95' : '#a1ffda';
     if (waypoint) {
@@ -86,7 +87,7 @@ export function createMinimap(canvas, world) {
       marker({ x: player.x + dx * ratio, z: player.z + dz * ratio }, fill, radius, shape);
     }
     if (waypoint) edgePin(waypoint, waypointColor, 7.5, 'diamond');
-    for (const unit of police.units) if (unit.active) {
+    for (const unit of police.units) if (unit.active && (police.wanted.state !== 'search' || scan)) {
       if (scan && policeActive) edgePin(unit, '#ffae89', 4.5);
       else marker(unit, '#ff857d', 5);
     }

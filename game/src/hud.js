@@ -7,6 +7,7 @@ const digits = Array.from({ length: 361 }, (_, n) => String(n).padStart(3, '0'))
 const bearings = digits.map((value, n) => `${DIRECTIONS[Math.round(n / 45) % 8]}  /  ${value}°`);
 const exploration = Array.from({ length: 7 }, (_, n) => `0${n} / 06`);
 const rankThresholds = [0, 150, 400, 800, 1400];
+const rankNames = ['Runner', 'Wheelhand', 'Link', 'Fixer', 'Current'];
 const conditionWidths = Array.from({ length: 101 }, (_, n) => `${n}%`);
 const objectives = ['Six districts. One continuous city.', 'Your next bad idea has four wheels.', 'Find your own way through the city.'];
 const prompts = Object.fromEntries(Object.entries(VEHICLE_TUNING).map(([key, tuning]) => [key, `<kbd>E</kbd> Take the ${tuning.name}`]));
@@ -20,7 +21,7 @@ export function createStreetHUD(world, minimap) {
     'station-readout', 'station-name', 'station-track', 'toast', 'compass', 'status', 'map-label',
     'city-cash', 'city-rank', 'rank-meter', 'game-time', 'health-value', 'health-bar', 'armour-value', 'armour-bar', 'weapon-name', 'free-roam', 'mission-card', 'mission-chapter', 'mission-title', 'mission-step',
     'mission-stages', 'mission-objective', 'mission-waypoint', 'mission-next', 'mission-radio', 'radio-contact', 'radio-line',
-    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-row', 'heat-meter', 'dispatch-units', 'aim-reticle'].map(id => [id, $(id)]));
+    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-row', 'heat-meter', 'dispatch-units', 'aim-reticle', 'unlock-ilex', 'unlock-sava', 'unlock-daro', 'scan-status'].map(id => [id, $(id)]));
   const stars = [...elements['wanted-stars'].children];
   const rows = [...elements['dispatch-units'].children];
   const segments = [...elements['mission-stages'].children];
@@ -41,7 +42,8 @@ export function createStreetHUD(world, minimap) {
     const near = !!target;
     const mode = driving ? 2 : near ? 1 : 0;
     const fighting = combat.weapon === 2 ? `<kbd>F</kbd> Fire <span>·</span> ${combat.reload ? 'Reloading' : `${combat.rounds} / ${combat.reserve}`}` : '<kbd>F</kbd> Swing';
-    const promptHTML = action ? `<kbd>E</kbd> ${action}` : driving ? drivingPrompt : `${fighting} <span>·</span> ${walking}`;
+    const promptHTML = action === 'Open Ilex Auto' ? '<kbd>G</kbd> Open Ilex Auto'
+      : action ? `<kbd>E</kbd> ${action}` : driving ? drivingPrompt : `${fighting} <span>·</span> ${walking}`;
     if (promptHTML !== prompt || cache.district !== world.district.name) {
       elements.prompt.innerHTML = promptHTML;
       text('status', `${world.district.name}. ${driving ? 'Driving' : 'On foot'}. ${near ? 'Press E to enter car.' : ''}`);
@@ -56,13 +58,25 @@ export function createStreetHUD(world, minimap) {
       text('city-cash', job.cash.toLocaleString('en-US'));
       elements['city-cash'].setAttribute('aria-label', `Cash: $${cache['city-cash']}`);
     }
+    const rankThreshold = rankThresholds.find(value => value > job.rp);
     text('city-rank', `${job.rank.toUpperCase()} · ${job.rp.toLocaleString()} RP`);
+    const services = job.services || {};
+    for (const [id, key, label] of [['unlock-ilex', 'ilexRepair', 'REPAIRS'], ['unlock-sava', 'savaScan', 'SCAN'], ['unlock-daro', 'daroBonus', '+10%']]) {
+      elements[id].textContent = ` ${label} · ${services[key] ? 'READY' : 'LOCKED'}`;
+      elements[id].classList.toggle('unlocked', !!services[key]);
+    }
     const clockMinutes = 17 * 60 + 40 + Math.floor(world.clock / 60);
     text('game-time', `${String(Math.floor(clockMinutes / 60) % 24).padStart(2, '0')}:${String(clockMinutes % 60).padStart(2, '0')}`);
     if (cache.rp !== job.rp) {
       const nextRank = rankThresholds.findIndex(rp => rp > job.rp);
       const fraction = nextRank < 0 ? 1 : (job.rp - rankThresholds[nextRank - 1]) / (rankThresholds[nextRank] - rankThresholds[nextRank - 1]);
       elements['rank-meter'].style.width = `${fraction * 100}%`;
+      const floor = nextRank > 0 ? rankThresholds[nextRank - 1] : 0;
+      elements['rank-meter'].parentElement.setAttribute('aria-valuenow', String(job.rp - floor));
+      elements['rank-meter'].parentElement.setAttribute('aria-valuemax', String(rankThreshold ? rankThreshold - floor : 1));
+      elements['rank-meter'].parentElement.setAttribute('aria-label', rankThreshold
+        ? `${job.rp} cumulative RP; ${rankThreshold - job.rp} RP to ${rankNames[nextRank]}`
+        : `${job.rp} cumulative RP; maximum rank`);
       cache.rp = job.rp;
     }
     text('health-value', Math.ceil(player.health));
@@ -126,6 +140,9 @@ export function createStreetHUD(world, minimap) {
         : `${law.units.length} PATROL${law.units.length === 1 ? '' : 'S'}${law.helicopter ? ' + AIR SUPPORT' : ''}`
       : 'AREA QUIET';
     text('dispatch-readout', dispatch);
+    const scanText = job.scan > 0 ? `SAVA SCAN · ${Math.ceil(job.scan)}S` : job.scanCooldown > 0 ? `SCAN COOLDOWN · ${Math.ceil(job.scanCooldown)}S` : services.savaScan ? 'Q · ACTIVE SCAN READY' : 'SCAN LOCKED';
+    text('scan-status', scanText);
+    elements['scan-status'].hidden = !services.savaScan && !level && job.scan <= 0;
     const entries = level ? law.units.sort((a, b) => a.distance - b.distance) : [];
     const priority = [];
     if (law.helicopter) priority.push([law.helicopter, 'SPOTLIGHT']);

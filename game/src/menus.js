@@ -1,5 +1,6 @@
 import { CONTACTS, MISSIONS } from './mission-data.js';
 import { AUDIO_DEFAULTS, STATIONS } from './radio.js';
+import { GARAGE_PAINTS } from './missions.js';
 
 const $ = id => document.getElementById(id);
 const PREFS = 'rooktide-preferences-1';
@@ -87,20 +88,52 @@ export function createMenus({ canvas, input, missions, settings, storage, captur
     $('completion-reward').hidden = !payout.cash;
     $('completion-cash').textContent = `+$${payout.cash.toLocaleString('en-US')}`;
     $('completion-rp').textContent = `+${payout.rp} RP`;
+    $('completion-note').textContent = payout.bonus ? `Includes Daro’s 10% contact bonus (+$${payout.bonus.toLocaleString('en-US')}).` : '';
     $('ending-detail').textContent = ending ? 'The ledger is on every radio in the city. The pause menu now has all six jobs ready for replay.'
       : payout.cash ? 'The crew paid up. The city still owes you a parking spot.' : 'Job replayed. First clear rewards have already been settled.';
     $('completion-progress').textContent = payout.cash ? `${job.done} / ${MISSIONS.length} JOBS CLEARED · ${missions.saveStatus().blocked ? 'SESSION ONLY' : 'PROGRESS SAVED'}` : '';
     show('complete');
   }
 
+  function refreshGarage(message = '') {
+    const state = missions.garageStatus();
+    $('garage-vehicle-state').textContent = state.stored && state.hasVehicle
+      ? `${state.garageType.toUpperCase()} · STORED AT THE YARD`
+      : `${state.currentType.toUpperCase()} · ${state.currentCondition}% BODYWORK`;
+    $('garage-unlocks').textContent = `ILEX ${state.services.ilexRepair ? 'REPAIRS READY' : 'REPAIR LOCKED'} · SAVA ${state.services.savaScan ? 'SCAN READY' : 'SCAN LOCKED'} · DARO ${state.services.daroBonus ? '+10% BONUS' : 'BONUS LOCKED'}`;
+    const vehicleAction = $('garage-vehicle-action');
+    vehicleAction.dataset.garageAction = state.inVehicle ? 'store' : 'recall';
+    vehicleAction.textContent = state.inVehicle ? 'Store current vehicle' : state.hasVehicle ? 'Recall garage vehicle' : 'No vehicle stored';
+    vehicleAction.disabled = state.inVehicle ? !state.canStore : !state.canRecall;
+    const repair = $('garage-repair');
+    repair.disabled = !state.canRepair;
+    repair.textContent = !state.services.ilexRepair ? 'Repair · unlock with Borrowed Voltage'
+      : state.cash < 150 ? 'Repair · $150 required' : 'Repair bodywork · $150';
+    for (const paint of GARAGE_PAINTS) {
+      const button = $(`garage-paint-${paint.id}`);
+      button.disabled = !state.canPaint;
+      button.setAttribute('aria-pressed', String(state.paint === paint.color));
+    }
+    $('garage-note').textContent = message || (missions.saveStatus().blocked ? 'Storage is unavailable; garage changes last this session.' : '');
+  }
+
+  function garage() {
+    refreshGarage();
+    show('garage', 'street');
+  }
+
   function back() {
     if (current === 'pause') resume();
+    else if (current === 'garage') resume();
     else if (['confirm', 'controls', 'settings'].includes(current)) root === 'title' ? title() : pause();
   }
   dialog.addEventListener('cancel', event => { event.preventDefault(); back(); });
   dialog.addEventListener('click', event => {
     const { view } = event.target.dataset;
     if (view) { show(view, root); if (view === 'settings') $('settings-note').textContent = ''; }
+    const { garageAction, paint } = event.target.dataset;
+    if (garageAction) refreshGarage(missions.garageAction(garageAction).message);
+    if (paint) refreshGarage(missions.garageAction('paint', paint).message);
     if (event.target.hasAttribute('data-back')) back();
   });
   const on = (id, handler) => $(id).addEventListener('click', handler);
@@ -148,7 +181,7 @@ export function createMenus({ canvas, input, missions, settings, storage, captur
     actions.quality(settings.quality); $('quality-button').textContent = `Quality: ${settings.quality}`;
     savePreferences();
   });
-  return { title, pause, resume, outcome, complete, get current() { return current; },
+  return { title, pause, resume, outcome, complete, garage, get current() { return current; },
     get atTitle() { return root === 'title'; },
     tune() { settings.station = (settings.station + 1) % STATIONS.length; station.value = settings.station; savePreferences(false); } };
 }

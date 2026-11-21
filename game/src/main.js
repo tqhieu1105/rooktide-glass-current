@@ -62,7 +62,7 @@ export function bootOpenWorldCrimeGame() {
   });
   const minimap = createMinimap(document.getElementById('minimap'), world);
   const hud = createStreetHUD(world, minimap);
-  const blank = { forward: 0, right: 0, sprint: false, handbrake: false, interact: false, camera: false,
+  const blank = { forward: 0, right: 0, sprint: false, handbrake: false, interact: false, garage: false, camera: false,
     pause: false, recover: false, map: false, radio: false, attack: false, weapon: 0, weaponWheelOpen: false,
     weaponWheelPick: 1, scan: false, orbitX: 0, orbitY: 0, zoom: 0 };
   let expanded = false, seenPayout = null, titleTime = 0;
@@ -136,18 +136,24 @@ export function bootOpenWorldCrimeGame() {
   }
 
   function startStreet(fresh) {
-    if (fresh) missions.resetProgress();
+    if (fresh) {
+      missions.resetProgress();
+      car = Object.assign(firstCar, createVehicle(), { active: true });
+    }
     const node = world.roads.nodes[missions.saveStatus().checkpoint ?? -1];
+    let carX = player.x + 4, carZ = player.z, carHeading = 0;
     if (node) {
       const next = world.roads.nodes[node.links[0]];
       const length = Math.hypot(next.x - node.x, next.z - node.z);
       const dx = (next.x - node.x) / length, dz = (next.z - node.z) / length;
       Object.assign(player, { x: node.x, previousX: node.x, z: node.z, previousZ: node.z });
-      const x = node.x + 4 * dx, z = node.z + 4 * dz;
-      Object.assign(car, { x, previousX: x, z, previousZ: z, heading: Math.atan2(dx, -dz) });
+      carX = node.x + 4 * dx; carZ = node.z + 4 * dz; carHeading = Math.atan2(dx, -dz);
       population.resetNear(player);
       world.district = getDistrictAt(player.x, player.z); world.visited.clear(); world.visited.add(world.district.id);
     }
+    missions.restoreGarageAt(player.x, player.z);
+    Object.assign(car, { x: carX, previousX: carX, z: carZ, previousZ: carZ, heading: carHeading,
+      vx: 0, vz: 0, speed: 0, active: true });
     Object.assign(rig, { heading: 0, pitch: 0, preset: 0, zoom: 0, orbitHold: 0, initialized: false });
     menus.resume();
   }
@@ -198,12 +204,14 @@ export function bootOpenWorldCrimeGame() {
       }
       const actions = input.readPlayerActions();
       if (actions.pause && !menus.current) menus.pause();
-      const activeInput = actions.forward || actions.right || actions.interact || actions.recover || actions.sprint
+      const activeInput = actions.forward || actions.right || actions.interact || actions.garage || actions.recover || actions.sprint
         || actions.attack || actions.weapon || actions.handbrake || actions.camera || actions.map || actions.radio || actions.orbitX || actions.orbitY || actions.zoom;
       const canPlay = !menus.current && !actions.weaponWheelOpen;
       if (canPlay && game.frozen && activeInput) { game.frozen = false; accumulator = 0; }
       if (canPlay && !game.frozen) {
-        if (actions.interact && !missions.interact()) {
+        if (actions.garage && !missions.active && missions.canOpenGarage()) {
+          menus.garage();
+        } else if (actions.interact && !missions.interact()) {
           if (player.inVehicle) exitVehicleSafely(player, car, world);
           else {
             const target = population.findEnterable(player);
