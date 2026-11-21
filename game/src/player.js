@@ -4,7 +4,7 @@ import { findSafeSpawn, isDryLand, showWorldMessage } from './world.js';
 
 export function createOnFootPlayer() {
   return { x: 95.5, z: 29, previousX: 95.5, previousZ: 29, heading: 0, speed: 0, vx: 0, vz: 0,
-    inVehicle: false, walkPhase: 0, health: 100 };
+    inVehicle: false, walkPhase: 0, health: 100, armour: 0 };
 }
 
 export function updateOnFootPlayer(player, actions, cameraHeading, world, car, dt) {

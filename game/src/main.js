@@ -53,10 +53,18 @@ export function bootOpenWorldCrimeGame() {
   view.scene.add(visuals.player.root, visuals.car.root);
   const rig = createThirdPersonCamera(view.camera);
   const input = createInput(canvas);
+  const wheel = document.getElementById('weapon-wheel');
+  const wheelSlots = [...wheel.querySelectorAll('[data-weapon]')];
+  wheelSlots.forEach((slot, index) => {
+    const angle = index / wheelSlots.length * Math.PI * 2;
+    slot.style.setProperty('--slot-x', `${Math.sin(angle) * 108}px`);
+    slot.style.setProperty('--slot-y', `${-Math.cos(angle) * 108}px`);
+  });
   const minimap = createMinimap(document.getElementById('minimap'), world);
   const hud = createStreetHUD(world, minimap);
   const blank = { forward: 0, right: 0, sprint: false, handbrake: false, interact: false, camera: false,
-    pause: false, recover: false, map: false, radio: false, attack: false, weapon: 0, scan: false, orbitX: 0, orbitY: 0, zoom: 0 };
+    pause: false, recover: false, map: false, radio: false, attack: false, weapon: 0, weaponWheelOpen: false,
+    weaponWheelPick: 1, scan: false, orbitX: 0, orbitY: 0, zoom: 0 };
   let expanded = false, seenPayout = null, titleTime = 0;
   const defaultQuality = view.diagnostics().quality;
   const settings = loadPreferences(storage, defaultQuality);
@@ -114,6 +122,14 @@ export function bootOpenWorldCrimeGame() {
     paintMissions(rig.camera, alpha);
     paintCombat();
     view.renderWorldFrame(player.inVehicle ? car : player, world.clock + (menus.atTitle ? titleTime : 0));
+    const loadout = combat.snapshot();
+    input.setWheelSelection(loadout.weapon);
+    wheel.hidden = !actions.weaponWheelOpen || !!menus.current;
+    for (const slot of wheelSlots) {
+      const selected = Number(slot.dataset.weapon) === actions.weaponWheelPick;
+      slot.classList.toggle('selected', selected);
+      if (Number(slot.dataset.weapon) === 2) slot.querySelector('small').textContent = `${loadout.rounds} / ${loadout.reserve}`;
+    }
     if (!menus.current) hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player), police, missions, combat.snapshot(), settings.station);
   }
 
@@ -180,9 +196,9 @@ export function bootOpenWorldCrimeGame() {
       }
       const actions = input.readPlayerActions();
       if (actions.pause && !menus.current) menus.pause();
-      const canPlay = !menus.current;
       const activeInput = actions.forward || actions.right || actions.interact || actions.recover || actions.sprint
         || actions.attack || actions.weapon || actions.handbrake || actions.camera || actions.map || actions.radio || actions.orbitX || actions.orbitY || actions.zoom;
+      const canPlay = !menus.current && !actions.weaponWheelOpen;
       if (canPlay && game.frozen && activeInput) { game.frozen = false; accumulator = 0; }
       if (canPlay && !game.frozen) {
         if (actions.interact && !missions.interact()) {
@@ -213,9 +229,10 @@ export function bootOpenWorldCrimeGame() {
         titleTime += elapsed;
         rig.heading = -.38 + Math.cos(titleTime * .28) * .20; rig.preset = 1; rig.zoom = 1.7; rig.pitch = .13;
       }
-      const playing = !menus.current && !game.frozen;
+      const playing = !menus.current && !game.frozen && !actions.weaponWheelOpen;
       audio.update(playing, player.inVehicle, car.speed, actions.forward);
-      renderFrame(playing ? accumulator / STEP : 1, game.frozen ? 0 : elapsed || STEP, playing ? actions : blank);
+      const renderActions = !menus.current && (!game.frozen || actions.weaponWheelOpen) ? actions : blank;
+      renderFrame(playing ? accumulator / STEP : 1, game.frozen || actions.weaponWheelOpen ? 0 : elapsed || STEP, renderActions);
       frames++;
       if (frames === 3) { window.__gameReady = true; signalShotReady(); }
       requestAnimationFrame(frame);

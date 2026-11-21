@@ -18,7 +18,7 @@ export function createStreetHUD(world, minimap) {
   const elements = Object.fromEntries(['district', 'district-subtitle', 'explored', 'objective', 'prompt',
     'speed', 'drive-gear', 'mode', 'condition', 'condition-value', 'drive-readout', 'weapon-readout', 'pistol-slot', 'weapon-ammo',
     'station-readout', 'station-name', 'station-track', 'toast', 'compass', 'status', 'map-label',
-    'city-cash', 'city-rank', 'rank-meter', 'health-value', 'health-bar', 'free-roam', 'mission-card', 'mission-chapter', 'mission-title', 'mission-step',
+    'city-cash', 'city-rank', 'rank-meter', 'game-time', 'health-value', 'health-bar', 'armour-value', 'armour-bar', 'weapon-name', 'free-roam', 'mission-card', 'mission-chapter', 'mission-title', 'mission-step',
     'mission-stages', 'mission-objective', 'mission-waypoint', 'mission-next', 'mission-radio', 'radio-contact', 'radio-line',
     'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-row', 'heat-meter', 'dispatch-units', 'aim-reticle'].map(id => [id, $(id)]));
   const stars = [...elements['wanted-stars'].children];
@@ -57,6 +57,8 @@ export function createStreetHUD(world, minimap) {
       elements['city-cash'].setAttribute('aria-label', `Cash: $${cache['city-cash']}`);
     }
     text('city-rank', `${job.rank.toUpperCase()} · ${job.rp.toLocaleString()} RP`);
+    const clockMinutes = 17 * 60 + 40 + Math.floor(world.clock / 60);
+    text('game-time', `${String(Math.floor(clockMinutes / 60) % 24).padStart(2, '0')}:${String(clockMinutes % 60).padStart(2, '0')}`);
     if (cache.rp !== job.rp) {
       const nextRank = rankThresholds.findIndex(rp => rp > job.rp);
       const fraction = nextRank < 0 ? 1 : (job.rp - rankThresholds[nextRank - 1]) / (rankThresholds[nextRank] - rankThresholds[nextRank - 1]);
@@ -68,6 +70,9 @@ export function createStreetHUD(world, minimap) {
       elements['health-bar'].style.width = `${player.health}%`;
       cache.health = player.health;
     }
+    const armour = Math.max(0, Math.min(100, player.armour || 0));
+    text('armour-value', Math.ceil(armour));
+    if (cache.armour !== armour) { elements['armour-bar'].style.width = `${armour}%`; cache.armour = armour; }
     updateMission(job);
     text('mode', driving ? VEHICLE_TUNING[car.type].name : 'NERI VOSS');
     elements['drive-readout'].hidden = elements['station-readout'].hidden = !driving;
@@ -89,6 +94,12 @@ export function createStreetHUD(world, minimap) {
       elements['pistol-slot'].hidden = false;
       elements['weapon-ammo'].hidden = combat.weapon !== 2;
       elements['weapon-readout'].classList.toggle('pistol-equipped', combat.weapon === 2);
+      text('weapon-name', combat.weapon === 2 ? 'PISTOL' : 'FISTS');
+      elements['weapon-readout'].querySelector('.weapon-icon-frame').dataset.weapon = String(combat.weapon);
+      const iconPath = elements['weapon-readout'].querySelector('.weapon-icon-frame path');
+      iconPath.setAttribute('d', combat.weapon === 2
+        ? 'M4 12h16l2 2h5v5h-7l-2-2H4zM10 17h5l1 8h-5zM21 12V8h3v4z'
+        : 'M8 18c-2-1-3-3-2-5l2-4 3 1 2 3 2-6 3 1-1 5 2-4 3 1-2 6 2-3 3 2-4 8c-1 3-4 4-7 3l-4-2-4-5c-1-1-1-2 0-3Z');
       text('weapon-ammo', combat.reload ? 'RELOADING' : `${combat.rounds} / ${combat.reserve}`);
     }
     const toast = world.messageTime > 0 ? world.message : '';

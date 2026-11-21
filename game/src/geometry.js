@@ -138,7 +138,7 @@ export function districtSign(builder, sign) {
     z - Math.sin(yaw) * width * side * 0.43, 0.22, 5.2, 0.25, A.ink, yaw);
   builder.box(x, 5.1, z, width, 2.1, 0.3, color, yaw);
   builder.box(x, 4.05, z, width + 0.2, 0.14, 0.5, A.white, yaw);
-  const neon = text === 'KILN MARKET' ? 0xff9b7d : text === 'RELAY QUAY' ? 0x83ffe6 : 0;
+  const neon = text === 'KILN MARKET' ? A.neonPink : text === 'RELAY QUAY' ? A.neonMagenta : 0;
   for (const side of [-1, 1]) meshLettering(builder, text, x + Math.sin(yaw) * side * 0.18, 5.1,
     z + Math.cos(yaw) * side * 0.18, 0.17, yaw + (side < 0 ? Math.PI : 0), neon || A.white, neon ? 'light' : 'solid');
 }

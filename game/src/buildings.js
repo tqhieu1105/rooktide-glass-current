@@ -28,10 +28,10 @@ export function createDistrictBuildings(world, b) {
   }
   for (const sign of world.signs) districtSign(b, sign);
   instanceCityLandmarks(b);
-  neonBoard(b, 'HOT CLAY', 145, 6.2, 30.9, .39, Math.PI, 0xffd47a, 0xff776f);
-  neonBoard(b, 'HOT CLAY', 145, 6.2, 79, .39, 0, 0xffd47a, 0xff776f);
-  neonBoard(b, 'FISH DISCO', 316, 19.5, 306, .42, 0, 0x77fadc, 0xf985c1);
-  neonBoard(b, 'FISH DISCO', 316, 19.5, 302, .42, Math.PI, 0x77fadc, 0xf985c1);
+  neonBoard(b, 'HOT CLAY', 145, 6.2, 30.9, .39, Math.PI, A.neonPink, A.neonOrange);
+  neonBoard(b, 'HOT CLAY', 145, 6.2, 79, .39, 0, A.neonPink, A.neonOrange);
+  neonBoard(b, 'FISH DISCO', 316, 19.5, 306, .42, 0, A.neonMagenta, A.neonPink);
+  neonBoard(b, 'FISH DISCO', 316, 19.5, 302, .42, Math.PI, A.neonMagenta, A.neonPink);
 }
 
 export function instanceCityLandmarks(b) {

@@ -13,6 +13,10 @@ export function createMissionModels(scene, missions, world) {
   const core = new THREE.Mesh(new THREE.BoxGeometry(.65, .42, .42), new THREE.MeshLambertMaterial({ color: 0xf1bf63 }));
   const gate = new THREE.Group();
   const columnMaterial = new THREE.MeshBasicMaterial({ color: mint, transparent: true, opacity: .5, toneMapped: false });
+  const markerColumn = new THREE.Mesh(new THREE.CylinderGeometry(.42, .72, 5.6, 8, 1, true),
+    new THREE.MeshBasicMaterial({ color: mint, transparent: true, opacity: .16, depthWrite: false, side: THREE.DoubleSide, toneMapped: false }));
+  markerColumn.position.y = 2.8;
+  markerColumn.renderOrder = 1;
   for (const x of [-1, 1]) {
     const post = new THREE.Mesh(new THREE.BoxGeometry(.25, 4.8, .25), columnMaterial);
     post.position.set(x * 5.2, 2.4, 0); gate.add(post);
@@ -22,7 +26,7 @@ export function createMissionModels(scene, missions, world) {
   const temp = new THREE.Vector3();
   const markerLabel = document.getElementById('waypoint-label');
   const markerName = document.getElementById('waypoint-name');
-  scene.add(ring, diamond, core, gate, contact.root, ...guards.map(model => model.root));
+  scene.add(ring, diamond, core, gate, markerColumn, contact.root, ...guards.map(model => model.root));
   let oldLabel = '';
 
   function actorModel() {
@@ -50,6 +54,7 @@ export function createMissionModels(scene, missions, world) {
     const stage = missions.presentation();
     const marker = stage.marker;
     ring.visible = diamond.visible = !!marker;
+    markerColumn.visible = !!marker && marker.style !== 'contact';
     contact.root.visible = marker?.style === 'contact';
     gate.visible = stage.gate && !!marker;
     core.visible = stage.collect && !!marker;
@@ -59,6 +64,7 @@ export function createMissionModels(scene, missions, world) {
       const tint = style === 'contact' ? amber : style === 'target' ? coral : mint;
       color.color.setHex(tint); ring.material.color.setHex(tint);
       ring.position.set(x, .22, z); ring.scale.setScalar(Math.min(8, radius));
+      markerColumn.position.x = x; markerColumn.position.z = z; markerColumn.material.color.setHex(tint);
       const height = gate.visible ? 5.3 : style === 'contact' || style === 'car' || style === 'target' ? 3.2 : 2.05;
       diamond.position.set(x, height + .18 * Math.sin(world.clock * 3), z);
       diamond.rotation.y = world.clock * 1.4;

@@ -5,7 +5,7 @@ import { createGeometryBuilder } from './geometry.js';
 import { createDistrictBuildings } from './buildings.js';
 import { createBeachAndHarbour } from './coast.js';
 
-const SUN = new THREE.Vector3(67, 38, -73);
+const SUN = new THREE.Vector3(67, 15, -73);
 
 export function createCityRenderer(canvas, world) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false, powerPreference: 'high-performance' });
@@ -82,14 +82,18 @@ export function createCityRenderer(canvas, world) {
 function createSky() {
   return new THREE.Mesh(new THREE.SphereGeometry(950, 16, 10), new THREE.ShaderMaterial({
     side: THREE.BackSide, depthWrite: false,
-    uniforms: { top: { value: new THREE.Color(A.skyTop) }, horizon: { value: new THREE.Color(A.skyHorizon) },
+    uniforms: { top: { value: new THREE.Color(A.skyTop) }, magenta: { value: new THREE.Color(A.skyMagenta) },
+      pink: { value: new THREE.Color(A.skyPink) }, horizon: { value: new THREE.Color(A.skyHorizon) },
       sun: { value: SUN.clone().normalize() } },
     vertexShader: 'varying vec3 vDirection; void main(){vDirection=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-    fragmentShader: `varying vec3 vDirection; uniform vec3 top; uniform vec3 horizon; uniform vec3 sun;
-      void main(){vec3 dir=normalize(vDirection); float h=smoothstep(-.035,.48,dir.y);
+    fragmentShader: `varying vec3 vDirection; uniform vec3 top; uniform vec3 magenta; uniform vec3 pink; uniform vec3 horizon; uniform vec3 sun;
+      void main(){vec3 dir=normalize(vDirection);
+      float lower=smoothstep(-.22,.10,dir.y); vec3 low=mix(horizon,pink,lower);
+      float middle=smoothstep(-.015,.23,dir.y); vec3 dusk=mix(low,magenta,middle);
+      float upper=smoothstep(-.03,.27,dir.y); vec3 sky=mix(dusk,top,upper);
       float angle=dot(dir,sun); float glow=smoothstep(.94,.999,angle);
       float disc=smoothstep(.9991,.9995,angle);
-      gl_FragColor=vec4(mix(horizon,top,h)+vec3(1.,.49,.17)*glow*.65+vec3(3.,2.,1.2)*disc,1.);
+      gl_FragColor=vec4(sky+vec3(1.,.35,.25)*glow*.55+vec3(3.,2.,1.2)*disc,1.);
       #include <tonemapping_fragment>
       #include <colorspace_fragment>
       }`,

@@ -227,6 +227,25 @@ try {
   await browser.tap('Digit2');
   check('Weapon 2 selects the live pistol and its aiming reticle', (await snapshot()).combat.weapon === 2
     && await browser.evaluate('!document.getElementById("aim-reticle").hidden && !document.getElementById("pistol-slot").hidden'));
+  const wheelTick = (await snapshot()).tick;
+  await browser.key('Tab'); await delay(220);
+  check('Holding Tab opens the radial wheel and pauses the street', await browser.evaluate('!document.getElementById("weapon-wheel").hidden')
+    && (await snapshot()).tick === wheelTick);
+  await browser.key('Digit1'); await delay(120);
+  check('Number keys pick a wheel slot while Tab is held', await browser.evaluate('document.querySelectorAll("#weapon-wheel [data-weapon]")[0].classList.contains("selected")'));
+  await browser.key('Digit1', false); await browser.key('Tab', false); await delay(180);
+  check('Releasing Tab confirms the keyboard-picked fists slot', (await snapshot()).combat.weapon === 1
+    && await browser.evaluate('document.getElementById("weapon-wheel").hidden'));
+  await browser.tap('Digit2');
+  await browser.key('Tab'); await delay(80);
+  await browser.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: 640, y: 170 }); await delay(150);
+  check('Mouse direction highlights the upper radial slot', await browser.evaluate('document.querySelectorAll("#weapon-wheel [data-weapon]")[0].classList.contains("selected")'));
+  await browser.key('Tab', false); await delay(180);
+  check('Mouse-picked weapon is confirmed on Tab release', (await snapshot()).combat.weapon === 1);
+  await browser.tap('Digit1');
+  check('Digit1 still quick-selects fists after using the wheel', (await snapshot()).combat.weapon === 1);
+  await browser.tap('Digit2');
+  check('Digit2 still quick-selects the pistol after using the wheel', (await snapshot()).combat.weapon === 2);
   await hold('KeyF', 420);
   const firing = await snapshot();
   check('F fires from the on-foot pistol and raises wanted heat', firing.combat.rounds < 12 && firing.police.level === 1);

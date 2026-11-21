@@ -38,8 +38,8 @@ export function createRooktideCity(seed = 20261121) {
   for (let z = -410; z < 420; z += 29) palms.push({ x: 469 + random() * 9, z, height: 9 + random() * 3, turn: random() * 6.28 });
   signs.push(
     { text: 'SAFFRON STRAND', x: 444, z: 65, yaw: 0, color: 0xc9845e },
-    { text: 'KILN MARKET', x: 126, z: 19, yaw: 0, color: 0xc17659 },
-    { text: 'RELAY QUAY', x: 298, z: 264, yaw: 0, color: 0x547c7b },
+    { text: 'KILN MARKET', x: 126, z: 19, yaw: 0, color: 0xb93b87 },
+    { text: 'RELAY QUAY', x: 298, z: 264, yaw: 0, color: 0x78347d },
     { text: 'CINDERBANK', x: -374, z: 262, yaw: 0, color: 0x807d61 },
     { text: 'SWITCHBACK HEIGHTS', x: -373, z: -322, yaw: 0, color: 0x7c8b6b },
     { text: 'GLASSHOOK', x: 574, z: -267, yaw: Math.PI / 2, color: 0x4b8789 },
