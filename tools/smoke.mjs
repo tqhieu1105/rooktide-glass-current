@@ -145,9 +145,32 @@ try {
   check('Retry restores the same job stage and clears the dialog', !(await snapshot()).mission.failed && (await snapshot()).mission.index === 0
     && await browser.evaluate('document.getElementById("chase-outcome").hidden'));
 
-  await browser.key('ShiftLeft'); await browser.key('KeyW');
-  await browser.waitFor('document.getElementById("prompt").textContent.includes("Take the marked vehicle")', 22000);
-  await browser.key('KeyW', false); await browser.key('ShiftLeft', false);
+  // Jog through the lot marker, then approach the compact from the sidewalk.
+  async function jogTo(x, z, tolerance) {
+    const held = new Set();
+    const deadline = performance.now() + 20000;
+    try {
+      await browser.key('ShiftLeft');
+      while (performance.now() < deadline) {
+        const { player } = await snapshot();
+        const dx = x - player.x, dz = z - player.z;
+        if (Math.hypot(dx, dz) < tolerance) return;
+        const wanted = [];
+        if (Math.abs(dx) > .65) wanted.push(dx < 0 ? 'KeyA' : 'KeyD');
+        if (Math.abs(dz) > .65) wanted.push(dz < 0 ? 'KeyW' : 'KeyS');
+        for (const code of held) if (!wanted.includes(code)) { await browser.key(code, false); held.delete(code); }
+        for (const code of wanted) if (!held.has(code)) { await browser.key(code); held.add(code); }
+        await delay(90);
+      }
+      throw new Error(`Could not jog to (${x}, ${z}): ${JSON.stringify((await snapshot()).player)}`);
+    } finally {
+      for (const code of held) await browser.key(code, false);
+      await browser.key('ShiftLeft', false);
+    }
+  }
+  await jogTo(99, -46, 2.0);
+  await jogTo(97.3, -70, 1.1);
+  await browser.waitFor('document.getElementById("prompt").textContent.includes("Take the marked vehicle")', 5000);
   await browser.tap('KeyE');
   const marked = await snapshot();
   check('Entering the marked compact advances the mission and calls a one-star patrol', marked.player.inVehicle
