@@ -104,6 +104,14 @@ try {
   check('Retry restores the same job stage and clears the dialog', !(await snapshot()).mission.failed && (await snapshot()).mission.index === 0
     && await browser.evaluate('document.getElementById("chase-outcome").hidden'));
 
+  await browser.key('ShiftLeft'); await browser.key('KeyW');
+  await browser.waitFor('document.getElementById("prompt").textContent.includes("Take the marked vehicle")', 22000);
+  await browser.key('KeyW', false); await browser.key('ShiftLeft', false);
+  await browser.tap('KeyE');
+  const marked = await snapshot();
+  check('Entering the marked compact advances the mission and calls a one-star patrol', marked.player.inVehicle
+    && marked.car.type === 'compact' && marked.mission.kind === 'escapeWanted' && marked.police.level === 1);
+
   // Sixty real wall-clock seconds of keyboard-controlled driving on normal roads.
   await navigate('?shot=chase&seed=20261121');
   const chaseStart = await snapshot();
