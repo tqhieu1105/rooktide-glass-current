@@ -29,6 +29,9 @@ export function createCityRenderer(canvas, world) {
   const atlas = createCityAtlas(world.seed);
   const sky = createSky(); scene.add(sky);
   const sea = createSea(atlas); scene.add(sea);
+  // Fill the background after the opaque city so depth can reject hidden sky and water fragments.
+  sea.renderOrder = 1;
+  sky.renderOrder = 2;
   const builder = createGeometryBuilder(scene, atlas, world.seed, { terrain: true });
   createBeachAndHarbour(world, builder);
   const environment = builder.finish();

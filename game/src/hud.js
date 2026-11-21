@@ -104,7 +104,7 @@ export function createStreetHUD(world, minimap) {
       if (condition !== bodywork) {
         bodywork = condition;
         elements.condition.style.width = conditionWidths[condition];
-        text('condition-value', condition);
+        text('condition-value', conditionWidths[condition]);
       }
       text('station-name', STATIONS[station].name);
       text('station-track', STATIONS[station].track);
