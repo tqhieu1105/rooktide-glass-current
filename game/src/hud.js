@@ -13,13 +13,15 @@ const drivingPrompt = '<kbd>E</kbd> Step out <span>·</span> <kbd>SPACE</kbd> Ha
 export function createStreetHUD(world, minimap) {
   const $ = id => document.getElementById(id);
   const elements = Object.fromEntries(['district', 'district-subtitle', 'explored', 'objective', 'prompt',
-    'speed', 'speed-unit', 'mode', 'condition', 'condition-row', 'toast', 'compass', 'status', 'map-label'].map(id => [id, $(id)]));
+    'speed', 'speed-unit', 'mode', 'condition', 'condition-row', 'toast', 'compass', 'status', 'map-label',
+    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-meter'].map(id => [id, $(id)]));
+  const stars = [...elements['wanted-stars'].children];
   const cache = {};
   function text(id, value) {
     if (cache[id] !== value) { cache[id] = value; elements[id].textContent = value; }
   }
   let timer = 1, prompt = -1, bodywork = -1;
-  function updateStreetHUD(player, car, rig, dt, expanded, target) {
+  function updateStreetHUD(player, car, rig, dt, expanded, target, police) {
     timer += dt;
     const mapChanged = cache.expanded !== expanded;
     if (timer < 0.08 && !mapChanged) return;
@@ -52,7 +54,23 @@ export function createStreetHUD(world, minimap) {
     const degrees = Math.round(((rig.heading * 180 / Math.PI) % 360 + 360) % 360) % 360;
     text('compass', bearings[degrees]);
     text('map-label', expanded ? 'CITY OVERVIEW · M TO CLOSE' : 'M · CITY OVERVIEW');
-    minimap.drawRotatingMinimap(player, car, rig.heading, expanded);
+    const law = police.snapshot(), level = law.level;
+    text('wanted-level', level ? `LEVEL ${level} / ${law.state.toUpperCase()}` : 'ROUTINE');
+    const heat = `${law.heat}%`;
+    if (cache.heat !== heat) { cache.heat = heat; elements['heat-meter'].style.width = heat; }
+    const starLabel = `Wanted level: ${level} ${level === 1 ? 'star' : 'stars'}`;
+    if (cache.starLabel !== starLabel || cache.wantedState !== law.state) {
+      cache.starLabel = starLabel; cache.wantedState = law.state;
+      elements['wanted-stars'].setAttribute('aria-label', starLabel);
+      elements['wanted-stars'].classList.toggle('searching', law.state === 'search');
+      stars.forEach((star, i) => star.classList.toggle('lit', i < level));
+    }
+    const nearest = law.units.reduce((best, unit) => Math.min(best, unit.distance), Infinity);
+    const dispatch = level
+      ? `${law.units.length} RCP ${law.units.length === 1 ? 'unit' : 'units'} / ${Number.isFinite(nearest) ? `${Math.round(nearest)} M` : 'INBOUND'}${law.helicopter ? ' / AIR UNIT' : ''}`
+      : 'Rooktide Civic Patrol / Area quiet';
+    text('dispatch-readout', dispatch);
+    minimap.drawRotatingMinimap(player, car, rig.heading, expanded, police);
   }
   return { updateStreetHUD };
 }

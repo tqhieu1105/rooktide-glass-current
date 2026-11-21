@@ -2,15 +2,35 @@ const cellKey = (x, z) => x * 65536 + z;
 
 export function buildCollisionGrid(colliders, cellSize = 32) {
   const cells = new Map();
-  for (const box of colliders) {
+  const memberships = new Map();
+  function add(box) {
+    const keys = [];
     for (let x = Math.floor(box.minX / cellSize); x <= Math.floor(box.maxX / cellSize); x++) {
       for (let z = Math.floor(box.minZ / cellSize); z <= Math.floor(box.maxZ / cellSize); z++) {
         const key = cellKey(x, z);
         if (!cells.has(key)) cells.set(key, []);
         cells.get(key).push(box);
+        keys.push(key);
       }
     }
+    memberships.set(box, keys);
+    if (!colliders.includes(box)) colliders.push(box);
+    return box;
   }
+  function remove(box) {
+    const keys = memberships.get(box);
+    if (!keys) return false;
+    for (const key of keys) {
+      const cell = cells.get(key), index = cell.indexOf(box);
+      if (index >= 0) cell.splice(index, 1);
+      if (!cell.length) cells.delete(key);
+    }
+    memberships.delete(box);
+    const index = colliders.indexOf(box);
+    if (index >= 0) colliders.splice(index, 1);
+    return true;
+  }
+  for (const box of [...colliders]) add(box);
   // Callers consume this scratch array before making another query.
   const result = [];
   function query(x, z, radius) {
@@ -25,7 +45,7 @@ export function buildCollisionGrid(colliders, cellSize = 32) {
     }
     return result;
   }
-  return { query, colliders, cellSize, circle: { x: 0, z: 0, hit: false }, motion: { hit: false, nx: 0, nz: 0 } };
+  return { query, add, remove, colliders, cellSize, circle: { x: 0, z: 0, hit: false }, motion: { hit: false, nx: 0, nz: 0 } };
 }
 export function resolveCircle(grid, x, z, radius) {
   let hit = false;

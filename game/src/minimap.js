@@ -20,15 +20,18 @@ export function createMinimap(canvas, world) {
   }
   let lastX = Infinity, lastZ = Infinity, lastHeading = Infinity, lastFacing = Infinity, lastCarX = Infinity, lastCarZ = Infinity;
   let lastCarHeading = Infinity, lastExpanded, lastDriving, lastVisited = -1;
-  function drawRotatingMinimap(player, car, heading, expanded = false) {
+  let lastPolice = false;
+  function drawRotatingMinimap(player, car, heading, expanded = false, police) {
+    const policeActive = police.wanted.level > 0;
     const x = Math.round(player.x), z = Math.round(player.z);
     const angle = Math.round(heading * 90), facing = Math.round(player.heading * 90);
     const carX = Math.round(car.x), carZ = Math.round(car.z), carHeading = Math.round(car.heading * 90);
     if (x === lastX && z === lastZ && angle === lastHeading && facing === lastFacing && lastExpanded === expanded
-      && lastDriving === player.inVehicle && lastVisited === world.visited.size
+      && lastDriving === player.inVehicle && lastVisited === world.visited.size && !policeActive && !lastPolice
       && (player.inVehicle || carX === lastCarX && carZ === lastCarZ && carHeading === lastCarHeading)) return;
     lastX = x; lastZ = z; lastHeading = angle; lastFacing = facing; lastExpanded = expanded;
     lastDriving = player.inVehicle; lastVisited = world.visited.size;
+    lastPolice = policeActive;
     lastCarX = carX; lastCarZ = carZ; lastCarHeading = carHeading;
     const c = context, scale = expanded ? 0.22 : 0.77;
     c.setTransform(2, 0, 0, 2, 0, 0); c.clearRect(0, 0, size, size);
@@ -36,6 +39,11 @@ export function createMinimap(canvas, world) {
     c.fillStyle = '#193f45'; c.fillRect(0, 0, size, size);
     c.translate(size / 2, size / 2); c.rotate(heading); c.scale(scale, scale); c.translate(-player.x, -player.z);
     c.drawImage(map, -530, -440, 1200, 880);
+    if (police.wanted.state === 'search') {
+      const { lastSeen, searchRadius } = police.wanted;
+      c.fillStyle = '#f0745055'; c.strokeStyle = '#ffb472'; c.lineWidth = 1.5 / scale;
+      c.beginPath(); c.arc(lastSeen.x, lastSeen.z, searchRadius, 0, Math.PI * 2); c.fill(); c.stroke();
+    }
     for (const district of DISTRICTS) {
       c.fillStyle = world.visited.has(district.id) ? '#ffe0a1' : '#92b7b0';
       c.beginPath(); c.arc(district.x, district.z, 5 / scale, 0, Math.PI * 2); c.fill();
@@ -44,6 +52,13 @@ export function createMinimap(canvas, world) {
       c.save(); c.translate(car.x, car.z); c.rotate(car.heading);
       c.fillStyle = '#fa9876'; c.fillRect(-3 / scale, -5 / scale, 6 / scale, 10 / scale); c.restore();
     }
+    function marker(actor, fill, radius) {
+      c.fillStyle = fill; c.strokeStyle = '#18383d'; c.lineWidth = 1.5 / scale;
+      c.beginPath(); c.arc(actor.x, actor.z, radius / scale, 0, Math.PI * 2); c.fill(); c.stroke();
+    }
+    for (const unit of police.units) if (unit.active) marker(unit, '#fa746d', 4);
+    if (police.helicopter.active) marker(police.helicopter, '#8ce9ff', 5);
+    for (const block of police.roadblocks) if (block) marker(block, '#ffd05d', 4.5);
     c.restore();
     c.save(); c.translate(size / 2, size / 2); c.rotate(heading - player.heading);
     c.fillStyle = '#f9e5b5'; c.strokeStyle = '#18383d'; c.lineWidth = 2;

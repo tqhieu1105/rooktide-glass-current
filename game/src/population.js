@@ -4,6 +4,7 @@ import { createVehicle, stepArcadeDriving } from './vehicles.js';
 import { isDryLand, showWorldMessage } from './world.js';
 import { isSpaceClear, moveBodyWithCollisions } from './collision.js';
 import { buildSidewalkLinks, buildTrafficLanes } from './population-routes.js';
+import { hasPoliceSight } from './police.js';
 
 const TYPES = ['compact', 'saloon', 'van', 'pickup'];
 const PAINT = [0xf8ad45, 0xf0809a, 0x59b4ad, 0x7a8ad4, 0xe9d6a8, 0x985c9c, 0x72a974, 0xee7553];
@@ -13,7 +14,7 @@ const RECYCLING_RANGE = 310;
 const distSq = (x, z, a) => (x - a.x) ** 2 + (z - a.z) ** 2;
 const blank = { forward: 0, right: 0, handbrake: false };
 
-export function createPopulation(world, firstCar) {
+export function createPopulation(world, firstCar, onCrime = () => {}) {
   const random = createRandom(world.seed ^ 0xca921);
   const lanes = buildTrafficLanes(world.roads);
   const walks = buildSidewalkLinks(world);
@@ -33,7 +34,7 @@ export function createPopulation(world, firstCar) {
   let low = true, spawnTick = 0, sparkCursor = 0;
   let crossings = 0, stumbles = 0, impacts = 0, thefts = 0;
   let lastWitness = false, lastStaticImpact = 0;
-  const pop = { cars, vehicles, people, sparks, step, seedNear, findEnterable, claim, alarmAt, setQuality,
+  const pop = { cars, vehicles, people, sparks, step, seedNear, findEnterable, claim, alarmAt, throwSparks, setQuality,
     snapshot: () => ({ cars: cars.filter(car => car.active).length, walkers: people.filter(p => p.active).length,
       parked: cars.filter(car => car.active && car.parked && !car.claimed).length, crossings, stumbles, impacts, thefts,
       lastWitness, vehicles: vehicles.filter(car => car.active).map(car => ({ id: car.id, type: car.type,
@@ -135,12 +136,21 @@ export function createPopulation(world, firstCar) {
     if (car === firstCar || car.claimed) return;
     car.claimed = true;
     thefts++;
-    lastWitness = false;
-    for (const p of people) if (p.active && distSq(p.x, p.z, car) < 24 ** 2) { lastWitness = true; break; }
+    lastWitness = witnessNear(car, 32);
     if (lastWitness) showWorldMessage(world, 'Someone saw that. Probably everyone.', 3);
+    onCrime('vehicle_theft', car.x, car.z, lastWitness);
+  }
+  function witnessNear(actor, radius, except) {
+    return people.some(p => p !== except && p.active && distSq(p.x, p.z, actor) < radius ** 2 && hasPoliceSight(world, p, actor, 1.65));
   }
   function westEastGreen(node) { return (world.clock + node * 1.1) % 13 >= 6.5; }
   function blockedAhead(car, fx, fz, range, side, player) {
+    for (const box of world.grid.query(car.x, car.z, range + 1)) if (box.kind === 'roadblock') {
+      for (let d = 0; d <= range; d += 1.5) {
+        const x = car.x + d * fx, z = car.z + d * fz;
+        if (x > box.minX - .9 && x < box.maxX + .9 && z > box.minZ - .9 && z < box.maxZ + .9) return true;
+      }
+    }
     for (const other of vehicles) {
       if (other === car || !other.active) continue;
       const x = other.x - car.x, z = other.z - car.z;
@@ -228,7 +238,7 @@ export function createPopulation(world, firstCar) {
     }
     return true;
   }
-  function tickWalker(p, dt, think) {
+  function tickWalker(p, dt, think, chosen) {
     p.previousX = p.x; p.previousZ = p.z;
     if (think) for (const car of vehicles) {
       if (!car.active || car.speed < 4) continue;
@@ -237,7 +247,9 @@ export function createPopulation(world, firstCar) {
       const side = (dx * car.vz - dz * car.vx) / (car.speed || 1);
       if (Math.abs(ahead) < 2.35 && Math.abs(side) < 1.3 || ahead > 0 && ahead < 4 + car.speed * .55 && Math.abs(side) < 2.2) {
         const sign = side < 0 ? -1 : 1;
-        scare(p, p.x - car.vz * sign, p.z + car.vx * sign, Math.abs(ahead) < 2.35 && Math.abs(side) < 1.3); break;
+        const hit = Math.abs(ahead) < 2.35 && Math.abs(side) < 1.3;
+        if (hit && !p.tumble && car === chosen && car.speed > 8) onCrime('assault', p.x, p.z, witnessNear(p, 30, p));
+        scare(p, p.x - car.vz * sign, p.z + car.vx * sign, hit); break;
       }
     }
     const { link, from } = p, to = link.a === from ? link.b : link.a;
@@ -301,6 +313,7 @@ export function createPopulation(world, firstCar) {
     impacts++; throwSparks((car.x + other.x) / 2, (car.z + other.z) / 2, 14);
     alarmAt(other.x, other.z);
     showWorldMessage(world, 'That was constructive criticism.', 2);
+    if (approach > 13) onCrime('reckless_driving', car.x, car.z, witnessNear(other, 34));
   }
   function step(player, chosen, camera, dt) {
     const think = world.tick % 3 === 0;
@@ -312,7 +325,7 @@ export function createPopulation(world, firstCar) {
       } else tickTraffic(car, player, dt, think);
       if (player.inVehicle && distSq(car.x, car.z, chosen) < 28) bumpCar(chosen, car);
     }
-    for (const p of people) if (p.active) tickWalker(p, dt, think);
+    for (const p of people) if (p.active) tickWalker(p, dt, think, player.inVehicle ? chosen : null);
     for (const s of sparks) if (s.life > 0) {
       s.life -= dt; s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt; s.vy -= 18 * dt;
     }

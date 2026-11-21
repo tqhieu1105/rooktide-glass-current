@@ -10,6 +10,8 @@ import { createStreetHUD } from './hud.js';
 import { stagePlayableScreenshot, signalShotReady } from './shots.js';
 import { createPopulation } from './population.js';
 import { createPopulationModels } from './population-models.js';
+import { createPoliceSystem } from './police.js';
+import { createPoliceModels } from './police-models.js';
 import { STEP } from './config.js';
 
 export function bootOpenWorldCrimeGame() {
@@ -21,9 +23,15 @@ export function bootOpenWorldCrimeGame() {
   const player = createOnFootPlayer();
   const firstCar = createVehicle();
   let car = firstCar;
-  const population = createPopulation(world, firstCar);
+  const police = createPoliceSystem(world, player, () => car, {
+    camera: () => view.camera,
+    alarm: (x, z) => population.alarmAt(x, z),
+    sparks: (x, z, strength) => population.throwSparks(x, z, strength),
+  });
+  const population = createPopulation(world, firstCar, (kind, x, z, witnessed) => police.reportCrime(kind, x, z, witnessed));
   world.population = population;
   const paintPopulation = createPopulationModels(view.scene, population);
+  const paintPolice = createPoliceModels(view.scene, police, world);
   const visuals = { player: createPlayerModel(), car: createVehicleModel() };
   view.scene.add(visuals.player.root, visuals.car.root);
   const rig = createThirdPersonCamera(view.camera);
@@ -38,13 +46,23 @@ export function bootOpenWorldCrimeGame() {
   let last = performance.now(), accumulator = 0, frames = 0;
   const frameTimes = new Float64Array(3600);
   let frameSample = 0, frameSamples = 0;
-  const game = { player, car, world, rig, population, frozen: false, advanceFixedStep, renderFrame };
+  const game = { player, get car() { return car; }, world, rig, population, police, frozen: false, advanceFixedStep, renderFrame };
+  const outcome = document.getElementById('chase-outcome');
+  let cash = 250;
 
   function advanceFixedStep(actions) {
     stepArcadeDriving(car, actions, world, STEP, player.inVehicle);
     updateOnFootPlayer(player, actions, rig.heading, world, car, STEP);
     world.clock += STEP; world.tick++;
     population.step(player, car, rig, STEP);
+    police.step(STEP, actions);
+    if (police.wanted.outcome && outcome.hidden) {
+      const penalty = Math.min(cash, 50); cash -= penalty;
+      document.getElementById('outcome-title').textContent = police.wanted.outcome === 'busted' ? 'Busted.' : 'Down for the count.';
+      document.getElementById('outcome-detail').textContent = `$${penalty} in fees. Ilex can get you moving again.`;
+      input.clearHeldInputs(); outcome.hidden = false;
+      document.getElementById('retry-chase').focus();
+    }
     world.messageTime = Math.max(0, world.messageTime - STEP);
     const next = getDistrictAt(player.x, player.z);
     if (next.id !== world.district.id) { world.district = next; showWorldMessage(world, next.name.toUpperCase() + ' / ' + next.subtitle, 4); }
@@ -56,8 +74,9 @@ export function bootOpenWorldCrimeGame() {
     updateChaseCamera(rig, player, car, actions, world, dt);
     rig.camera.updateMatrixWorld();
     paintPopulation(rig.camera, car, alpha, lowQuality);
+    paintPolice(alpha);
     view.renderWorldFrame(player.inVehicle ? car : player);
-    hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player));
+    hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player), police);
   }
 
   function setPaused(value) {
@@ -67,6 +86,21 @@ export function bootOpenWorldCrimeGame() {
   }
   document.getElementById('help-button').addEventListener('click', () => setPaused(true));
   document.getElementById('resume-button').addEventListener('click', () => setPaused(false));
+  function continueFrom(safehouse) {
+    const checkpoint = police.wanted.checkpoint || player;
+    const safe = safehouse ? { x: -420, z: 240, heading: 0 } : findSafeSpawn(world, checkpoint.x, checkpoint.z);
+    police.reset();
+    Object.assign(car, safe, { previousX: safe.x, previousZ: safe.z, vx: 0, vz: 0, speed: 0,
+      condition: 100, impactCooldown: 0, roll: 0, pitch: 0, bounce: 0, bounceVelocity: 0 });
+    const onFoot = safehouse || !player.inVehicle;
+    Object.assign(player, { ...safe, x: safe.x + (onFoot ? 3 : 0), previousX: safe.x + (onFoot ? 3 : 0),
+      previousZ: safe.z, inVehicle: !onFoot, vx: 0, vz: 0, speed: 0, health: 100 });
+    rig.initialized = false; rig.orbitHold = 0;
+    outcome.hidden = true; setPaused(false);
+    showWorldMessage(world, safehouse ? 'Ilex / The yard is clear.' : 'Ilex / Your checkpoint is clear. Try again.', 4);
+  }
+  document.getElementById('retry-chase').addEventListener('click', () => continueFrom(false));
+  document.getElementById('return-yard').addEventListener('click', () => continueFrom(true));
   document.getElementById('quality-button').addEventListener('click', e => {
     lowQuality = !lowQuality; view.setRenderQuality(lowQuality ? 'low' : 'high');
     population.setQuality(lowQuality ? 'low' : 'high');
@@ -84,11 +118,11 @@ export function bootOpenWorldCrimeGame() {
         frameSamples = Math.min(frameSamples + 1, frameTimes.length);
       }
       const actions = input.readPlayerActions();
-      if (actions.pause) setPaused(!paused);
+      if (actions.pause && outcome.hidden) setPaused(!paused);
       const activeInput = actions.forward || actions.right || actions.interact || actions.recover || actions.sprint
         || actions.handbrake || actions.camera || actions.map || actions.orbitX || actions.orbitY || actions.zoom;
       if (game.frozen && activeInput) { game.frozen = false; accumulator = 0; }
-      if (!paused && !game.frozen) {
+      if (!paused && !game.frozen && outcome.hidden) {
         if (actions.interact) {
           if (player.inVehicle) exitVehicleSafely(player, car, world);
           else {
@@ -106,7 +140,7 @@ export function bootOpenWorldCrimeGame() {
         if (actions.map) expanded = !expanded;
         accumulator += elapsed;
         let steps = 0;
-        while (accumulator >= STEP && steps < 5) { advanceFixedStep(actions); accumulator -= STEP; steps++; }
+        while (accumulator >= STEP && steps < 5 && outcome.hidden) { advanceFixedStep(actions); accumulator -= STEP; steps++; }
         if (steps === 5) accumulator = 0;
       } else accumulator = 0;
       renderFrame(game.frozen ? 1 : accumulator / STEP, game.frozen ? 0 : elapsed || STEP, paused ? blank : actions);
@@ -123,9 +157,9 @@ export function bootOpenWorldCrimeGame() {
       const { lane, turn, ...carState } = car;
       return {
         player: { ...player }, car: carState, tick: world.tick, district: world.district.name,
-        staticImpacts: world.staticImpacts, paused, frozen: game.frozen, visited: [...world.visited],
+        staticImpacts: world.staticImpacts, paused, frozen: game.frozen, cash, visited: [...world.visited],
         camera: { heading: rig.heading, preset: rig.preset, type: view.camera.type, position: view.camera.position.toArray() },
-        renderer: view.diagnostics(), population: population.snapshot(),
+        renderer: view.diagnostics(), population: population.snapshot(), police: police.snapshot(),
         world: { buildings: world.buildings.length, palms: world.palms.length, districts: 6, roadNodes: world.roads.nodes.length },
         performance: { samples: frameSamples, medianMs: percentile(sorted, 0.5), p95Ms: percentile(sorted, 0.95) },
       };

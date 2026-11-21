@@ -8,7 +8,11 @@ export function stagePlayableScreenshot(name, game) {
     Object.assign(car, { x: 426, z: 74, heading: 0 });
     Object.assign(player, { x: 429, z: 74 });
     enterOrStealVehicle(player, car, world);
-    rig.heading = 0.32; rig.orbitHold = 4;
+    rig.heading = name === 'chase' ? 0.43 : 0.32; rig.orbitHold = 4;
+    if (name === 'chase') {
+      rig.preset = 1; rig.zoom = 2; rig.pitch = 0.08;
+      game.police.restorePursuit(3, [[419, 80, 0, 13], [414, 33, Math.PI, 5], [426, 175, 0, 12]], [442, 24, -31]);
+    }
   } else if (name === 'bridge') {
     Object.assign(car, { x: 430, z: -240, heading: Math.PI / 2 });
     Object.assign(player, { x: 430, z: -237 });
