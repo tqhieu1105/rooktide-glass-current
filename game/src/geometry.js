@@ -111,8 +111,10 @@ export function createGeometryBuilder(scene, atlas, seed = 0, options = {}) {
           #include <begin_vertex>
           float bladeHeight = clamp(position.y, 0.0, 1.0);
           float bladePhase = instanceMatrix[3].x * .17 + instanceMatrix[3].z * .13;
-          transformed.x += sin(uGrassTime * 1.65 + bladePhase + bladeHeight * 1.3) * .06 * bladeHeight;
-          transformed.z += cos(uGrassTime * 1.22 + bladePhase + bladeHeight) * .035 * bladeHeight;
+          float gust = .7 + .3 * sin(uGrassTime * .54 - bladePhase * .19);
+          float tipBend = bladeHeight * bladeHeight * gust;
+          transformed.x += sin(uGrassTime * 1.65 + bladePhase + bladeHeight * 1.3) * .10 * tipBend;
+          transformed.z += cos(uGrassTime * 1.22 + bladePhase + bladeHeight) * .06 * tipBend;
         `);
       };
       grassMaterial.customProgramCacheKey = () => 'rooktide-instanced-grass-wind-v1';
@@ -201,7 +203,6 @@ function makePalmFrond() {
     const reach = 0.13 + Math.sin(Math.PI * t) * 0.27;
     const tipY = y - 0.10 - t * 0.10, tipZ = Math.min(1.08, t + 0.18);
     quad([0, y + 0.012, t], [-reach, tipY, tipZ], [0, tipY - 0.014, tipZ + 0.035], [reach, tipY, tipZ]);
-    quad([0, y + 0.012, t], [reach, tipY, tipZ], [0, tipY - 0.014, tipZ + 0.035], [-reach, tipY, tipZ]);
   }
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(points, 3));
   geometry.setIndex(indices);
@@ -228,7 +229,7 @@ function makeGrassTuft() {
     }
     for (let row = 0; row < levels.length - 1; row++) {
       const a = first + row * 2, b = a + 1, c = a + 2, d = a + 3;
-      indices.push(a, c, b, b, c, d, b, c, a, d, c, b);
+      indices.push(a, c, b, b, c, d);
     }
   }
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));

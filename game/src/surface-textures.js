@@ -45,15 +45,21 @@ export function createGroundTextures(seed) {
   const phase = Array.from({ length: 8 }, () => random() * TAU);
   for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) {
     const u = x / 256, v = y / 256;
-    const low = Math.sin(TAU * (u * 3 + v * 2) + phase[0]) * Math.cos(TAU * (v * 2 - u) + phase[1]);
+    const a = TAU * (u * 3 + v * 2) + phase[0], b = TAU * (v * 2 - u) + phase[1];
+    const low = Math.sin(a) * Math.cos(b);
+    const ridge = Math.cos(a) * Math.cos(b), hollow = Math.sin(a) * Math.sin(b);
+    const slope = Math.hypot(3 * ridge + hollow, 2 * (ridge - hollow)) / 4;
+    // The road bed stays level for gameplay. A shallow virtual relief supplies
+    // greener hollows and drier ridges in the baked, periodic ground material.
+    const dry = THREE.MathUtils.clamp(0.44 + low * 0.42 + slope * 0.36, 0, 1);
     const mid = Math.sin(TAU * (u * 11 + v * 7) + phase[2]) * Math.cos(TAU * (v * 13 - u * 3) + phase[3]);
     const fine = Math.sin(TAU * (u * 29) + phase[4]) * Math.cos(TAU * (v * 31) + phase[5]);
-    const value = Math.max(0, Math.min(255, Math.round(227 + low * 14 + mid * 8 + fine * 4)));
-    const roughness = Math.max(0, Math.min(255, Math.round(226 + low * 15 + mid * 11 + fine * 4)));
+    const value = 221 + low * 15 + mid * 8 + fine * 4;
+    const roughness = Math.max(0, Math.min(255, Math.round(212 + dry * 26 + mid * 11 + fine * 4)));
     const i = (y * 256 + x) * 4;
-    color.data[i] = value;
-    color.data[i + 1] = Math.min(255, value + 2);
-    color.data[i + 2] = Math.max(0, value - 5);
+    color.data[i] = Math.min(255, value + dry * 20);
+    color.data[i + 1] = Math.min(255, value + (1 - dry) * 12);
+    color.data[i + 2] = value - dry * 14;
     color.data[i + 3] = 255;
     rough.data[i] = rough.data[i + 1] = rough.data[i + 2] = roughness;
     rough.data[i + 3] = 255;

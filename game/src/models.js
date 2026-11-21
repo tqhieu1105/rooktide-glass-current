@@ -170,10 +170,10 @@ export function createPlayerModel() {
   const jacket = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.29, 0.58, 12), material(A.mustard));
   jacket.position.set(0, 1.13, 0); jacket.castShadow = true; jacket.receiveShadow = true; root.add(jacket);
   box(root, 0, 0.88, 0, 0.39, 0.17, 0.27, 0x294c58);
-  box(root, 0, 1.18, 0.17, 0.26, 0.36, 0x315360);
-  box(root, 0, 1.18, 0.193, 0.025, 0.34, A.cream, true);
-  box(root, 0, 0.96, 0.17, 0.31, 0.08, A.ink, true);
-  box(root, 0, 0.96, 0.221, 0.065, 0.07, 0xc9b987, true);
+  box(root, 0, 1.18, 0.17, 0.26, 0.36, 0.17, 0x315360);
+  box(root, 0, 1.18, 0.193, 0.025, 0.34, 0.025, A.cream, true);
+  box(root, 0, 0.96, 0.17, 0.31, 0.08, 0.04, A.ink, true);
+  box(root, 0, 0.96, 0.221, 0.065, 0.07, 0.026, 0xc9b987, true);
   for (const side of [-1, 1]) {
     box(root, side * 0.17, 1.15, 0.145, 0.018, 0.37, 0.025, A.terracotta, false, -side * 0.1);
   }
@@ -186,12 +186,12 @@ export function createPlayerModel() {
   oval(root, 0, 1.61, 0.158, 0.031, 0.045, 0.035, 0xb77a5d);
   oval(root, 0, 1.72, -0.01, 0.16, 0.09, 0.16, 0x343c3a);
   box(root, 0, 1.69, 0.105, 0.27, 0.075, 0.10, 0x343c3a);
-  box(root, 0, 1.64, -0.11, 0.15, 0.07, 0x343c3a);
+  box(root, 0, 1.64, -0.11, 0.15, 0.07, 0.10, 0x343c3a);
   box(root, 0.17, 1.17, -0.20, 0.36, 0.46, 0.16, A.terracotta);
-  box(root, 0.17, 1.39, -0.19, 0.34, 0.12, 0xb65a46);
-  box(root, 0.17, 1.13, -0.292, 0.26, 0.14, 0x294c58);
-  box(root, 0.17, 1.14, -0.316, 0.07, 0.035, A.cream, true);
-  box(root, 0.17, 1.18, -0.06, 0.055, 0.49, A.ink);
+  box(root, 0.17, 1.39, -0.19, 0.34, 0.12, 0.16, 0xb65a46);
+  box(root, 0.17, 1.13, -0.292, 0.26, 0.14, 0.04, 0x294c58);
+  box(root, 0.17, 1.14, -0.316, 0.07, 0.035, 0.024, A.cream, true);
+  box(root, 0.17, 1.18, -0.06, 0.055, 0.49, 0.028, A.ink);
   box(root, 0.055, 1.20, 0.171, 0.063, 0.53, 0.028, A.ink, false, -0.49);
   box(root, -0.23, 0.86, -0.015, 0.16, 0.23, 0.17, A.ink);
   box(root, -0.23, 0.91, 0.035, 0.10, 0.14, 0.07, A.terracotta);
