@@ -6,7 +6,8 @@ import { isDryLand, showWorldMessage } from './world.js';
 const ESCAPE_SECONDS = [0, 10, 15, 20, 25, 30];
 const CRIMES = {
   vehicle_theft: [100, 'Stolen car'], reckless_driving: [55, 'Reckless driving'],
-  assault: [100, 'Pedestrian collision'], patrol_impact: [120, 'Patrol car hit'], mission_theft: [200, 'Marked vehicle stolen'],
+  assault: [100, 'Pedestrian collision'], gunfire: [100, 'Gunfire reported'], explosion: [150, 'Vehicle explosion'],
+  patrol_impact: [120, 'Patrol car hit'], mission_theft: [200, 'Marked vehicle stolen'],
 };
 const dist = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
 const deltaHeading = (from, to) => Math.atan2(to.x - from.x, from.z - to.z);

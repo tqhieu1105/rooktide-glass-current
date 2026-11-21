@@ -1,0 +1,17 @@
+{
+  "checks": [
+    "Free-roam pistol hits a car and consumes a magazine round",
+    "Pistol fire enters the live RCP wanted system",
+    "R reload refills only the magazine capacity from finite reserve",
+    "Damaged vehicles emit drifting smoke",
+    "Severe damage progresses from smoke to active fire",
+    "Fire fuse ends in a large explosion with cartwheeling debris"
+  ],
+  "final": {
+    "wanted": 2,
+    "health": 92,
+    "vehicleDestroyed": true,
+    "smokePuffs": 15,
+    "debrisPieces": 12
+  }
+}

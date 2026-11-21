@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict';
+import { writeFile } from 'node:fs/promises';
+import * as THREE from '../game/vendor/three.module.min.js';
+import { STEP } from '../game/src/config.js';
+import { createRooktideCity } from '../game/src/world.js';
+import { createVehicle } from '../game/src/vehicles.js';
+import { createOnFootPlayer } from '../game/src/player.js';
+import { createPoliceSystem } from '../game/src/police.js';
+import { createPopulation } from '../game/src/population.js';
+import { createMissionSystem } from '../game/src/missions.js';
+import { createCombatSystem } from '../game/src/combat.js';
+import { createCombatModels } from '../game/src/combat-models.js';
+
+const world = createRooktideCity(), player = createOnFootPlayer(), car = createVehicle();
+let controlled = car;
+const police = createPoliceSystem(world, player, () => controlled);
+const population = createPopulation(world, car);
+world.population = population; world.police = police;
+const missions = createMissionSystem({ world, player, police, population, getCar: () => controlled, setCar: target => { controlled = target; } });
+const combat = createCombatSystem({ world, player, police, population, missions, getCar: () => controlled });
+missions.attachCombat(combat);
+const scene = new THREE.Scene(), paintCombat = createCombatModels(scene, combat);
+Object.assign(player, { x: 84, z: 0, previousX: 84, previousZ: 0, inVehicle: false, heading: 0 });
+const target = Object.assign(createVehicle(84, -8), { id: 'combat-check-target', type: 'compact', active: true });
+population.vehicles.push(target);
+const checks = [];
+const check = (name, condition) => { assert.ok(condition, name); checks.push(name); };
+combat.step(STEP, { weapon: 2, attack: true }, 0);
+paintCombat();
+check('Free-roam pistol hits a car and consumes a magazine round', target.condition === 83 && combat.snapshot().rounds === 11);
+check('Pistol fire enters the live RCP wanted system', police.wanted.level === 1 && police.wanted.incident === 'Gunfire reported');
+assert.ok(combat.beginReload());
+for (let tick = 0; tick < 76; tick++) combat.step(STEP, {}, 0);
+check('R reload refills only the magazine capacity from finite reserve', combat.snapshot().rounds === 12 && combat.snapshot().reserve === 35);
+target.condition = 67;
+combat.step(STEP, {}, 0);
+paintCombat();
+check('Damaged vehicles emit drifting smoke', target.combatSmoke && combat.smoke.some(puff => puff.life > 0));
+target.condition = 35;
+combat.step(STEP, {}, 0);
+check('Severe damage progresses from smoke to active fire', target.combatFire && target.damageFuse > 0);
+for (let tick = 0; tick < 195; tick++) combat.step(STEP, {}, 0);
+paintCombat();
+check('Fire fuse ends in a large explosion with cartwheeling debris', target.destroyed && combat.explosions.length === 1
+  && combat.debris.some(piece => piece.life > 0) && target.airVelocity > 0);
+
+const result = { checks, final: { wanted: police.wanted.level, health: player.health, vehicleDestroyed: target.destroyed,
+  smokePuffs: combat.smoke.filter(puff => puff.life > 0).length, debrisPieces: combat.debris.filter(piece => piece.life > 0).length } };
+await writeFile('verification/combat.json', JSON.stringify(result, null, 2) + '\n');
+console.log(JSON.stringify(result, null, 2));

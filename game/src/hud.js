@@ -20,7 +20,7 @@ export function createStreetHUD(world, minimap) {
     'station-readout', 'station-name', 'station-track', 'toast', 'compass', 'status', 'map-label',
     'city-cash', 'city-rank', 'rank-meter', 'health-value', 'health-bar', 'free-roam', 'mission-card', 'mission-chapter', 'mission-title', 'mission-step',
     'mission-stages', 'mission-objective', 'mission-waypoint', 'mission-next', 'mission-radio', 'radio-contact', 'radio-line',
-    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-row', 'heat-meter', 'dispatch-units'].map(id => [id, $(id)]));
+    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-row', 'heat-meter', 'dispatch-units', 'aim-reticle'].map(id => [id, $(id)]));
   const stars = [...elements['wanted-stars'].children];
   const rows = [...elements['dispatch-units'].children];
   const segments = [...elements['mission-stages'].children];
@@ -30,7 +30,7 @@ export function createStreetHUD(world, minimap) {
     if (cache[id] !== value) { cache[id] = value; elements[id].textContent = value; }
   }
   let timer = 1, prompt = -1, bodywork = -1;
-  function updateStreetHUD(player, car, rig, dt, expanded, target, police, missions, station = 0) {
+  function updateStreetHUD(player, car, rig, dt, expanded, target, police, missions, combat, station = 0) {
     timer += dt;
     const mapChanged = cache.expanded !== expanded;
     if (timer < 0.08 && !mapChanged && cache.station === station) return;
@@ -40,9 +40,8 @@ export function createStreetHUD(world, minimap) {
     const driving = player.inVehicle;
     const near = !!target;
     const mode = driving ? 2 : near ? 1 : 0;
-    const combat = job.guardCount || job.kind === 'disableVehicle';
-    const fighting = job.weapon === 2 ? `<kbd>F</kbd> Fire <span>·</span> ${job.reload ? 'Reloading' : `${job.rounds} / ${job.reserve}`}` : '<kbd>F</kbd> Swing';
-    const promptHTML = action ? `<kbd>E</kbd> ${action}` : driving ? drivingPrompt : combat ? fighting : near ? prompts[target.type] : walking;
+    const fighting = combat.weapon === 2 ? `<kbd>F</kbd> Fire <span>·</span> ${combat.reload ? 'Reloading' : `${combat.rounds} / ${combat.reserve}`}` : '<kbd>F</kbd> Swing';
+    const promptHTML = action ? `<kbd>E</kbd> ${action}` : driving ? drivingPrompt : `${fighting} <span>·</span> ${walking}`;
     if (promptHTML !== prompt || cache.district !== world.district.name) {
       elements.prompt.innerHTML = promptHTML;
       text('status', `${world.district.name}. ${driving ? 'Driving' : 'On foot'}. ${near ? 'Press E to enter car.' : ''}`);
@@ -73,6 +72,7 @@ export function createStreetHUD(world, minimap) {
     text('mode', driving ? VEHICLE_TUNING[car.type].name : 'NERI VOSS');
     elements['drive-readout'].hidden = elements['station-readout'].hidden = !driving;
     elements['weapon-readout'].hidden = driving;
+    elements['aim-reticle'].hidden = driving || combat.weapon !== 2;
     if (driving) {
       text('speed', Math.round(car.speed * 3.6));
       const forward = car.vx * Math.sin(car.heading) - car.vz * Math.cos(car.heading);
@@ -86,10 +86,10 @@ export function createStreetHUD(world, minimap) {
       text('station-name', STATIONS[station].name);
       text('station-track', STATIONS[station].track);
     } else {
-      elements['pistol-slot'].hidden = job.done < 2;
-      elements['weapon-ammo'].hidden = job.weapon !== 2;
-      elements['weapon-readout'].classList.toggle('pistol-equipped', job.weapon === 2);
-      text('weapon-ammo', job.reload ? 'RELOADING' : `${job.rounds} / ${job.reserve}`);
+      elements['pistol-slot'].hidden = false;
+      elements['weapon-ammo'].hidden = combat.weapon !== 2;
+      elements['weapon-readout'].classList.toggle('pistol-equipped', combat.weapon === 2);
+      text('weapon-ammo', combat.reload ? 'RELOADING' : `${combat.rounds} / ${combat.reserve}`);
     }
     const toast = world.messageTime > 0 ? world.message : '';
     if (toast !== cache.toast) {

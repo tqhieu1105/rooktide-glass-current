@@ -54,6 +54,10 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 #mission-next{color:var(--muted);border-top:1px solid var(--line);margin-top:8px;padding-top:7px}
 #waypoint-label{position:absolute;display:flex;align-items:center;gap:7px;transform:translate(-50%,-100%);padding:4px 9px;border:1px solid #a5f2cf84;background:#102426ef;color:#e6fff1;font:700 13px/1.2 var(--label);letter-spacing:.04em;white-space:nowrap;text-transform:uppercase}
 #waypoint-label i{width:6px;height:6px;background:var(--mint);transform:rotate(45deg)}
+#aim-reticle{position:absolute;left:50%;top:50%;width:19px;height:19px;transform:translate(-50%,-50%);filter:drop-shadow(0 1px 2px #10181c);opacity:.9}
+#aim-reticle i,#aim-reticle b{position:absolute;display:block;background:#fff0d3}
+#aim-reticle i{left:8px;top:1px;width:2px;height:17px}
+#aim-reticle b{left:1px;top:8px;width:17px;height:2px}
 .district-title,.compass{position:absolute;left:50%;transform:translateX(-50%);text-align:center;text-shadow:0 1px 3px var(--ink),0 0 8px var(--ink)}
 .district-title{top:25px;font-family:var(--label);white-space:nowrap}
 .district-title h2{font-size:26px;letter-spacing:.14em;text-transform:uppercase}

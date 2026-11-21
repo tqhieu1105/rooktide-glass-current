@@ -74,8 +74,11 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
       car.lane = lane; car.distance = progress; car.x = car.previousX = x; car.z = car.previousZ = z;
       car.heading = lane.heading; car.speed = car.parked ? 0 : car.cruise * .7;
       car.vx = lane.fx * car.speed; car.vz = lane.fz * car.speed;
+      car.condition = 100; car.damageFuse = car.explosionTimer = car.combatSmokeClock = car.combatFireClock = 0;
       car.braking = false; car.steer = car.blocked = car.knock = car.spin = car.bounce = 0;
       car.wrecked = car.obstacle = false;
+      car.destroying = car.destroyed = car.combatSmoke = car.combatFire = false;
+      car.damageFuse = car.explosionTimer = car.airHeight = car.airVelocity = car.explosionSpin = 0;
       car.active = true;
       return;
     }
@@ -110,7 +113,8 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
     vehicles.splice(0, vehicles.length, firstCar, ...cars);
     reservations.fill(-1);
     for (const car of cars) Object.assign(car, { claimed: false, active: false, turn: null, condition: 100,
-      impactCooldown: 0, bounceVelocity: 0, roll: 0, pitch: 0, wheelSpin: 0 });
+      impactCooldown: 0, bounceVelocity: 0, roll: 0, pitch: 0, wheelSpin: 0,
+      destroying: false, destroyed: false, damageFuse: 0, explosionTimer: 0, explosionSpin: 0, combatSmoke: false, combatFire: false });
     for (const walker of people) walker.active = false;
     for (const spark of sparks) spark.life = 0;
     spawnTick = sparkCursor = crossings = stumbles = impacts = thefts = lastStaticImpact = 0;

@@ -222,6 +222,19 @@ try {
     && performanceState.mission.index >= 2);
   check('60-second drive has no stalls trapping input', travelled > 350 && performanceState.performance.samples > 60);
   check('60-second drive stays intact', performanceState.car.condition > 70);
+  await navigate();
+  await browser.startNewGame();
+  await browser.tap('Digit2');
+  check('Weapon 2 selects the live pistol and its aiming reticle', (await snapshot()).combat.weapon === 2
+    && await browser.evaluate('!document.getElementById("aim-reticle").hidden && !document.getElementById("pistol-slot").hidden'));
+  await hold('KeyF', 420);
+  const firing = await snapshot();
+  check('F fires from the on-foot pistol and raises wanted heat', firing.combat.rounds < 12 && firing.police.level === 1);
+  await browser.tap('KeyR');
+  await browser.waitFor('window.__rooktide.snapshot().combat.rounds === 12', 7000);
+  check('R reloads from reserve and restores magazine capacity', (await snapshot()).combat.reserve < 36);
+  await browser.tap('Digit1');
+  check('Weapon 1 returns to fists without changing pistol ammunition', (await snapshot()).combat.weapon === 1);
   const simulation = runSimulationChecks();
   const external = requests.filter(url => new URL(url).origin !== new URL(base).origin);
   check('No remote game requests', external.length === 0);

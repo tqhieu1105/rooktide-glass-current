@@ -16,7 +16,8 @@ export function createMissionSystem({ world, player, police, population, getCar,
   const { progress, status } = loadProgress(storage, world.roads.nodes.length);
   const guards = [];
   let run = null, radio = null, payout = null, ending = false, replay = null, attempts = 0;
-  let scan = 0, scanCooldown = 0, weapon = 1, rounds = 12, reserve = 36, attackCooldown = 0, reload = 0;
+  let scan = 0, scanCooldown = 0, combatEpoch = 0;
+  let combat = null;
 
   const nextJob = () => replay || MISSIONS[progress.done];
   const activeStage = () => run?.job.stages[run.index];
@@ -41,7 +42,7 @@ export function createMissionSystem({ world, player, police, population, getCar,
 
   function clearSession() {
     cleanUp(); radio = payout = replay = null; ending = false; attempts = 0;
-    scan = scanCooldown = attackCooldown = reload = 0; weapon = 1; rounds = 12; reserve = 36;
+    scan = scanCooldown = 0; combatEpoch++;
   }
 
   function say(contact, line, seconds = 9) {
@@ -77,11 +78,11 @@ export function createMissionSystem({ world, player, police, population, getCar,
     if (oldCar) population.vehicles.splice(population.vehicles.indexOf(oldCar), 1);
     run = { job: selected, index: 0, gate: 0, held: 0, lost: 0, failed: '', capture,
       seed, replay: replay === selected, vehicle: addCar(selected.vehicle, deliveryId), courier: null, checkpoint: null };
+    combatEpoch++;
     if (run.vehicle) run.vehicle.locked = true;
     replay = null;
     payout = null;
     player.health = 100;
-    if (progress.done >= 2) { rounds = 12; reserve = 36; reload = 0; }
     beginStage(0);
     return true;
   }
@@ -91,7 +92,8 @@ export function createMissionSystem({ world, player, police, population, getCar,
     run.index = index; run.gate = 0; run.held = 0; run.lost = 0;
     guards.length = 0;
     if (stage.guards) for (const [i, [x, z]] of stage.guards.entries()) {
-      guards.push({ x, z, previousX: x, previousZ: z, heading: 0, hp: 2, attack: 1 + i * .4, phase: 0, flash: 0, hit: 0 });
+      guards.push({ x, z, previousX: x, previousZ: z, heading: 0, hp: 2, attack: 1 + i * .4, phase: 0, flash: 0, hit: 0,
+        mode: 'idle', aim: 0, reposition: 0, side: i % 2 ? -1 : 1 });
     }
     if (stage.kind === 'enterVehicle' && run.vehicle) run.vehicle.locked = false;
     if (run.job.id === 'glass-current' && run.vehicle) run.vehicle.locked = false;
@@ -191,6 +193,18 @@ export function createMissionSystem({ world, player, police, population, getCar,
     }
   }
 
+  function hitTarget(target, damage) {
+    if (!target || !run || run.failed || !player.health) return false;
+    if (target === run.courier && activeStage()?.kind === 'disableVehicle') {
+      damageCourier(damage);
+      return true;
+    }
+    if (!guards.includes(target) || !target.hp) return false;
+    target.hp = Math.max(0, target.hp - damage);
+    target.hit = .44; target.attack = .85; target.mode = 'reposition'; target.reposition = .48;
+    return true;
+  }
+
   function driveCourier(dt) {
     const courier = run.courier, route = run.job.courierRoute;
     if (distance(courier, route[run.gate]) < 7) run.gate = (run.gate + 1) % route.length;
@@ -202,49 +216,44 @@ export function createMissionSystem({ world, player, police, population, getCar,
     if (run.lost >= 30) fail('The courier got away. Stay within 180 metres on your next run.');
   }
 
-  function fight(dt, actions, aimHeading) {
-    attackCooldown = Math.max(0, attackCooldown - dt);
-    if (actions.weapon === 1 || (actions.weapon === 2 && progress.done >= 2)) weapon = actions.weapon;
-    if (reload > 0) {
-      reload = Math.max(0, reload - dt);
-      if (!reload) { const load = Math.min(12 - rounds, reserve); rounds += load; reserve -= load; }
-    }
-    if (!player.inVehicle && actions.attack && attackCooldown === 0 && (guards.length || activeStage().kind === 'disableVehicle')) {
-      const ranged = weapon === 2;
-      if (ranged && !rounds) { if (!reload && reserve) reload = 1.25; }
-      else {
-        attackCooldown = ranged ? .27 : .37;
-        if (ranged) { rounds--; population.throwSparks(player.x, player.z, 4); }
-        const candidates = activeStage().kind === 'disableVehicle' ? (ranged ? [run.courier] : []) : guards.filter(g => g.hp);
-        const reach = ranged ? 35 : 3.45;
-        let near = reach, victim;
-        for (const candidate of candidates) {
-          const range = distance(player, candidate);
-          if (range < near && Math.abs(angleDelta(ranged ? aimHeading : player.heading, headingTo(player, candidate))) < (ranged ? .23 : 1.3)
-            && hasPoliceSight(world, player, candidate, 1.45)) { near = range; victim = candidate; }
-        }
-        if (victim === run.courier && victim) damageCourier(23);
-        else if (victim) { victim.hp = Math.max(0, victim.hp - (ranged ? 2 : 1)); victim.hit = .44; victim.attack = .85; }
-      }
-    }
+  function updateHostileGuards(dt) {
     for (const guard of guards) {
       guard.hit = Math.max(0, guard.hit - dt);
       if (!guard.hp) continue;
       guard.previousX = guard.x; guard.previousZ = guard.z;
       guard.flash = Math.max(0, guard.flash - dt);
+      guard.reposition = Math.max(0, guard.reposition - dt);
       const range = distance(guard, player);
       const distant = activeStage().kind === 'holdPosition';
       guard.attack = Math.max(0, guard.attack - dt);
-      if (range > 32 || player.inVehicle || !hasPoliceSight(world, guard, player, 1.45)) continue;
+      if (range > 40 || player.inVehicle || !hasPoliceSight(world, guard, player, 1.45)) { guard.mode = 'idle'; guard.aim = 0; continue; }
       guard.heading = headingTo(guard, player);
-      const attackRange = distant ? 10 : 2.25;
-      if (range > attackRange && guard.hit === 0) {
-        moveBodyWithCollisions(world.grid, guard, Math.sin(guard.heading) * 2.5 * dt, -Math.cos(guard.heading) * 2.5 * dt, .38);
-        guard.phase += 6 * dt;
+      if (guard.reposition > 0 && range > 4) {
+        guard.mode = 'reposition';
+        moveBodyWithCollisions(world.grid, guard, Math.cos(guard.heading) * guard.side * 1.1 * dt,
+          Math.sin(guard.heading) * guard.side * 1.1 * dt, .38);
+        continue;
       }
-      if (range <= attackRange && guard.attack === 0) {
-        guard.attack = distant ? 2.4 : 1.2; guard.flash = .22;
-        player.health = Math.max(0, player.health - (distant ? 4 : 9));
+      const fireRange = distant ? 15 : 9;
+      if (range > fireRange && guard.hit === 0) {
+        guard.mode = 'investigate'; guard.aim = 0;
+        moveBodyWithCollisions(world.grid, guard, Math.sin(guard.heading) * 2.3 * dt, -Math.cos(guard.heading) * 2.3 * dt, .38);
+        guard.phase += 6 * dt;
+      } else if (range > 2.5) {
+        guard.mode = 'aim'; guard.aim += dt;
+        if (guard.aim >= .58 && guard.attack === 0) {
+          guard.mode = 'fire'; guard.attack = distant ? 2.15 : 2.5; guard.flash = .24; guard.aim = 0;
+          if (!player.damageCooldown) player.health = Math.max(0, player.health - (distant ? 5 : 7));
+          player.damageCooldown = .58;
+          guard.reposition = .52;
+        }
+      } else {
+        guard.mode = 'fire'; guard.aim = 0;
+        if (guard.attack === 0) {
+          guard.attack = 1.25; guard.flash = .2;
+          if (!player.damageCooldown) player.health = Math.max(0, player.health - 8);
+          player.damageCooldown = .58;
+        }
       }
     }
   }
@@ -262,7 +271,7 @@ export function createMissionSystem({ world, player, police, population, getCar,
       fail('The job car was wrecked or went into the water.'); return;
     }
     const stage = activeStage();
-    fight(dt, actions, aimHeading);
+    updateHostileGuards(dt);
     if (stage !== activeStage() || !player.health) return;
     if (stage.kind === 'disableVehicle') { driveCourier(dt); return; }
     if (stage.kind === 'defeatGuards' && !stage.collect && guards.every(guard => !guard.hp)) { advance(); return; }
@@ -300,7 +309,7 @@ export function createMissionSystem({ world, player, police, population, getCar,
     setCar(cp.car);
     Object.assign(player, cp.player, { health: 100, vx: 0, vz: 0, speed: 0, previousX: cp.player.x, previousZ: cp.player.z });
     run.failed = '';
-    rounds = 12; reserve = 36; attackCooldown = reload = 0;
+    combatEpoch++;
     police.reset(true);
     if (cp.heat) police.reportMissionAlert(cp.heat, 'Checkpoint pursuit');
     beginStage(cp.index, true);
@@ -334,17 +343,22 @@ export function createMissionSystem({ world, player, police, population, getCar,
 
   function snapshot() {
     const stage = activeStage(), point = marker(), job = run?.job || nextJob();
+    const loadout = combat?.snapshot() || { weapon: 1, rounds: 12, reserve: 36, reload: false };
     return { id: job?.id, title: job?.title, contact: job?.contact, chapter: job?.chapter, active: !!run,
       index: run?.index, total: run?.job.stages.length, kind: stage?.kind, gate: run?.gate, held: run?.held,
       seconds: targetPoint()?.seconds || 0, lost: run?.lost || 0, failed: run?.failed || '',
       text: stage?.text, next: run?.job.stages[run.index + 1]?.text, point, distance: point ? Math.round(distance(player, point)) : null,
       guardCount: guards.filter(guard => guard.hp).length, targetCondition: stage?.kind === 'disableVehicle' ? Math.ceil(run.courier.condition) : null,
       cash: progress.cash, rp: progress.rp, rank: rank(), done: progress.done, replay: !!(run?.replay || replay), ending,
-      scan, scanCooldown, weapon, rounds, reserve, reload: reload > 0,
+      scan, scanCooldown, weapon: loadout.weapon, rounds: loadout.rounds, reserve: loadout.reserve, reload: loadout.reload, combatEpoch,
       radio: radio?.until > world.clock ? radio : null, payout: payout?.until > world.clock ? payout : null };
   }
 
-  return { guards, step, start, interact, prompt, takeMissionCar, fail, retry, abandon, payFee, presentation, snapshot, chooseReplay,
+  return { guards, step, start, interact, prompt, takeMissionCar, fail, retry, abandon, payFee, presentation, snapshot, chooseReplay, hitTarget,
+    attachCombat(system) { combat = system; },
+    get combatEpoch() { return combatEpoch; },
+    get combatVehicle() { return run?.courier; },
+    get protectedVehicles() { return run ? [run.vehicle, run.courier].filter(Boolean) : []; },
     save, resetProgress, clearSession, latestPayout: () => payout, saveStatus: () => ({ ...status, checkpoint: progress.checkpoint }),
     get vehicle() { return run?.vehicle; }, get active() { return !!run; }, get failed() { return run?.failed; },
     get scan() { return scan; }, get ending() { return ending; }, dismissEnding() { ending = false; }, lastLine: () => radio };

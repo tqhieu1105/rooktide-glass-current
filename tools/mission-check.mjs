@@ -8,6 +8,7 @@ import { createOnFootPlayer, updateOnFootPlayer } from '../game/src/player.js';
 import { createPoliceSystem } from '../game/src/police.js';
 import { createPopulation } from '../game/src/population.js';
 import { createMissionSystem } from '../game/src/missions.js';
+import { createCombatSystem } from '../game/src/combat.js';
 import { GARAGE, MISSIONS } from '../game/src/mission-data.js';
 import { findWaypointRoute } from '../game/src/roads.js';
 
@@ -19,10 +20,16 @@ const storage = new Map();
 const police = createPoliceSystem(world, player, () => car);
 const population = createPopulation(world, firstCar);
 world.population = population; world.police = police;
-const createCampaign = () => createMissionSystem({ world, player, police, population, getCar: () => car,
-  setCar: vehicle => { car = vehicle; }, storage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) } });
-const missions = createCampaign();
-const state = missions.snapshot;
+let missions, combat;
+function createCampaign() {
+  missions = createMissionSystem({ world, player, police, population, getCar: () => car,
+    setCar: vehicle => { car = vehicle; }, storage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value) } });
+  combat = createCombatSystem({ world, player, police, population, missions, getCar: () => car });
+  missions.attachCombat(combat);
+  return missions;
+}
+createCampaign();
+const state = () => missions.snapshot();
 const tested = [], pursuits = [];
 const check = (name, condition) => { assert.ok(condition, name); tested.push(name); };
 const place = (body, x, z, heading = 0) => Object.assign(body, { x, z, previousX: x, previousZ: z, heading, vx: 0, vz: 0, speed: 0 });
@@ -36,6 +43,7 @@ function tick(count = 1, input = {}) {
     world.clock += STEP; world.tick++;
     population.step(player, car, { heading: aim }, STEP);
     police.step(STEP, actions);
+    combat.step(STEP, actions, aim);
     missions.step(STEP, actions, aim);
   }
 }

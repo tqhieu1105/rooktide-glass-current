@@ -30,7 +30,7 @@ export function createPopulationModels(scene, population) {
     const paint = car.paint || 0xc65f54;
     const distance = car.claimed || car.distance == null ? car.wheelSpin * .42 : car.distance;
     const sway = Math.sin(distance * .24) * Math.min(.055, car.speed * .006);
-    place(car, alpha, car.bounce + .10 + Math.abs(sway) * .65, car.knock > 0 ? Math.sin(car.knock * 15) * .21 : sway);
+    place(car, alpha, car.bounce + (car.airHeight || 0) + .10 + Math.abs(sway) * .65, car.knock > 0 ? Math.sin(car.knock * 15) * .21 : sway);
     part(0, .52, 0, width, .48, length, paint);
     part(0, .74 + height * .44, car.type === 'pickup' ? -.43 : .05, width * .81, height * .92, length * .50, GLASS);
     part(0, .74 + height * .86, car.type === 'pickup' ? -.43 : .05, width * .86, .10, length * .49, paint);
