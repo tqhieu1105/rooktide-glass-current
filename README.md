@@ -45,6 +45,10 @@ Ilex offers roadside help if you get busted.
 
 Repeated city geometry and civilian models are grouped into instanced draws.
 One local atlas supplies the facade, asphalt, sidewalk, sand, and water textures.
+District dressing is built as 192 m chunks around Neri: the software preset keeps
+at most eight resident chunks, four with full detail. Far buildings use simple
+facade volumes; distant chunks release their geometry, materials and owned
+resources. Road and water infrastructure and the collision graph stay shared.
 The high preset uses one 512×512 sun shadow map. On a 1280×720 viewport the
 software preset draws the city at 576×324, with the HUD at viewport resolution.
 Use the pause menu to switch presets.

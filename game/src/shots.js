@@ -42,6 +42,7 @@ export function stagePlayableScreenshot(name, game) {
   game.population.seedNear(player);
   for (let i = 0; i < 90; i++) game.advanceFixedStep(warm);
   world.messageTime = 0;
+  game.primeStreaming(player.inVehicle ? car.x : player.x, player.inVehicle ? car.z : player.z);
   rig.initialized = false;
   rig.camera.fov = player.inVehicle ? 60 + car.speed * 0.12 : 58;
   rig.camera.updateProjectionMatrix();

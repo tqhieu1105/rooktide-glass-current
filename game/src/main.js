@@ -74,6 +74,7 @@ export function bootOpenWorldCrimeGame() {
     view.setRenderQuality(quality); population.setQuality(quality);
   }
   setQuality(settings.quality);
+  if (!capture) view.primeStreaming(player.x, player.z);
   const audio = createCarAudio(settings);
   function wakeAudio(event) { if (event.isTrusted && navigator.userActivation.hasBeenActive) audio.wake(); }
   window.addEventListener('pointerdown', wakeAudio);
@@ -81,7 +82,8 @@ export function bootOpenWorldCrimeGame() {
   let last = performance.now(), accumulator = 0, frames = 0;
   const frameTimes = new Float64Array(3600);
   let frameSample = 0, frameSamples = 0;
-  const game = { player, get car() { return car; }, world, rig, population, police, missions, combat, frozen: false, advanceFixedStep, renderFrame };
+  const game = { player, get car() { return car; }, world, rig, population, police, missions, combat, frozen: false,
+    advanceFixedStep, renderFrame, primeStreaming: view.primeStreaming };
   const menus = createMenus({ canvas, input, missions, settings, storage, capture, actions: {
     freeze: () => { accumulator = 0; audio.update(false, false, 0, 0); },
     quality: setQuality, start: startStreet, quit: quitToTitle, retry: continueFrom,
@@ -249,7 +251,7 @@ export function bootOpenWorldCrimeGame() {
         player: { ...player }, car: carState, tick: world.tick, district: world.district.name,
         staticImpacts: world.staticImpacts, paused: !!menus.current, menu: menus.current, station: settings.station, frozen: game.frozen, cash: mission.cash, mission, combat: combat.snapshot(), visited: [...world.visited],
         camera: { heading: rig.heading, preset: rig.preset, type: view.camera.type, position: view.camera.position.toArray() },
-        renderer: view.diagnostics(), population: population.snapshot(), police: police.snapshot(),
+        renderer: view.diagnostics(), streaming: view.streamingDiagnostics(), population: population.snapshot(), police: police.snapshot(),
         world: { buildings: world.buildings.length, palms: world.palms.length, districts: 6, roadNodes: world.roads.nodes.length },
         performance: { samples: frameSamples, medianMs: percentile(sorted, 0.5), p95Ms: percentile(sorted, 0.95) },
       };

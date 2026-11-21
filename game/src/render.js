@@ -2,8 +2,9 @@ import * as THREE from '../vendor/three.module.min.js';
 import { createCityAtlas } from './atlas.js';
 import { ART_DIRECTION as A } from './art-direction.js';
 import { createGeometryBuilder } from './geometry.js';
-import { createDistrictBuildings } from './buildings.js';
+import { createCityChunks } from './buildings.js';
 import { createBeachAndHarbour } from './coast.js';
+import { createCityStreamer } from './streaming.js';
 
 const SUN = new THREE.Vector3(67, 15, -73);
 
@@ -30,8 +31,9 @@ export function createCityRenderer(canvas, world) {
   const sea = createSea(atlas); scene.add(sea);
   const builder = createGeometryBuilder(scene, atlas);
   createBeachAndHarbour(world, builder);
-  createDistrictBuildings(world, builder);
-  const { updateDrawDistance, ...staticStats } = builder.finish();
+  const environment = builder.finish();
+  const chunks = createCityChunks(world);
+  const streamer = createCityStreamer(scene, atlas, chunks);
   let scale = 1, shadowX = Infinity, shadowZ = Infinity;
   const gl = renderer.getContext();
   const extension = gl.getExtension('WEBGL_debug_renderer_info');
@@ -59,7 +61,8 @@ export function createCityRenderer(canvas, world) {
     }
     sea.material.uniforms.time.value = time;
     sky.position.set(camera.position.x, camera.position.y, camera.position.z);
-    updateDrawDistance(camera, quality === 'low' ? 245 : 420);
+    environment.updateDrawDistance(camera, quality === 'low' ? 245 : 420);
+    streamer.update(target, camera, quality);
     renderer.render(scene, camera);
   }
   function setRenderQuality(value) {
@@ -72,11 +75,14 @@ export function createCityRenderer(canvas, world) {
     resize();
   }
   setRenderQuality(quality);
+  function primeStreaming(x, z) { streamer.prime({ x, z }, quality); }
   return { scene, camera, renderer, renderWorldFrame, setRenderQuality,
+    primeStreaming, streamingDiagnostics: streamer.diagnostics,
     diagnostics: () => ({ engine: `Three.js r${THREE.REVISION}`, context: version, gpu: rendererName, quality,
       width: canvas.width, height: canvas.height,
       calls: renderer.info.render.calls, triangles: renderer.info.render.triangles,
-      geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures, ...staticStats }) };
+      geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures,
+      batches: environment.batches, instances: environment.instances }) };
 }
 
 function createSky() {

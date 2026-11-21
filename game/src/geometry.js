@@ -22,6 +22,7 @@ export function createGeometryBuilder(scene, atlas) {
   useCityAtlas(materials.facade, atlas, true);
   useCityAtlas(materials.surface, atlas, false);
   const buckets = new Map();
+  const ownedResources = new Set();
   const transform = new THREE.Object3D();
   const tint = new THREE.Color();
   // Cull distant/behind-camera static props, including the sun's shadow pass.
@@ -66,16 +67,31 @@ export function createGeometryBuilder(scene, atlas) {
       mesh.castShadow = material === 'solid' || material === 'facade'; mesh.receiveShadow = material !== 'light';
       mesh.computeBoundingSphere(); scene.add(mesh); meshes.push(mesh); instances += entries.length;
     }
-    return { batches: buckets.size, instances, updateDrawDistance(camera, distance) {
+    let disposed = false;
+    return { batches: buckets.size, instances, meshes, updateDrawDistance(camera, distance) {
       for (const mesh of meshes) {
         const sphere = mesh.boundingSphere;
         const dx = sphere.center.x - camera.position.x, dz = sphere.center.z - camera.position.z;
         const reach = distance + sphere.radius;
         mesh.visible = dx * dx + dz * dz < reach * reach;
       }
+    }, dispose() {
+      if (disposed) return;
+      disposed = true;
+      const geometries = new Set(), usedMaterials = new Set();
+      for (const mesh of meshes) {
+        scene.remove(mesh); mesh.dispose(); geometries.add(mesh.geometry);
+        if (Array.isArray(mesh.material)) for (const material of mesh.material) usedMaterials.add(material);
+        else usedMaterials.add(mesh.material);
+      }
+      for (const geometry of geometries) geometry.dispose();
+      for (const material of usedMaterials) material.dispose();
+      for (const resource of ownedResources) resource.dispose();
     } };
   }
-  return { add, box, beam, finish };
+  // Chunk-specific textures and buffers can join the same lifetime as their meshes.
+  function own(resource) { if (resource?.dispose) ownedResources.add(resource); return resource; }
+  return { add, box, beam, own, finish };
 }
 
 export function addPalm(builder, palm) {

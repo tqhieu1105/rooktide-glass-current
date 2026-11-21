@@ -51,6 +51,7 @@ try {
         document.getElementById('quality-button').click(); document.querySelector('#settings-screen [data-back]').click();
         document.getElementById('resume-button').click()`);
     }
+    await browser.waitFor('window.__rooktide.snapshot().streaming.settled');
     const fonts = await browser.evaluate(`Promise.all([
       '400 42px Anton', '400 14px Barlow', '600 14px Barlow',
       '600 14px "Barlow Condensed"', '700 72px "Barlow Condensed"',

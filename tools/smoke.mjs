@@ -41,6 +41,9 @@ try {
   const initial = await snapshot();
   check('Perspective camera and authentic WebGL2 renderer', initial.camera.type === 'PerspectiveCamera' && initial.renderer.context.includes('WebGL'));
   check('172 real buildings and six-district graph', initial.world.buildings === 172 && initial.world.districts === 6 && initial.world.roadNodes === 43);
+  check('District streaming starts from a bounded set of full-detail chunks', initial.streaming.totalChunks === 49
+    && initial.streaming.loadedChunks < initial.streaming.totalChunks && initial.streaming.loadedChunks <= 8
+    && initial.streaming.detailedChunks > 0);
   await hold('KeyW', 550);
   const walked = await snapshot();
   check('Real W key walks', walked.player.z < initial.player.z - 0.7 && !walked.player.inVehicle);
@@ -218,10 +221,20 @@ try {
   await keys([]);
   const performanceState = await snapshot();
   await browser.screenshot('verification/drive-60s.jpg', 'jpeg');
+  if (performanceState.car.condition <= 70) console.log('Drive damage trace:', JSON.stringify({
+    car: { x: performanceState.car.x, z: performanceState.car.z, speed: performanceState.car.speed,
+      recoveries: performanceState.car.recoveries, condition: performanceState.car.condition },
+    streaming: performanceState.streaming,
+    damage: samples.filter((sample, index) => index === 0 || sample.condition < samples[index - 1].condition)
+      .slice(-12).map(({ ms, speed, condition }) => ({ seconds: +(ms / 1000).toFixed(1), speed, condition })),
+  }));
   check('Screenshot mission resumes and advances through both gates under normal keys', !performanceState.frozen && performanceState.tick > 91
     && performanceState.mission.index >= 2);
   check('60-second drive has no stalls trapping input', travelled > 350 && performanceState.performance.samples > 60);
-  check('60-second drive stays intact', performanceState.car.condition > 70);
+  check(`60-second drive stays intact (bodywork ${performanceState.car.condition.toFixed(1)}%)`, performanceState.car.condition > 70);
+  check('District streaming unloads visited chunks and stays within its residency budget', performanceState.streaming.unloads > 0
+    && performanceState.streaming.loadedChunks <= 8 && performanceState.streaming.maxLoadedChunks <= 8
+    && performanceState.streaming.detailedChunks > 0 && performanceState.streaming.lowDetailChunks > 0);
   await navigate();
   await browser.startNewGame();
   await browser.tap('Digit2');

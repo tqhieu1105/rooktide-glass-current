@@ -1,0 +1,92 @@
+{
+  "chromium": "Chrome/154.0.8037.57",
+  "viewport": [
+    1280,
+    720
+  ],
+  "iterations": 5,
+  "runs": [
+    {
+      "navigationWallMs": 1974.53,
+      "readyMs": 1959.6,
+      "responseEndMs": 17.7,
+      "domInteractiveMs": 58.7,
+      "buildings": 172,
+      "loadedDistricts": null,
+      "activeMeshes": null,
+      "renderer": {
+        "geometries": 39,
+        "textures": 1,
+        "calls": 108,
+        "triangles": 12956
+      },
+      "initializationMs": 1941.9
+    },
+    {
+      "navigationWallMs": 3816.02,
+      "readyMs": 3805,
+      "responseEndMs": 6.4,
+      "domInteractiveMs": 27.1,
+      "buildings": 172,
+      "loadedDistricts": null,
+      "activeMeshes": null,
+      "renderer": {
+        "geometries": 39,
+        "textures": 1,
+        "calls": 108,
+        "triangles": 12956
+      },
+      "initializationMs": 3798.6
+    },
+    {
+      "navigationWallMs": 3953.86,
+      "readyMs": 3947.2,
+      "responseEndMs": 3.7,
+      "domInteractiveMs": 11.1,
+      "buildings": 172,
+      "loadedDistricts": null,
+      "activeMeshes": null,
+      "renderer": {
+        "geometries": 39,
+        "textures": 1,
+        "calls": 108,
+        "triangles": 12956
+      },
+      "initializationMs": 3943.5
+    },
+    {
+      "navigationWallMs": 3576.2,
+      "readyMs": 3572.6,
+      "responseEndMs": 2.8,
+      "domInteractiveMs": 21.8,
+      "buildings": 172,
+      "loadedDistricts": null,
+      "activeMeshes": null,
+      "renderer": {
+        "geometries": 39,
+        "textures": 1,
+        "calls": 108,
+        "triangles": 12956
+      },
+      "initializationMs": 3569.8
+    },
+    {
+      "navigationWallMs": 3995.94,
+      "readyMs": 3992.3,
+      "responseEndMs": 3.4,
+      "domInteractiveMs": 18,
+      "buildings": 172,
+      "loadedDistricts": null,
+      "activeMeshes": null,
+      "renderer": {
+        "geometries": 39,
+        "textures": 1,
+        "calls": 108,
+        "triangles": 12956
+      },
+      "initializationMs": 3988.9
+    }
+  ],
+  "medianReadyMs": 3805,
+  "medianInitializationMs": 3798.6
+}
