@@ -43,6 +43,12 @@ for (let tick = 0; tick < 195; tick++) combat.step(STEP, {}, 0);
 paintCombat();
 check('Fire fuse ends in a large explosion with cartwheeling debris', target.destroyed && combat.explosions.length === 1
   && combat.debris.some(piece => piece.life > 0) && target.airVelocity > 0);
+police.reset(true);
+police.restorePursuit(1, [[84, -8, 0, 0]]);
+const patrol = police.units.find(unit => unit.active);
+combat.step(STEP, { weapon: 2, attack: true }, 0);
+check('A pistol hit damages a responding RCP unit and escalates the pursuit', patrol.condition === 83
+  && police.wanted.level >= 3 && police.wanted.incident === 'RCP unit attacked');
 
 const result = { checks, final: { wanted: police.wanted.level, health: player.health, vehicleDestroyed: target.destroyed,
   smokePuffs: combat.smoke.filter(puff => puff.life > 0).length, debrisPieces: combat.debris.filter(piece => piece.life > 0).length } };

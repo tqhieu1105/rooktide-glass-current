@@ -2,9 +2,9 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "67028adfbbf763e282e919a641a8e296bba060e1",
+    "baseCommit": "76866af83f7dec567696318157bd7641df629daa",
     "workingTree": true,
-    "gameTreeSha256": "a22f0e3a8ccbd60fd562afd6fac8290af41a3e95a605fa487bdc79b053272a56"
+    "gameTreeSha256": "053e40f19408ee219b5eb56d5d90f845b285e3c88ab130adbf2d77f8a92334a5"
   },
   "errors": [],
   "external": [],
@@ -18,8 +18,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 155887,
-      "sha256": "6f9bd37fc9b4d61d73d344bbba6a70ed1b3ac564f1cf48e6204048e37920f87b",
+      "bytes": 156527,
+      "sha256": "4815e98fc07326cccf7f4b75a02752bc74997e817f447bcb05d7a80fd7145c97",
       "state": {
         "player": {
           "x": 426,
@@ -32,7 +32,8 @@
           "vz": 0,
           "inVehicle": true,
           "walkPhase": 0,
-          "health": 100
+          "health": 100,
+          "damageCooldown": 0
         },
         "car": {
           "id": "seawall-dividend-car",
@@ -55,10 +56,19 @@
           "bounce": 0,
           "bounceVelocity": 0,
           "braking": false,
+          "destroying": false,
+          "destroyed": false,
+          "damageFuse": 0,
+          "explosionTimer": 0,
+          "explosionSpin": 0,
+          "combatSmoke": false,
+          "combatFire": false,
           "paint": 13000532,
           "active": true,
           "claimed": true,
-          "locked": false
+          "locked": false,
+          "airHeight": 0,
+          "airVelocity": 0
         },
         "tick": 91,
         "district": "Saffron Strand",
@@ -106,12 +116,21 @@
           "rounds": 12,
           "reserve": 36,
           "reload": false,
+          "combatEpoch": 1,
           "radio": {
             "contact": "Ilex",
             "line": "North up the seawall. Two gates. The helicopter is free, the parking is not.",
             "until": 9.016666666666667
           },
           "payout": null
+        },
+        "combat": {
+          "weapon": 1,
+          "rounds": 12,
+          "reserve": 36,
+          "reload": false,
+          "muzzleFlash": false,
+          "activeExplosions": 0
         },
         "visited": [
           "market",
@@ -134,9 +153,9 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 102,
+          "calls": 103,
           "triangles": 16738,
-          "geometries": 47,
+          "geometries": 53,
           "textures": 2,
           "batches": 310,
           "instances": 7736
@@ -397,8 +416,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 132062,
-      "sha256": "e46081c6da13817f195b3f0beee2bac4446fab48b20aba1e90494758a05d1048",
+      "bytes": 134589,
+      "sha256": "960bb18d6fc751cd0dd34471a62ab953e49cae53b63291c49e1d26da4dcbc2bf",
       "state": {
         "player": {
           "x": 95.5,
@@ -411,7 +430,8 @@
           "vz": 0,
           "inVehicle": false,
           "walkPhase": 0,
-          "health": 100
+          "health": 100,
+          "damageCooldown": 0
         },
         "car": {
           "id": "driftline-01",
@@ -434,7 +454,16 @@
           "bounce": 0,
           "bounceVelocity": 0,
           "braking": false,
-          "active": true
+          "destroying": false,
+          "destroyed": false,
+          "damageFuse": 0,
+          "explosionTimer": 0,
+          "explosionSpin": 0,
+          "combatSmoke": false,
+          "combatFire": false,
+          "active": true,
+          "airHeight": 0,
+          "airVelocity": 0
         },
         "tick": 91,
         "district": "Kiln Market",
@@ -475,8 +504,17 @@
           "rounds": 12,
           "reserve": 36,
           "reload": false,
+          "combatEpoch": 0,
           "radio": null,
           "payout": null
+        },
+        "combat": {
+          "weapon": 1,
+          "rounds": 12,
+          "reserve": 36,
+          "reload": false,
+          "muzzleFlash": false,
+          "activeExplosions": 0
         },
         "visited": [
           "market"
@@ -498,9 +536,9 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 145,
+          "calls": 146,
           "triangles": 19804,
-          "geometries": 47,
+          "geometries": 53,
           "textures": 2,
           "batches": 310,
           "instances": 7736
@@ -708,8 +746,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 129383,
-      "sha256": "08f3db7b8edc762d54e0db952680c24afea3921386fe7caa10649b3ad8c18668",
+      "bytes": 129866,
+      "sha256": "b59a773149155472c40415831ba1e6fe2c4acb0218b8e94643bfc5d680d72f13",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -722,7 +760,8 @@
           "vz": 0,
           "inVehicle": true,
           "walkPhase": 0,
-          "health": 100
+          "health": 100,
+          "damageCooldown": 0
         },
         "car": {
           "id": "driftline-01",
@@ -745,7 +784,16 @@
           "bounce": 0,
           "bounceVelocity": 0,
           "braking": false,
-          "active": true
+          "destroying": false,
+          "destroyed": false,
+          "damageFuse": 0,
+          "explosionTimer": 0,
+          "explosionSpin": 0,
+          "combatSmoke": false,
+          "combatFire": false,
+          "active": true,
+          "airHeight": 0,
+          "airVelocity": 0
         },
         "tick": 91,
         "district": "Saffron Strand",
@@ -786,8 +834,17 @@
           "rounds": 12,
           "reserve": 36,
           "reload": false,
+          "combatEpoch": 0,
           "radio": null,
           "payout": null
+        },
+        "combat": {
+          "weapon": 1,
+          "rounds": 12,
+          "reserve": 36,
+          "reload": false,
+          "muzzleFlash": false,
+          "activeExplosions": 0
         },
         "visited": [
           "market",
@@ -810,9 +867,9 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 51,
+          "calls": 52,
           "triangles": 7664,
-          "geometries": 22,
+          "geometries": 28,
           "textures": 2,
           "batches": 310,
           "instances": 7736

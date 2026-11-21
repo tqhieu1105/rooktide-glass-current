@@ -109,8 +109,11 @@ assert.equal(car.condition, 100); assert.equal(state().cash, 800);
 
 start(MISSIONS[1]);
 foot(state().point.x, state().point.z); tick();
-foot(state().point.x, state().point.z);
+foot(state().point.x, state().point.z); tick();
 check('The ledger stays guarded until the actual fight is won', state().guardCount === 2 && !missions.interact());
+check('Warehouse guards investigate or aim as Neri enters their sightline', missions.guards.length === 2
+  && missions.guards.some(guard => guard.mode === 'investigate' || guard.mode === 'aim')
+  && missions.guards.every(guard => ['investigate', 'aim', 'reposition', 'fire'].includes(guard.mode)));
 for (const guard of missions.guards) {
   foot(guard.x, guard.z + 2.2); tick(60, { attack: true });
 }

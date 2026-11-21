@@ -5,13 +5,14 @@
     "R reload refills only the magazine capacity from finite reserve",
     "Damaged vehicles emit drifting smoke",
     "Severe damage progresses from smoke to active fire",
-    "Fire fuse ends in a large explosion with cartwheeling debris"
+    "Fire fuse ends in a large explosion with cartwheeling debris",
+    "A pistol hit damages a responding RCP unit and escalates the pursuit"
   ],
   "final": {
-    "wanted": 2,
+    "wanted": 3,
     "health": 92,
     "vehicleDestroyed": true,
-    "smokePuffs": 15,
+    "smokePuffs": 13,
     "debrisPieces": 12
   }
 }
