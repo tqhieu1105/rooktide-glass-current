@@ -62,7 +62,7 @@ export function createStreetHUD(world, minimap) {
     text('city-rank', `${job.rank.toUpperCase()} · ${job.rp.toLocaleString()} RP`);
     const services = job.services || {};
     for (const [id, key, label] of [['unlock-ilex', 'ilexRepair', 'REPAIRS'], ['unlock-sava', 'savaScan', 'SCAN'], ['unlock-daro', 'daroBonus', '+10%']]) {
-      elements[id].textContent = ` ${label} · ${services[key] ? 'READY' : 'LOCKED'}`;
+      text(id, `${label} · ${services[key] ? 'READY' : 'LOCKED'}`);
       elements[id].classList.toggle('unlocked', !!services[key]);
     }
     const clockMinutes = 17 * 60 + 40 + Math.floor(world.clock / 60);

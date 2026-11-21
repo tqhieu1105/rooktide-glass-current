@@ -63,7 +63,7 @@ export async function openChromium({ width = 1280, height = 720, headed = false 
     throw new Error(`Page readiness timeout: ${expression}`);
   }
   async function key(code, down = true) {
-    const virtual = { KeyW: 87, KeyA: 65, KeyS: 83, KeyD: 68, KeyE: 69, KeyC: 67, KeyR: 82, KeyM: 77, KeyV: 86,
+    const virtual = { KeyW: 87, KeyA: 65, KeyS: 83, KeyD: 68, KeyE: 69, KeyC: 67, KeyR: 82, KeyM: 77, KeyV: 86, KeyG: 71,
       Digit1: 49, Digit2: 50,
       Tab: 9,
       Escape: 27, Space: 32, ShiftLeft: 16, ArrowUp: 38, ArrowDown: 40, ArrowLeft: 37, ArrowRight: 39 }[code];
