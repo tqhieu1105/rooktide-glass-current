@@ -20,17 +20,50 @@
     </section>
     <div id="waypoint-label" aria-hidden="true" hidden><i></i><span id="waypoint-name"></span></div>
     <div class="district-title"><h2 id="district">Kiln Market</h2><p id="district-subtitle">CLAY / COFFEE / SMALL FAVOURS</p></div>
-    <div class="top-right"><span class="live-dot"></span> <span id="city-cash">$250</span><span id="city-rank">RUNNER</span> <button id="help-button" title="Controls and pause">ESC <span>Ⅱ</span></button></div>
-    <section class="wanted" aria-label="Police response"><div class="wanted-heading"><span>RCP RESPONSE</span><strong id="wanted-level">ROUTINE</strong></div><div class="wanted-stars" id="wanted-stars" aria-label="Wanted level: zero stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div><div class="heat-line"><span>HEAT</span><div><i id="heat-meter"></i></div></div><p id="dispatch-readout">Rooktide Civic Patrol / Area quiet</p></section>
-    <ol class="dispatch-units" id="dispatch-units" aria-label="Responding units" hidden><li></li><li></li><li></li></ol>
+    <aside class="street-status" aria-label="Cash and police response">
+      <div class="wallet">
+        <div><span class="wallet-label">CASH ON HAND</span><div class="wallet-cash"><span aria-hidden="true">$</span><strong id="city-cash" aria-label="Cash: $250">250</strong></div></div>
+        <button id="help-button" title="Pause menu" aria-label="Pause menu"><span aria-hidden="true">Ⅱ</span> ESC</button>
+        <div class="rank-line"><span id="city-rank">RUNNER · 0 RP</span><div class="rank-track"><i id="rank-meter"></i></div></div>
+      </div>
+      <section class="wanted" aria-label="Police response">
+        <div class="wanted-heading"><span>ROOKTIDE CIVIC PATROL</span><strong id="wanted-level">ROUTINE</strong></div>
+        <div class="wanted-stars" id="wanted-stars" role="img" aria-label="Wanted level: zero stars">
+          <svg aria-hidden="true" viewBox="0 0 28 26"><path id="wanted-star-shape" d="M14 2 17.5 9 25.4 10.2 19.7 15.8 21 23.8 14 20 7 23.8 8.3 15.8 2.6 10.2 10.5 9Z"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 28 26"><use href="#wanted-star-shape"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 28 26"><use href="#wanted-star-shape"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 28 26"><use href="#wanted-star-shape"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 28 26"><use href="#wanted-star-shape"/></svg>
+        </div>
+        <div class="heat-line" id="heat-row" hidden><span>HEAT</span><div><i id="heat-meter"></i></div></div>
+        <p id="dispatch-readout">AREA QUIET</p>
+      </section>
+      <ol class="dispatch-units" id="dispatch-units" aria-label="Responding units" hidden><li></li><li></li><li></li></ol>
+    </aside>
     <div class="compass" id="compass">N / 000°</div>
-    <section class="map-wrap"><div class="map-ring"><canvas id="minimap" aria-label="Rooktide street minimap"></canvas></div><div class="map-caption"><i></i><span id="map-label">M · CITY OVERVIEW</span></div><div class="health"><span>NERI VOSS</span><div><i id="health-bar"></i></div><b id="health-value">100</b></div></section>
-    <section class="vehicle"><div class="mode-rule"></div><p id="mode">UNDERTOW COURIER</p><div class="speed-line"><strong id="speed">NERI</strong><span id="speed-unit">VOSS</span></div><div id="condition-row" hidden><div class="condition-track"><i id="condition"></i></div><span class="condition-caption">BODYWORK</span></div></section>
-    <div id="toast" role="status"></div>
-    <div id="mission-payout" role="status" hidden></div>
-    <aside id="mission-radio" hidden><div class="portrait" aria-hidden="true"><b></b><i></i></div><div><strong id="radio-contact"></strong><p id="radio-line"></p></div></aside>
-    <div id="prompt" class="prompt"><kbd>E</kbd> Take the Driftline GT</div>
-    <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>SHIFT</kbd> Sprint</span><span><kbd>C</kbd> Camera</span><span>DRAG TO LOOK</span><span><kbd>R</kbd> Roadside recovery</span></footer>
+    <section class="map-wrap" aria-label="Navigation and health">
+      <div class="map-ring"><canvas id="minimap" aria-label="Rooktide street minimap"></canvas></div>
+      <div class="map-caption"><kbd>M</kbd><span id="map-label">CITY OVERVIEW</span></div>
+      <div class="health"><span>HEALTH</span><div><i id="health-bar"></i></div><b id="health-value">100</b></div>
+    </section>
+    <section class="vehicle" aria-label="Vehicle or equipment">
+      <p id="mode">NERI VOSS</p>
+      <div id="drive-readout" hidden>
+        <div class="speed-line"><strong id="speed">0</strong><div><span id="speed-unit">KM/H</span><span id="drive-gear">D</span></div></div>
+        <div class="condition"><span>BODYWORK</span><div class="condition-track"><i id="condition"></i></div><b id="condition-value">100</b></div>
+      </div>
+      <div id="weapon-readout"><span><kbd>1</kbd> FISTS</span><span id="pistol-slot" hidden><kbd>2</kbd> PISTOL</span><strong id="weapon-ammo" hidden></strong></div>
+      <div id="station-readout" hidden><kbd>V</kbd><span><strong id="station-name"></strong><span id="station-track"></span></span></div>
+    </section>
+    <div class="street-comms">
+      <div id="toast" role="status"></div>
+      <aside id="mission-radio" aria-label="Crew dialogue" hidden>
+        <div class="portrait" aria-hidden="true"><b></b><i></i></div>
+        <div><strong id="radio-contact"></strong><span class="crew-radio-label">CREW RADIO</span><p id="radio-line"></p></div>
+      </aside>
+      <div id="prompt" class="prompt"><kbd>E</kbd> Take the Driftline GT</div>
+    </div>
+    <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>C</kbd> Camera</span><span><kbd>R</kbd> Roadside recovery</span></footer>
   </div>
   <section id="pause" hidden>
     <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2>Catch your breath.</h2><p>One city. Six districts. Find the coast, cross to Glasshook, or take a wrong turn on purpose.</p><dl><dt>W A S D / Arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Interact / enter / exit car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Space while stopped</dt><dd>Hold to surrender near RCP</dd><dt>Mouse drag / Wheel</dt><dd>Orbit / camera distance</dd><dt>C / M</dt><dd>Camera preset / city overview</dd><dt>R</dt><dd>Roadside recovery / mission retry</dd><dt>F · 1 / 2</dt><dd>Attack · fists / pistol when unlocked</dd><dt>Q</dt><dd>Sava’s patrol scan when unlocked</dd></dl><div class="pause-actions"><button id="resume-button">BACK TO THE STREET <span>→</span></button><button id="quality-button">QUALITY: HIGH</button></div><small>Witnesses call in stolen cars and serious crashes. When the stars pulse, stay out of sight until the search ends.</small>

@@ -1,10 +1,12 @@
 import { VEHICLE_TUNING } from './config.js';
 import { CONTACTS } from './mission-data.js';
+import { STATIONS } from './radio.js';
 
 const DIRECTIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 const digits = Array.from({ length: 361 }, (_, n) => String(n).padStart(3, '0'));
 const bearings = digits.map((value, n) => `${DIRECTIONS[Math.round(n / 45) % 8]}  /  ${value}°`);
 const exploration = Array.from({ length: 7 }, (_, n) => `0${n} / 06`);
+const rankThresholds = [0, 150, 400, 800, 1400];
 const conditionWidths = Array.from({ length: 101 }, (_, n) => `${n}%`);
 const objectives = ['Six districts. One continuous city.', 'Your next bad idea has four wheels.', 'Find your own way through the city.'];
 const prompts = Object.fromEntries(Object.entries(VEHICLE_TUNING).map(([key, tuning]) => [key, `<kbd>E</kbd> Take the ${tuning.name}`]));
@@ -14,10 +16,11 @@ const drivingPrompt = '<kbd>E</kbd> Step out <span>·</span> <kbd>SPACE</kbd> Ha
 export function createStreetHUD(world, minimap) {
   const $ = id => document.getElementById(id);
   const elements = Object.fromEntries(['district', 'district-subtitle', 'explored', 'objective', 'prompt',
-    'speed', 'speed-unit', 'mode', 'condition', 'condition-row', 'toast', 'compass', 'status', 'map-label',
-    'city-cash', 'city-rank', 'health-value', 'health-bar', 'free-roam', 'mission-card', 'mission-chapter', 'mission-title', 'mission-step',
-    'mission-stages', 'mission-objective', 'mission-waypoint', 'mission-next', 'mission-radio', 'radio-contact', 'radio-line', 'mission-payout',
-    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-meter', 'dispatch-units'].map(id => [id, $(id)]));
+    'speed', 'drive-gear', 'mode', 'condition', 'condition-value', 'drive-readout', 'weapon-readout', 'pistol-slot', 'weapon-ammo',
+    'station-readout', 'station-name', 'station-track', 'toast', 'compass', 'status', 'map-label',
+    'city-cash', 'city-rank', 'rank-meter', 'health-value', 'health-bar', 'free-roam', 'mission-card', 'mission-chapter', 'mission-title', 'mission-step',
+    'mission-stages', 'mission-objective', 'mission-waypoint', 'mission-next', 'mission-radio', 'radio-contact', 'radio-line',
+    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-row', 'heat-meter', 'dispatch-units'].map(id => [id, $(id)]));
   const stars = [...elements['wanted-stars'].children];
   const rows = [...elements['dispatch-units'].children];
   const segments = [...elements['mission-stages'].children];
@@ -27,11 +30,11 @@ export function createStreetHUD(world, minimap) {
     if (cache[id] !== value) { cache[id] = value; elements[id].textContent = value; }
   }
   let timer = 1, prompt = -1, bodywork = -1;
-  function updateStreetHUD(player, car, rig, dt, expanded, target, police, missions) {
+  function updateStreetHUD(player, car, rig, dt, expanded, target, police, missions, station = 0) {
     timer += dt;
     const mapChanged = cache.expanded !== expanded;
-    if (timer < 0.08 && !mapChanged) return;
-    timer = 0; cache.expanded = expanded;
+    if (timer < 0.08 && !mapChanged && cache.station === station) return;
+    timer = 0; cache.expanded = expanded; cache.station = station;
     const job = missions.snapshot();
     const action = missions.prompt();
     const driving = player.inVehicle;
@@ -49,31 +52,55 @@ export function createStreetHUD(world, minimap) {
     text('district-subtitle', world.district.subtitle);
     text('explored', exploration[world.visited.size]);
     text('objective', job.point?.style === 'contact' ? `${job.point.label.split(' · ')[0]} is waiting · ${job.distance} m` : objectives[mode]);
-    text('city-cash', `$${job.cash.toLocaleString()}`);
+    if (cache.cash !== job.cash) {
+      cache.cash = job.cash;
+      text('city-cash', job.cash.toLocaleString('en-US'));
+      elements['city-cash'].setAttribute('aria-label', `Cash: $${cache['city-cash']}`);
+    }
     text('city-rank', `${job.rank.toUpperCase()} · ${job.rp.toLocaleString()} RP`);
+    if (cache.rp !== job.rp) {
+      const nextRank = rankThresholds.findIndex(rp => rp > job.rp);
+      const fraction = nextRank < 0 ? 1 : (job.rp - rankThresholds[nextRank - 1]) / (rankThresholds[nextRank] - rankThresholds[nextRank - 1]);
+      elements['rank-meter'].style.width = `${fraction * 100}%`;
+      cache.rp = job.rp;
+    }
     text('health-value', Math.ceil(player.health));
     if (cache.health !== player.health) {
       elements['health-bar'].style.width = `${player.health}%`;
       cache.health = player.health;
     }
     updateMission(job);
-    text('speed', driving ? digits[Math.round(car.speed * 3.6)] : 'NERI');
-    text('speed-unit', driving ? 'KM / H' : 'VOSS');
-    text('mode', driving ? VEHICLE_TUNING[car.type].name : 'UNDERTOW COURIER');
-    const condition = Math.round(car.condition);
-    if (driving && condition !== bodywork) {
-      bodywork = condition; elements.condition.style.width = conditionWidths[condition];
+    text('mode', driving ? VEHICLE_TUNING[car.type].name : 'NERI VOSS');
+    elements['drive-readout'].hidden = elements['station-readout'].hidden = !driving;
+    elements['weapon-readout'].hidden = driving;
+    if (driving) {
+      text('speed', Math.round(car.speed * 3.6));
+      const forward = car.vx * Math.sin(car.heading) - car.vz * Math.cos(car.heading);
+      text('drive-gear', forward < -.6 ? 'R' : 'D');
+      const condition = Math.round(car.condition);
+      if (condition !== bodywork) {
+        bodywork = condition;
+        elements.condition.style.width = conditionWidths[condition];
+        text('condition-value', condition);
+      }
+      text('station-name', STATIONS[station].name);
+      text('station-track', STATIONS[station].track);
+    } else {
+      elements['pistol-slot'].hidden = job.done < 2;
+      elements['weapon-ammo'].hidden = job.weapon !== 2;
+      elements['weapon-readout'].classList.toggle('pistol-equipped', job.weapon === 2);
+      text('weapon-ammo', job.reload ? 'RELOADING' : `${job.rounds} / ${job.reserve}`);
     }
-    if (elements['condition-row'].hidden === driving) elements['condition-row'].hidden = !driving;
     const toast = world.messageTime > 0 ? world.message : '';
     if (toast !== cache.toast) {
       text('toast', toast); elements.toast.classList.toggle('visible', !!toast);
     }
     const degrees = Math.round(((rig.heading * 180 / Math.PI) % 360 + 360) % 360) % 360;
     text('compass', bearings[degrees]);
-    text('map-label', expanded ? 'CITY OVERVIEW · M TO CLOSE' : 'M · CITY OVERVIEW');
+    text('map-label', expanded ? 'BACK TO STREET MAP' : 'CITY OVERVIEW');
     const law = police.snapshot(), level = law.level;
-    text('wanted-level', level ? `LEVEL ${level} / ${law.state.toUpperCase()}` : 'ROUTINE');
+    text('wanted-level', level ? law.state.toUpperCase() : 'ROUTINE');
+    elements['heat-row'].hidden = !level;
     const heat = `${law.heat}%`;
     if (cache.heat !== heat) { cache.heat = heat; elements['heat-meter'].style.width = heat; }
     const starLabel = `Wanted level: ${level} ${level === 1 ? 'star' : 'stars'}`;
@@ -135,8 +162,6 @@ export function createStreetHUD(world, minimap) {
       text('radio-contact', contact.name);
       text('radio-line', job.radio.line);
     }
-    elements['mission-payout'].hidden = !job.payout;
-    if (job.payout) text('mission-payout', job.payout.cash ? `JOB COMPLETE · +$${job.payout.cash.toLocaleString()} · +${job.payout.rp} RP` : 'REPLAY COMPLETE');
   }
   return { updateStreetHUD };
 }
