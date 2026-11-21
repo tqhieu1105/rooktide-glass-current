@@ -15,7 +15,9 @@ import { createPoliceModels } from './police-models.js';
 import { STEP } from './config.js';
 import { createMissionSystem } from './missions.js';
 import { createMissionModels } from './mission-models.js';
-import { MISSIONS } from './mission-data.js';
+import { createMenus, loadPreferences } from './menus.js';
+import { createCarAudio } from './radio.js';
+import { nearestRoadNode } from './roads.js';
 
 export function bootOpenWorldCrimeGame() {
   const query = new URLSearchParams(location.search);
@@ -34,9 +36,11 @@ export function bootOpenWorldCrimeGame() {
   const population = createPopulation(world, firstCar, (kind, x, z, witnessed) => police.reportCrime(kind, x, z, witnessed));
   world.population = population;
   world.police = police;
+  const capture = query.has('shot');
   let storage;
-  if (!query.has('shot')) { try { storage = window.localStorage; } catch {} }
-  const missions = createMissionSystem({ world, player, police, population, storage, getCar: () => car, setCar: target => { car = target; } });
+  if (!capture) { try { storage = window.localStorage; } catch {} }
+  const missions = createMissionSystem({ world, player, police, population, storage, getCar: () => car,
+    setCar: target => { car = target; }, checkpointForSave: () => nearestRoadNode(world.roads, player.x, player.z).id });
   const paintMissions = createMissionModels(view.scene, missions, world);
   const paintPopulation = createPopulationModels(view.scene, population);
   const paintPolice = createPoliceModels(view.scene, police, world);
@@ -47,19 +51,28 @@ export function bootOpenWorldCrimeGame() {
   const minimap = createMinimap(document.getElementById('minimap'), world);
   const hud = createStreetHUD(world, minimap);
   const blank = { forward: 0, right: 0, sprint: false, handbrake: false, interact: false, camera: false,
-    pause: false, recover: false, map: false, attack: false, weapon: 0, scan: false, orbitX: 0, orbitY: 0, zoom: 0 };
-  let paused = false, expanded = false, lowQuality = view.diagnostics().quality === 'low';
-  population.setQuality(lowQuality ? 'low' : 'high');
-  document.getElementById('quality-button').textContent = lowQuality ? 'QUALITY: LOW' : 'QUALITY: HIGH';
+    pause: false, recover: false, map: false, radio: false, attack: false, weapon: 0, scan: false, orbitX: 0, orbitY: 0, zoom: 0 };
+  let expanded = false, seenPayout = null, titleTime = 0;
+  const defaultQuality = view.diagnostics().quality;
+  const settings = loadPreferences(storage, defaultQuality);
+  let lowQuality = settings.quality === 'low';
+  function setQuality(quality) {
+    lowQuality = quality === 'low';
+    view.setRenderQuality(quality); population.setQuality(quality);
+  }
+  setQuality(settings.quality);
+  const audio = createCarAudio(settings);
+  function wakeAudio(event) { if (event.isTrusted && navigator.userActivation.hasBeenActive) audio.wake(); }
+  window.addEventListener('pointerdown', wakeAudio);
+  window.addEventListener('keydown', wakeAudio);
   let last = performance.now(), accumulator = 0, frames = 0;
   const frameTimes = new Float64Array(3600);
   let frameSample = 0, frameSamples = 0;
   const game = { player, get car() { return car; }, world, rig, population, police, missions, frozen: false, advanceFixedStep, renderFrame };
-  const outcome = document.getElementById('chase-outcome');
-  const ending = document.getElementById('campaign-ending');
-  const replay = document.getElementById('mission-replay');
-  const abandon = document.getElementById('abandon-mission');
-  for (const job of MISSIONS) replay.add(new Option(job.title, job.id));
+  const menus = createMenus({ canvas, input, missions, settings, storage, capture, actions: {
+    freeze: () => { accumulator = 0; audio.update(false, false, 0, 0); },
+    quality: setQuality, start: startStreet, quit: quitToTitle, retry: continueFrom,
+  } });
 
   function advanceFixedStep(actions) {
     stepArcadeDriving(car, actions, world, STEP, player.inVehicle);
@@ -68,19 +81,17 @@ export function bootOpenWorldCrimeGame() {
     population.step(player, car, rig, STEP);
     police.step(STEP, actions);
     missions.step(STEP, actions, rig.heading);
-    if ((police.wanted.outcome || missions.failed) && outcome.hidden) {
-      document.getElementById('outcome-title').textContent = police.wanted.outcome === 'busted' ? 'Busted.'
-        : missions.failed ? 'Job interrupted.' : 'Down for the count.';
-      const penalty = police.wanted.outcome && !missions.failed ? missions.payFee(50) : 0;
-      document.getElementById('outcome-detail').textContent = missions.failed || `$${penalty} in fees. Ilex can get you moving again.`;
-      input.clearHeldInputs(); outcome.hidden = false;
-      document.getElementById('retry-chase').focus();
-    }
-    if (missions.ending && ending.hidden) {
-      const progress = missions.snapshot();
-      document.getElementById('ending-detail').textContent = `All six jobs complete · $${progress.payout.cash.toLocaleString()} + ${progress.payout.rp} RP`;
-      input.clearHeldInputs(); ending.hidden = false;
-      document.getElementById('dismiss-ending').focus();
+    if (police.wanted.outcome || missions.failed) {
+      const job = missions.snapshot();
+      const penalty = police.wanted.outcome && !job.active ? missions.payFee(50) : 0;
+      menus.outcome({ heading: police.wanted.outcome === 'busted' ? 'Busted.' : job.active ? 'Job interrupted.' : 'Down for the count.',
+        job: job.active ? job.title : '', detail: job.failed || `$${penalty} in fees. Ilex can get you moving again.` });
+    } else {
+      const payout = missions.latestPayout();
+      if (payout && payout !== seenPayout) {
+        seenPayout = payout;
+        menus.complete(missions.snapshot());
+      }
     }
     world.messageTime = Math.max(0, world.messageTime - STEP);
     const next = getDistrictAt(player.x, player.z);
@@ -95,35 +106,42 @@ export function bootOpenWorldCrimeGame() {
     paintPopulation(rig.camera, car, alpha, lowQuality);
     paintPolice(alpha);
     paintMissions(rig.camera, alpha);
-    view.renderWorldFrame(player.inVehicle ? car : player);
-    hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player), police, missions);
+    view.renderWorldFrame(player.inVehicle ? car : player, world.clock + (menus.atTitle ? titleTime : 0));
+    if (!menus.current) hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player), police, missions, settings.station);
   }
 
-  function setPaused(value) {
-    paused = value; accumulator = 0; input.clearHeldInputs();
-    document.getElementById('pause').hidden = !paused;
-    if (paused) {
-      const status = missions.snapshot();
-      abandon.hidden = !status.active;
-      replay.parentElement.hidden = status.active || status.done < MISSIONS.length;
-      document.getElementById('last-radio').textContent = missions.lastLine()?.line || '';
+  function startStreet(fresh) {
+    if (fresh) missions.resetProgress();
+    const node = world.roads.nodes[missions.saveStatus().checkpoint ?? -1];
+    if (node) {
+      const next = world.roads.nodes[node.links[0]];
+      const length = Math.hypot(next.x - node.x, next.z - node.z);
+      const dx = (next.x - node.x) / length, dz = (next.z - node.z) / length;
+      Object.assign(player, { x: node.x, previousX: node.x, z: node.z, previousZ: node.z });
+      const x = node.x + 4 * dx, z = node.z + 4 * dz;
+      Object.assign(car, { x, previousX: x, z, previousZ: z, heading: Math.atan2(dx, -dz) });
+      population.resetNear(player);
+      world.district = getDistrictAt(player.x, player.z); world.visited.clear(); world.visited.add(world.district.id);
     }
-    if (!paused) canvas.focus({ preventScroll: true });
+    Object.assign(rig, { heading: 0, pitch: 0, preset: 0, zoom: 0, orbitHold: 0, initialized: false });
+    menus.resume();
   }
-  document.getElementById('help-button').addEventListener('click', () => setPaused(true));
-  document.getElementById('resume-button').addEventListener('click', () => setPaused(false));
-  abandon.addEventListener('click', () => { missions.abandon(); setPaused(false); });
-  replay.addEventListener('change', () => {
-    if (missions.chooseReplay(replay.value)) setPaused(false);
-    replay.selectedIndex = 0;
-  });
-  document.getElementById('dismiss-ending').addEventListener('click', () => {
-    missions.dismissEnding(); ending.hidden = true; setPaused(false);
-  });
+
+  function quitToTitle() {
+    missions.save(); missions.clearSession(); police.reset(true);
+    Object.assign(player, createOnFootPlayer());
+    car = Object.assign(firstCar, createVehicle(), { active: true });
+    world.clock = 0; world.tick = 0; world.messageTime = 0; world.staticImpacts = 0;
+    world.district = getDistrictAt(player.x, player.z); world.visited.clear(); world.visited.add(world.district.id);
+    population.resetNear(player);
+    expanded = false; seenPayout = null; titleTime = 0; rig.initialized = false;
+    menus.title();
+  }
+
   function continueFrom(safehouse) {
     if (!safehouse && missions.retry()) {
       rig.initialized = false; rig.orbitHold = 0;
-      outcome.hidden = true; setPaused(false);
+      menus.resume();
       showWorldMessage(world, 'Checkpoint restored. Give it another go.');
       return;
     }
@@ -137,34 +155,29 @@ export function bootOpenWorldCrimeGame() {
     Object.assign(player, { ...safe, x: safe.x + (onFoot ? 3 : 0), previousX: safe.x + (onFoot ? 3 : 0),
       previousZ: safe.z, inVehicle: !onFoot, vx: 0, vz: 0, speed: 0, health: 100 });
     rig.initialized = false; rig.orbitHold = 0;
-    outcome.hidden = true; setPaused(false);
+    menus.resume();
     showWorldMessage(world, safehouse ? 'Ilex / The yard is clear.' : 'Ilex / Your checkpoint is clear. Try again.', 4);
   }
-  document.getElementById('retry-chase').addEventListener('click', () => continueFrom(false));
-  document.getElementById('return-yard').addEventListener('click', () => continueFrom(true));
-  document.getElementById('quality-button').addEventListener('click', e => {
-    lowQuality = !lowQuality; view.setRenderQuality(lowQuality ? 'low' : 'high');
-    population.setQuality(lowQuality ? 'low' : 'high');
-    e.currentTarget.textContent = lowQuality ? 'QUALITY: LOW' : 'QUALITY: HIGH';
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !game.frozen && !menus.current) menus.pause();
   });
-  document.addEventListener('visibilitychange', () => { if (document.hidden && !game.frozen) setPaused(true); });
 
   function frame(now) {
     try {
       const frameMs = Math.max(0, now - last); last = now;
       const elapsed = Math.min(0.1, frameMs / 1000);
-      if (frames > 20 && !paused && !game.frozen) {
+      if (frames > 20 && !menus.current && !game.frozen) {
         frameTimes[frameSample] = frameMs;
         frameSample = (frameSample + 1) % frameTimes.length;
         frameSamples = Math.min(frameSamples + 1, frameTimes.length);
       }
       const actions = input.readPlayerActions();
-      const canPlay = outcome.hidden && ending.hidden;
-      if (actions.pause && canPlay) setPaused(!paused);
+      if (actions.pause && !menus.current) menus.pause();
+      const canPlay = !menus.current;
       const activeInput = actions.forward || actions.right || actions.interact || actions.recover || actions.sprint
-        || actions.attack || actions.handbrake || actions.camera || actions.map || actions.orbitX || actions.orbitY || actions.zoom;
-      if (game.frozen && activeInput) { game.frozen = false; accumulator = 0; }
-      if (!paused && !game.frozen && canPlay) {
+        || actions.attack || actions.handbrake || actions.camera || actions.map || actions.radio || actions.orbitX || actions.orbitY || actions.zoom;
+      if (canPlay && game.frozen && activeInput) { game.frozen = false; accumulator = 0; }
+      if (canPlay && !game.frozen) {
         if (actions.interact && !missions.interact()) {
           if (player.inVehicle) exitVehicleSafely(player, car, world);
           else {
@@ -181,12 +194,19 @@ export function bootOpenWorldCrimeGame() {
           showWorldMessage(world, 'Back on the road. No paperwork.');
         }
         if (actions.map) expanded = !expanded;
+        if (actions.radio && player.inVehicle) menus.tune();
         accumulator += elapsed;
         let steps = 0;
-        while (accumulator >= STEP && steps < 5 && outcome.hidden && ending.hidden) { advanceFixedStep(actions); accumulator -= STEP; steps++; }
+        while (accumulator >= STEP && steps < 5 && !menus.current) { accumulator -= STEP; advanceFixedStep(actions); steps++; }
         if (steps === 5) accumulator = 0;
       } else accumulator = 0;
-      renderFrame(game.frozen ? 1 : accumulator / STEP, game.frozen ? 0 : elapsed || STEP, paused ? blank : actions);
+      if (menus.atTitle) {
+        titleTime += elapsed;
+        rig.heading = -.38 + Math.cos(titleTime * .28) * .20; rig.preset = 1; rig.zoom = 1.7; rig.pitch = .13;
+      }
+      const playing = !menus.current && !game.frozen;
+      audio.update(playing, player.inVehicle, car.speed, actions.forward);
+      renderFrame(playing ? accumulator / STEP : 1, game.frozen ? 0 : elapsed || STEP, playing ? actions : blank);
       frames++;
       if (frames === 3) { window.__gameReady = true; signalShotReady(); }
       requestAnimationFrame(frame);
@@ -201,7 +221,7 @@ export function bootOpenWorldCrimeGame() {
       const mission = missions.snapshot();
       return {
         player: { ...player }, car: carState, tick: world.tick, district: world.district.name,
-        staticImpacts: world.staticImpacts, paused, frozen: game.frozen, cash: mission.cash, mission, visited: [...world.visited],
+        staticImpacts: world.staticImpacts, paused: !!menus.current, menu: menus.current, station: settings.station, frozen: game.frozen, cash: mission.cash, mission, visited: [...world.visited],
         camera: { heading: rig.heading, preset: rig.preset, type: view.camera.type, position: view.camera.position.toArray() },
         renderer: view.diagnostics(), population: population.snapshot(), police: police.snapshot(),
         world: { buildings: world.buildings.length, palms: world.palms.length, districts: 6, roadNodes: world.roads.nodes.length },
@@ -210,8 +230,8 @@ export function bootOpenWorldCrimeGame() {
     },
   };
   advanceFixedStep(blank);
-  if (query.has('shot')) stagePlayableScreenshot(query.get('shot'), game);
-  else population.seedNear(player);
+  if (capture) stagePlayableScreenshot(query.get('shot'), game);
+  else { population.seedNear(player); menus.title(); }
   requestAnimationFrame(frame);
 }
 
@@ -222,6 +242,7 @@ function percentile(values, part) {
 
 function showFatalError(error) {
   console.error(error);
+  document.getElementById('game-menu').close();
   document.getElementById('fatal').hidden = false;
   document.getElementById('fatal-message').textContent = error.message || String(error);
   window.__renderFailed = true;

@@ -45,7 +45,11 @@ try {
     if (await browser.evaluate('!!window.__renderFailed')) throw new Error('Renderer failed');
     if (await browser.evaluate('window.__rooktide.snapshot().renderer.quality') !== renderQuality) {
       // Exercise the ordinary pause-menu control; no screenshot-only renderer.
-      await browser.evaluate('document.getElementById("help-button").click();document.getElementById("quality-button").click();document.getElementById("resume-button").click()');
+      await browser.evaluate('document.getElementById("help-button").click()');
+      // DOM activation avoids opening an audio context in passive captures.
+      await browser.evaluate(`document.querySelector('#pause [data-view=settings]').click();
+        document.getElementById('quality-button').click(); document.querySelector('#settings-screen [data-back]').click();
+        document.getElementById('resume-button').click()`);
     }
     const fonts = await browser.evaluate(`Promise.all([
       '400 42px Anton', '400 14px Barlow', '600 14px Barlow',

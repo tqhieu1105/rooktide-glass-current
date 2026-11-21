@@ -34,7 +34,7 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
   let low = true, spawnTick = 0, sparkCursor = 0;
   let crossings = 0, stumbles = 0, impacts = 0, thefts = 0;
   let lastWitness = false, lastStaticImpact = 0;
-  const pop = { cars, vehicles, people, sparks, step, seedNear, findEnterable, claim, alarmAt, throwSparks, setQuality,
+  const pop = { cars, vehicles, people, sparks, step, seedNear, resetNear, findEnterable, claim, alarmAt, throwSparks, setQuality,
     snapshot: () => ({ cars: cars.filter(car => car.active).length, walkers: people.filter(p => p.active).length,
       parked: cars.filter(car => car.active && car.parked && !car.claimed).length, crossings, stumbles, impacts, thefts,
       lastWitness, vehicles: vehicles.filter(car => car.active).map(car => ({ id: car.id, type: car.type,
@@ -105,6 +105,17 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
       if (i < 4) spawnWalker(people[i], actor, null, true);
       if (!people[i].active) spawnWalker(people[i], actor, null);
     }
+  }
+  function resetNear(actor) {
+    vehicles.splice(0, vehicles.length, firstCar, ...cars);
+    reservations.fill(-1);
+    for (const car of cars) Object.assign(car, { claimed: false, active: false, turn: null, condition: 100,
+      impactCooldown: 0, bounceVelocity: 0, roll: 0, pitch: 0, wheelSpin: 0 });
+    for (const walker of people) walker.active = false;
+    for (const spark of sparks) spark.life = 0;
+    spawnTick = sparkCursor = crossings = stumbles = impacts = thefts = lastStaticImpact = 0;
+    lastWitness = false;
+    seedNear(actor);
   }
   function recycle(actor, camera) {
     for (const car of cars) {

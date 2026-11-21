@@ -29,6 +29,15 @@ try {
   await mkdir('verification', { recursive: true });
   const version = await browser.send('Browser.getVersion');
   await navigate();
+  const titleTick = (await snapshot()).tick;
+  await hold('KeyW', 260);
+  check('Fresh title has no Continue and blocks movement', (await snapshot()).menu === 'title'
+    && (await snapshot()).tick === titleTick && await browser.evaluate('document.getElementById("continue-button").hidden'));
+  await browser.click('#title-screen [data-view=controls]');
+  check('Title opens the controls guide', (await snapshot()).menu === 'controls');
+  await browser.tap('Escape');
+  check('Escape returns from controls to title', (await snapshot()).menu === 'title');
+  await browser.startNewGame();
   const initial = await snapshot();
   check('Perspective camera and authentic WebGL2 renderer', initial.camera.type === 'PerspectiveCamera' && initial.renderer.context.includes('WebGL'));
   check('172 real buildings and six-district graph', initial.world.buildings === 172 && initial.world.districts === 6 && initial.world.roadNodes === 43);
@@ -39,6 +48,9 @@ try {
   await browser.tap('KeyE');
   const entered = await snapshot();
   check('Real E key enters the existing car', entered.player.inVehicle && entered.car.id === initial.car.id);
+  await browser.tap('KeyV');
+  check('V tunes the next station in a car', (await snapshot()).station === 1
+    && await browser.evaluate('document.getElementById("station-name").textContent === "Lowwater 91.6"'));
   await hold('KeyE', 850);
   check('One E press exits once', !(await snapshot()).player.inVehicle);
   await hold('KeyE', 850);
@@ -75,16 +87,41 @@ try {
   await browser.tap('Escape');
   const paused = await snapshot(); await delay(350);
   check('Escape pauses simulation', paused.paused && (await snapshot()).tick === paused.tick);
-  await browser.evaluate('document.getElementById("quality-button").click()');
+  await browser.click('#pause [data-view=settings]');
+  await browser.click('#quality-button');
   check('Quality setting changes the actual renderer', (await snapshot()).renderer.quality !== initial.renderer.quality);
-  await browser.evaluate('document.getElementById("quality-button").click()');
+  await browser.click('#quality-button');
+  const muted = await browser.evaluate('document.getElementById("mute-audio").checked');
+  await browser.click('#mute-audio');
+  check('Audio preferences persist station and mute state', await browser.evaluate(`(() => {
+    const settings = JSON.parse(localStorage.getItem('rooktide-preferences-1'));
+    return settings.station === 1 && settings.muted === ${!muted}; })()`));
+  await browser.tap('Escape');
   await browser.tap('Escape');
   await browser.tap('KeyR');
   check('R safely recovers the on-foot player', !(await snapshot()).paused && !(await snapshot()).player.inVehicle);
   await browser.screenshot('verification/on-foot-tested.jpg', 'jpeg');
 
-  // Start and retry the first job with ordinary keyboard controls.
+  // Save, quit, continue, reload, then confirm a new game through the normal title.
+  await browser.tap('Escape');
+  await browser.click('#save-button');
+  check('Save records a validated street checkpoint', await browser.evaluate(`Number.isInteger(JSON.parse(localStorage.getItem('rooktide-campaign-1')).checkpoint)
+    && document.getElementById('save-note').textContent.startsWith('Progress saved')`));
+  await browser.click('#quit-button');
+  check('Quit to Title offers Continue', (await snapshot()).menu === 'title'
+    && await browser.evaluate('!document.getElementById("continue-button").hidden'));
   await navigate();
+  await browser.click('#continue-button');
+  check('Continue after reload is on foot beside a usable car at the saved street', !(await snapshot()).paused
+    && !(await snapshot()).player.inVehicle && await browser.evaluate(`(() => { const { player, car } = window.__rooktide.snapshot();
+      return Math.hypot(player.x - car.x, player.z - car.z) === 4; })()`));
+  await browser.tap('Escape');
+  await browser.click('#quit-button');
+  await browser.click('#new-game');
+  check('Starting over requires confirmation when a save exists', (await snapshot()).menu === 'confirm');
+  await browser.click('#confirm-new');
+
+  // Start and retry the first job with ordinary keyboard controls.
   check('Fresh free roam shows Ilex and leaves the campaign inactive', (await snapshot()).mission.point.style === 'contact' && !(await snapshot()).mission.active);
   await browser.key('KeyW');
   await browser.waitFor('window.__rooktide.snapshot().player.z < 9', 15000);
@@ -97,6 +134,10 @@ try {
   check('A single E at Ilex starts Borrowed Voltage without entering a car', firstJob.mission.active && firstJob.mission.index === 0
     && firstJob.mission.id === 'borrowed-voltage' && !firstJob.player.inVehicle
     && await browser.evaluate('!document.getElementById("mission-card").hidden'));
+  await browser.tap('Escape');
+  check('Pause offers checkpoint retry and the last crew transmission', await browser.evaluate(`!document.getElementById('pause-retry').hidden
+    && document.getElementById('last-radio').textContent.startsWith('Ilex Renn:')`));
+  await browser.click('#pause-retry');
   await browser.tap('KeyR');
   check('Manual mission recovery opens the checkpoint dialog', !!(await snapshot()).mission.failed
     && await browser.evaluate('!document.getElementById("chase-outcome").hidden'));

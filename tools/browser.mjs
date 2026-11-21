@@ -63,12 +63,23 @@ export async function openChromium({ width = 1280, height = 720, headed = false 
     throw new Error(`Page readiness timeout: ${expression}`);
   }
   async function key(code, down = true) {
-    const virtual = { KeyW: 87, KeyA: 65, KeyS: 83, KeyD: 68, KeyE: 69, KeyC: 67, KeyR: 82, KeyM: 77,
+    const virtual = { KeyW: 87, KeyA: 65, KeyS: 83, KeyD: 68, KeyE: 69, KeyC: 67, KeyR: 82, KeyM: 77, KeyV: 86,
       Escape: 27, Space: 32, ShiftLeft: 16, ArrowUp: 38, ArrowDown: 40, ArrowLeft: 37, ArrowRight: 39 }[code];
     const key = code.startsWith('Key') ? code.slice(3).toLowerCase() : code === 'Space' ? ' ' : code === 'ShiftLeft' ? 'Shift' : code;
     await send('Input.dispatchKeyEvent', { type: down ? 'keyDown' : 'keyUp', key, code, windowsVirtualKeyCode: virtual, nativeVirtualKeyCode: virtual });
   }
   async function tap(code) { await key(code); await delay(180); await key(code, false); await delay(180); }
+  async function click(selector) {
+    const [x, y] = await evaluate(`(() => { const b = document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect(); return [b.left+b.width/2,b.top+b.height/2]; })()`);
+    const point = { x, y, button: 'left', clickCount: 1 };
+    await send('Input.dispatchMouseEvent', { type: 'mousePressed', ...point });
+    await send('Input.dispatchMouseEvent', { type: 'mouseReleased', ...point });
+  }
+  async function startNewGame() {
+    await click('#new-game');
+    if (await evaluate('!document.getElementById("new-confirm").hidden')) await click('#confirm-new');
+    await waitFor('window.__rooktide.snapshot().menu === null');
+  }
   async function screenshot(path, format = 'png', quality = 84) {
     const shot = await send('Page.captureScreenshot', { format, ...(format === 'jpeg' ? { quality } : {}), captureBeyondViewport: false, fromSurface: true });
     await writeFile(path, Buffer.from(shot.data, 'base64')); return path;
@@ -80,5 +91,5 @@ export async function openChromium({ width = 1280, height = 720, headed = false 
     await new Promise(resolve => { if (process.exitCode !== null) resolve(); else { process.once('exit', resolve); setTimeout(resolve, 3000); } });
     await rm(profile, { recursive: true, force: true, maxRetries: 3 });
   }
-  return { send, on, evaluate, waitFor, key, tap, screenshot, close };
+  return { send, on, evaluate, waitFor, key, tap, click, startNewGame, screenshot, close };
 }

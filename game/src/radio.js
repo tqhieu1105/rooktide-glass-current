@@ -9,7 +9,7 @@ export const AUDIO_DEFAULTS = { station: 0, master: 70, engine: 34, radio: 55, m
 
 export function createCarAudio(settings) {
   let context, master, radio, motorGain, motor;
-  let station = -1, step = 0, nextNote = 0;
+  let station = -1, step = 0, nextNote = 0, playing = false, unlocked = false;
   const voices = new Set();
 
   function wake() {
@@ -21,7 +21,7 @@ export function createCarAudio(settings) {
       motorGain = context.createGain(); motorGain.gain.value = 0; motorGain.connect(master);
       motor = context.createOscillator(); motor.type = 'triangle'; motor.connect(motorGain); motor.start();
     }
-    if (context.state === 'suspended') context.resume().catch(() => {});
+    if (!unlocked) context.resume().then(() => { unlocked = true; if (!playing) context.suspend().catch(() => {}); }).catch(() => {});
   }
 
   function silenceNotes() {
@@ -42,8 +42,20 @@ export function createCarAudio(settings) {
     voice.start(at); voice.stop(at + length);
   }
 
-  function update(driving, speed, throttle) {
-    if (!context || context.state !== 'running') return;
+  function update(active, driving, speed, throttle) {
+    if (active !== playing) {
+      playing = active;
+      if (context && unlocked) {
+        if (playing) context.resume().catch(() => {});
+        else {
+          master.gain.cancelScheduledValues(context.currentTime);
+          master.gain.value = 0;
+          silenceNotes();
+          context.suspend().catch(() => {});
+        }
+      }
+    }
+    if (!playing || !context || context.state !== 'running') return;
     const now = context.currentTime;
     const audible = driving && !settings.muted;
     master.gain.setTargetAtTime(audible ? settings.master / 100 : 0, now, .035);

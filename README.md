@@ -51,6 +51,7 @@ Use the pause menu to switch presets.
 
 ## Undertow Relay campaign
 
+Choose **New Game** at the title, or **Continue** to use a saved run.
 Walk to the amber marker beside the Kiln Market plaza and press **E** to talk to
 Ilex. You can explore first. Each job has four stages. Follow the mint route on
 the minimap, or press **M** for a wider view. Watch the stage card for the next
@@ -69,12 +70,12 @@ or head to Ilex Auto. You can also abandon a job from the pause menu.
 The routes, fights and pursuits are designed for roughly 25–35 minutes on a
 first run. The first job unlocks paid bodywork at Ilex Auto. The second unlocks
 Sava’s patrol scan and a pistol for use in mission encounters. Cash and
-completed jobs save locally on the same browser. Once the broadcast goes out,
+completed jobs save locally on the same browser. **Save Progress** and **Quit to Title** save a safe street checkpoint. Continue restores Neri on foot with a nearby car and leaves unfinished jobs available at their contact.
+Once the broadcast goes out,
 the pause menu lets you replay any job. Each first completion pays once.
 
 The browser captures show the playable three-star **Seawall Dividend** chase,
-Kiln Market on foot, and the Glasshook Bridge approach. See `CHECKPOINT-6.md`
-for the campaign, driving, capture comparison and package checks.
+Kiln Market on foot, and the Glasshook Bridge approach. See `CHECKPOINT-7.md` for the HUD, menu, capture comparison and package checks.
 
 ## Controls
 
@@ -89,6 +90,7 @@ for the campaign, driving, capture comparison and package checks.
 | Mouse drag | Orbit the camera without pointer lock |
 | C / mouse wheel | Cycle camera preset / adjust distance |
 | M | Expand / close the city map |
+| V | Cycle the car radio between three original stations and off |
 | R | Roadside recovery or open the mission retry menu |
 | Escape | Pause / resume |
 

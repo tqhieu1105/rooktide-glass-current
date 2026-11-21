@@ -10,6 +10,7 @@ async function load(query) {
   await browser.send('Page.navigate', { url: base + '/' + query });
   await browser.waitFor('window.__gameReady || window.__renderFailed');
   assert.ok(!await browser.evaluate('!!window.__renderFailed'));
+  if (!query) await browser.startNewGame();
 }
 async function measure(seconds) {
   return browser.evaluate(`new Promise(resolve => {

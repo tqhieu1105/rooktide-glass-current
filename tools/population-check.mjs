@@ -59,6 +59,7 @@ try {
   await browser.send('Page.navigate', { url: 'http://127.0.0.1:8080/?seed=20261121' });
   await browser.waitFor('window.__gameReady || window.__renderFailed');
   assert.ok(!await browser.evaluate('!!window.__renderFailed'));
+  await browser.startNewGame();
   const initial = await snapshot();
   assert.ok(initial.population.cars === 14 && initial.population.walkers === 24);
   const stationaryStart = Date.now();

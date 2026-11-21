@@ -46,7 +46,7 @@ export function createCityRenderer(canvas, world) {
   window.addEventListener('resize', resize); resize();
   let contextLost = false;
   canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); contextLost = true; });
-  function renderWorldFrame(target) {
+  function renderWorldFrame(target, time = world.clock) {
     if (contextLost) throw new Error('WebGL context lost. Reload to restore the 3D renderer.');
     if (renderer.shadowMap.enabled) {
       const x = Math.round(target.x / 16) * 16, z = Math.round(target.z / 16) * 16;
@@ -57,7 +57,7 @@ export function createCityRenderer(canvas, world) {
         renderer.shadowMap.needsUpdate = true;
       }
     }
-    sea.material.uniforms.time.value = world.clock;
+    sea.material.uniforms.time.value = time;
     sky.position.set(camera.position.x, camera.position.y, camera.position.z);
     updateDrawDistance(camera, quality === 'low' ? 245 : 420);
     renderer.render(scene, camera);

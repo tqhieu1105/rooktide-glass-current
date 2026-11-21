@@ -12,8 +12,8 @@ const isPickup = stage => stage?.kind === 'collect' || (stage?.kind === 'defeatG
 const STORE = 'rooktide-campaign-1';
 const RANKS = [[1400, 'Current'], [800, 'Fixer'], [400, 'Link'], [150, 'Wheelhand'], [0, 'Runner']];
 
-export function createMissionSystem({ world, player, police, population, getCar, setCar, storage }) {
-  const progress = loadProgress(storage);
+export function createMissionSystem({ world, player, police, population, getCar, setCar, storage, checkpointForSave }) {
+  const { progress, status } = loadProgress(storage, world.roads.nodes.length);
   const guards = [];
   let run = null, radio = null, payout = null, ending = false, replay = null, attempts = 0;
   let scan = 0, scanCooldown = 0, weapon = 1, rounds = 12, reserve = 36, attackCooldown = 0, reload = 0;
@@ -22,8 +22,26 @@ export function createMissionSystem({ world, player, police, population, getCar,
   const activeStage = () => run?.job.stages[run.index];
   const rank = () => RANKS.find(([minimum]) => progress.rp >= minimum)[1];
 
-  function save() {
-    try { storage?.setItem(STORE, JSON.stringify({ done: progress.done, cash: progress.cash })); } catch {}
+  function save(checkpoint = checkpointForSave?.()) {
+    if (checkpoint !== undefined) progress.checkpoint = checkpoint;
+    status.valid = true; status.invalid = false;
+    try {
+      if (!storage) return false;
+      storage.setItem(STORE, JSON.stringify({ done: progress.done, cash: progress.cash, checkpoint: progress.checkpoint }));
+      status.blocked = false;
+      return true;
+    } catch { status.blocked = true; return false; }
+  }
+
+  function resetProgress() {
+    clearSession();
+    Object.assign(progress, { done: 0, cash: 250, rp: 0, checkpoint: null });
+    save(null);
+  }
+
+  function clearSession() {
+    cleanUp(); radio = payout = replay = null; ending = false; attempts = 0;
+    scan = scanCooldown = attackCooldown = reload = 0; weapon = 1; rounds = 12; reserve = 36;
   }
 
   function say(contact, line, seconds = 9) {
@@ -271,7 +289,7 @@ export function createMissionSystem({ world, player, police, population, getCar,
   function fail(reason) { if (run && !run.failed) run.failed = reason; }
 
   function retry() {
-    if (!run?.failed) return false;
+    if (!run?.checkpoint) return false;
     const cp = run.checkpoint;
     if (run.courier) {
       population.vehicles.splice(population.vehicles.indexOf(run.courier), 1);
@@ -327,16 +345,27 @@ export function createMissionSystem({ world, player, police, population, getCar,
   }
 
   return { guards, step, start, interact, prompt, takeMissionCar, fail, retry, abandon, payFee, presentation, snapshot, chooseReplay,
+    save, resetProgress, clearSession, latestPayout: () => payout, saveStatus: () => ({ ...status, checkpoint: progress.checkpoint }),
     get vehicle() { return run?.vehicle; }, get active() { return !!run; }, get failed() { return run?.failed; },
     get scan() { return scan; }, get ending() { return ending; }, dismissEnding() { ending = false; }, lastLine: () => radio };
 }
 
-function loadProgress(storage) {
-  let saved;
-  try { saved = JSON.parse(storage?.getItem(STORE)); } catch {}
-  const done = Number.isInteger(saved?.done) && saved.done >= 0 && saved.done <= MISSIONS.length ? saved.done : 0;
-  const earned = MISSIONS.slice(0, done);
+function loadProgress(storage, nodeCount) {
+  const status = { valid: false, invalid: false, blocked: !storage };
+  let raw, saved;
+  try { raw = storage?.getItem(STORE); } catch { status.blocked = true; }
+  if (raw != null) {
+    try { saved = JSON.parse(raw); } catch {}
+    status.invalid = true;
+  }
+  const validDone = Number.isInteger(saved?.done) && saved.done >= 0 && saved.done <= MISSIONS.length;
+  const earned = MISSIONS.slice(0, validDone ? saved.done : 0);
   const maxCash = earned.reduce((total, job) => total + job.cash, 250);
-  const cash = Number.isInteger(saved?.cash) && saved.cash >= 0 && saved.cash <= maxCash ? saved.cash : maxCash;
-  return { done, cash, rp: earned.reduce((total, job) => total + job.rp, 0) };
+  if (validDone && Number.isInteger(saved.cash) && saved.cash >= 0 && saved.cash <= maxCash) {
+    status.valid = true; status.invalid = false;
+    const index = saved.checkpoint;
+    const checkpoint = Number.isInteger(index) && index >= 0 && index < nodeCount ? index : null;
+    return { status, progress: { done: saved.done, cash: saved.cash, rp: earned.reduce((total, job) => total + job.rp, 0), checkpoint } };
+  }
+  return { status, progress: { done: 0, cash: 250, rp: 0, checkpoint: null } };
 }

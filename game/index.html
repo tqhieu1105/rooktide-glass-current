@@ -65,22 +65,68 @@
     </div>
     <footer class="controls"><span><kbd>W A S D</kbd> Move / drive</span><span><kbd>C</kbd> Camera</span><span><kbd>R</kbd> Roadside recovery</span></footer>
   </div>
-  <section id="pause" hidden>
-    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2>Catch your breath.</h2><p>One city. Six districts. Find the coast, cross to Glasshook, or take a wrong turn on purpose.</p><dl><dt>W A S D / Arrows</dt><dd>Walk or drive</dd><dt>E</dt><dd>Interact / enter / exit car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Space while stopped</dt><dd>Hold to surrender near RCP</dd><dt>Mouse drag / Wheel</dt><dd>Orbit / camera distance</dd><dt>C / M</dt><dd>Camera preset / city overview</dd><dt>R</dt><dd>Roadside recovery / mission retry</dd><dt>F · 1 / 2</dt><dd>Attack · fists / pistol when unlocked</dd><dt>Q</dt><dd>Sava’s patrol scan when unlocked</dd></dl><div class="pause-actions"><button id="resume-button">BACK TO THE STREET <span>→</span></button><button id="quality-button">QUALITY: HIGH</button></div><small>Witnesses call in stolen cars and serious crashes. When the stars pulse, stay out of sight until the search ends.</small>
-      <p id="last-radio"></p>
-      <div class="mission-menu"><button id="abandon-mission" hidden>ABANDON JOB</button><label hidden>MISSION REPLAY <select id="mission-replay"><option value="">Choose a completed job</option></select></label></div>
-    </div>
-  </section>
-  <section id="chase-outcome" role="dialog" aria-modal="true" aria-labelledby="outcome-title" hidden>
-    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / ROADSIDE HELP</div><h2 id="outcome-title"></h2><p id="outcome-detail"></p>
-      <div class="pause-actions"><button id="retry-chase">RETRY FROM CHECKPOINT</button><button id="return-yard">RETURN TO ILEX’S YARD</button></div></div>
-  </section>
-  <section id="campaign-ending" role="dialog" aria-modal="true" aria-labelledby="ending-title" hidden>
-    <div class="pause-card"><div class="eyebrow">UNDERTOW RELAY / PUBLIC RECORD</div><h2 id="ending-title">Rooktide is listening.</h2>
-      <p id="ending-detail"></p><p>The ledger is on every radio in the city. The streets are open, and every job is available to replay from the pause menu.</p>
-      <div class="pause-actions"><button id="dismiss-ending">BACK TO THE STREET <span>→</span></button></div>
-    </div>
-  </section>
+  <dialog id="game-menu" aria-labelledby="menu-title">
+    <section id="title-screen" class="menu-card" data-screen="title" hidden>
+      <div class="eyebrow">UNDERTOW RELAY PRESENTS <span>01 / ROOKTIDE</span></div>
+      <h2 id="title-heading"><span class="wordmark" data-title="ROOKTIDE">ROOKTIDE</span><span class="brand-subtitle">GLASS CURRENT</span></h2>
+      <p class="menu-intro">Good weather. Questionable decisions.</p>
+      <div class="menu-actions">
+        <button id="continue-button" class="primary" hidden>Continue <span>→</span></button>
+        <button id="new-game" class="primary">New Game <span>→</span></button>
+        <button data-view="controls">Controls</button><button data-view="settings">Audio &amp; Quality</button>
+      </div>
+      <p id="title-note" class="menu-note"></p>
+    </section>
+    <section id="new-confirm" class="menu-card" data-screen="confirm" hidden>
+      <div class="eyebrow">UNDERTOW RELAY / FILE ROOM</div><h2 id="confirm-heading">Start over?</h2>
+      <p class="menu-intro">A new game replaces this browser’s saved jobs, cash and street checkpoint.</p>
+      <div class="menu-actions"><button data-back class="primary">Keep my save</button><button id="confirm-new">Replace save and start over</button></div>
+    </section>
+    <section id="pause" class="menu-card" data-screen="pause" hidden>
+      <div class="eyebrow">UNDERTOW RELAY / OFF THE CLOCK</div><h2 id="pause-heading">Catch your breath.</h2>
+      <p class="menu-intro" id="pause-detail"></p>
+      <div class="menu-actions">
+        <button id="resume-button" class="primary">Resume <span>→</span></button>
+        <button id="pause-retry" hidden>Retry Checkpoint</button>
+        <button data-view="controls">Controls</button><button data-view="settings">Audio &amp; Quality</button>
+        <button id="save-button">Save Progress</button><button id="quit-button">Quit to Title</button>
+        <button id="abandon-mission" hidden>Abandon Job</button>
+      </div>
+      <label id="replay-row" hidden>Mission Replay <select id="mission-replay"><option value="">Choose a completed job</option></select></label>
+      <details id="last-transmission" hidden><summary>Last crew transmission</summary><p id="last-radio"></p></details>
+      <p id="save-note" class="menu-note" role="status"></p>
+    </section>
+    <section id="controls-screen" class="menu-card" data-screen="controls" hidden>
+      <div class="eyebrow">UNDERTOW RELAY / FIELD GUIDE</div><h2 id="controls-heading">Street controls.</h2>
+      <dl><dt>WASD / Arrows</dt><dd>Walk, accelerate, reverse or steer</dd><dt>E</dt><dd>Interact, enter or exit a stopped car</dd><dt>Shift / Space</dt><dd>Sprint on foot / handbrake in car</dd><dt>Hold Space while stopped</dt><dd>Surrender near RCP</dd><dt>Mouse drag / Wheel / C</dt><dd>Orbit, zoom or change camera preset</dd><dt>M / V</dt><dd>City overview / cycle car radio</dd><dt>R</dt><dd>Roadside recovery or mission retry</dd><dt>F / 1 / 2</dt><dd>Attack / fists / unlocked pistol</dd><dt>Q</dt><dd>Sava’s patrol scan, once unlocked</dd><dt>Esc</dt><dd>Pause or return</dd></dl>
+      <div class="menu-actions"><button data-back class="primary">Back</button></div>
+    </section>
+    <section id="settings-screen" class="menu-card" data-screen="settings" hidden>
+      <div class="eyebrow">UNDERTOW RELAY / SOUND CHECK</div><h2 id="settings-heading">Audio &amp; Quality.</h2>
+      <div class="settings-fields">
+        <label for="volume-master">Master volume</label><input id="volume-master" type="range" min="0" max="100" step="5"><output for="volume-master"></output>
+        <label for="volume-engine">Engine</label><input id="volume-engine" type="range" min="0" max="100"><output for="volume-engine"></output>
+        <label for="volume-radio">Radio</label><input id="volume-radio" type="range" min="0" max="100" step="5"><output for="volume-radio"></output>
+        <label for="mute-audio">Mute all sound</label><input id="mute-audio" type="checkbox">
+        <label for="radio-station">Car radio station</label><select id="radio-station"></select>
+      </div>
+      <button id="quality-button">Quality: High</button>
+      <p id="settings-note" class="menu-note" role="status"></p>
+      <div class="menu-actions"><button data-back class="primary">Back</button></div>
+    </section>
+    <section id="chase-outcome" class="menu-card result failure" data-screen="outcome" hidden>
+      <div class="eyebrow" id="outcome-label">UNDERTOW RELAY / ROADSIDE HELP</div>
+      <h2 id="outcome-title"></h2><p class="result-job" id="outcome-job"></p><p class="menu-intro" id="outcome-detail"></p>
+      <div class="menu-actions"><button id="retry-chase" class="primary">Retry Checkpoint <span>→</span></button><button id="return-yard">Return to Ilex’s Yard</button></div>
+    </section>
+    <section id="campaign-ending" class="menu-card result success" data-screen="complete" hidden>
+      <div class="eyebrow" id="completion-label">UNDERTOW RELAY / JOB COMPLETE</div><h2 id="ending-title"></h2>
+      <p class="result-job" id="completion-job"></p>
+      <div class="reward" id="completion-reward"><div><span>PAYOUT</span><strong id="completion-cash"></strong></div><div><span>REPUTATION</span><strong id="completion-rp"></strong></div></div>
+      <p class="menu-intro" id="ending-detail"></p><p class="menu-note" id="completion-progress"></p>
+      <div class="menu-actions"><button id="dismiss-ending" class="primary">Back to the Street <span>→</span></button></div>
+    </section>
+  </dialog>
   <div id="fatal" hidden><h2>The 3D renderer stopped.</h2><p id="fatal-message"></p><p>This game requires WebGL. Reload after checking browser graphics support.</p></div>
   <p id="status" class="screen-reader" role="status" aria-live="polite"></p>
   <script type="module" src="./src/main.js"></script>
