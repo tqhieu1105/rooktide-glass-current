@@ -16,7 +16,7 @@
     "firstTraffic": 0
   },
   "live": {
-    "stationarySeconds": 120.044,
+    "stationarySeconds": 120.046,
     "crossings": 64,
     "carStolen": "civilian-1",
     "firstCarStillPresent": "driftline-01",
