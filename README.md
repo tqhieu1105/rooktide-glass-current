@@ -28,7 +28,7 @@ wants the evidence buried.
 - **Glasshook:** a service island reached by bridge, crowned by a broken-ring
   floodgate gantry.
 
-## Milestone 2 — populated streets at golden hour
+## Milestone 3 — Rooktide Civic Patrol
 
 The six districts share one road graph and one continuous city. Neri can walk,
 sprint, take an available car, drive across Glasshook Bridge, and leave a car
@@ -36,16 +36,23 @@ in place for later. Civilian drivers yield at junctions and crossings, while
 people walk the sidewalks and scramble away from fast cars. Free roam includes
 five vehicle types, arcade drifting, bouncy collisions, and cartoon sparks.
 
+Steal a car in view of a witness and RCP dispatch sends a patrol. Further
+incidents raise heat and can bring ramming patrols, a helicopter, and roadblocks
+with a gap. Break line of sight and stay clear until the pulsing stars go dark.
+The minimap shows the last place RCP saw you, and dispatch lists the nearest
+units and their distances. Hold Space while stopped near a patrol to surrender.
+Ilex offers roadside help if you get busted.
+
 Repeated city geometry and civilian models are grouped into instanced draws.
 One local atlas supplies the facade, asphalt, sidewalk, sand, and water textures.
 The high preset uses one 512×512 sun shadow map. On a 1280×720 viewport the
 software preset draws the city at 576×324, with the HUD at viewport resolution.
 Use the pause menu to switch presets.
 
-The three browser captures show a drive along Saffron Strand, Kiln Market on
-foot, and the Glasshook bridge approach. See `verification/README.md` and
-`CHECKPOINT-4.md` for timings and browser evidence. The campaign and wanted
-system remain future milestones.
+The three browser captures show a playable three-star pursuit along Saffron
+Strand, Kiln Market on foot, and the Glasshook Bridge approach. See
+`CHECKPOINT-5.md` for the police, driving, and packaging checks. The campaign
+is a future milestone.
 
 ## Controls
 
@@ -54,7 +61,7 @@ system remain future milestones.
 | WASD / arrow keys | Move on foot; accelerate, brake/reverse and steer in the car |
 | Shift | Sprint on foot |
 | E | Enter a nearby parked or stopped car, or exit at low speed |
-| Space | Handbrake while driving |
+| Space | Handbrake while driving, or hold while stopped to surrender near RCP |
 | Mouse drag | Orbit the camera without pointer lock |
 | C / mouse wheel | Cycle camera preset / adjust distance |
 | M | Expand / close the city map |
@@ -90,6 +97,7 @@ node tools/simulation-checks.mjs
 node tools/smoke.mjs
 node tools/drive-loop.mjs
 node tools/population-check.mjs
+node tools/police-check.mjs
 node tools/timing-probe.mjs
 node tools/capture-shots.mjs --base http://127.0.0.1:8080 --quality 84
 node tools/verify-package.mjs
