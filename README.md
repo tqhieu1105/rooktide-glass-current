@@ -79,7 +79,8 @@ Once the broadcast goes out,
 the pause menu lets you replay any job. Each first completion pays once.
 
 The browser captures show the playable three-star **Seawall Dividend** chase,
-Kiln Market on foot, and the Glasshook Bridge approach. See `CHECKPOINT-7.md` for the HUD, menu, capture comparison and package checks.
+Kiln Market on foot, and the Glasshook Bridge approach. See [Checkpoint 13](CHECKPOINT-13.md)
+for the final HUD, capture comparison, timing and package checks.
 
 ## Controls
 
@@ -130,7 +131,9 @@ node tools/population-check.mjs
 node tools/police-check.mjs
 node tools/mission-check.mjs
 node tools/timing-probe.mjs
+node tools/load-probe.mjs
 node tools/capture-shots.mjs --base http://127.0.0.1:8080 --quality 84
+node tools/compare-shots.mjs 388460f
 node tools/verify-package.mjs
 ```
 

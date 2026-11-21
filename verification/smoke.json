@@ -42,7 +42,7 @@
     "Wanted stars and air dispatch are visible",
     "Screenshot mission resumes and advances through both gates under normal keys",
     "60-second drive has no stalls trapping input",
-    "60-second drive stays intact (bodywork 79.6%)",
+    "60-second drive stays intact (bodywork 88.0%)",
     "District streaming unloads visited chunks and stays within its residency budget",
     "WebGL boot (fresh game)",
     "Weapon 2 selects the live pistol and its aiming reticle",
@@ -91,15 +91,15 @@
     }
   },
   "performance": {
-    "durationMs": 67245,
-    "travelledMetres": 1116,
+    "durationMs": 66717,
+    "travelledMetres": 924,
     "state": {
       "player": {
-        "x": 251.2290418071408,
-        "z": 164.7136984880859,
-        "previousX": 251.25946545622784,
-        "previousZ": 164.33380855503765,
-        "heading": -3.0487447044659466,
+        "x": 253.52441394108334,
+        "z": -26.4436348809577,
+        "previousX": 253.58560322380404,
+        "previousZ": -26.79600186073775,
+        "heading": -2.9566247807970045,
         "speed": 0,
         "vx": 0,
         "vz": 0,
@@ -112,23 +112,23 @@
       "car": {
         "id": "seawall-dividend-car",
         "type": "sports",
-        "x": 251.2290418071408,
-        "z": 164.7136984880859,
-        "previousX": 251.25946545622784,
-        "previousZ": 164.33380855503765,
-        "heading": -3.0487447044659466,
-        "vx": -1.8254189452230478,
-        "vz": 22.793395982895372,
-        "speed": 22.86637388740616,
-        "steer": 0.17473951565364446,
-        "wheelSpin": 2696.426338303877,
-        "condition": 79.61084757000627,
+        "x": 253.52441394108334,
+        "z": -26.4436348809577,
+        "previousX": 253.58560322380404,
+        "previousZ": -26.79600186073775,
+        "heading": -2.9566247807970045,
+        "vx": -3.671356963241685,
+        "vz": 21.142018786802975,
+        "speed": 21.458420732502034,
+        "steer": -0.2952913003032036,
+        "wheelSpin": 2239.286569359448,
+        "condition": 88,
         "recoveries": 0,
         "impactCooldown": 0,
-        "roll": -0.01787916524341095,
-        "pitch": -0.016119066577821257,
+        "roll": -0.02170079002126283,
+        "pitch": -0.0021603909024138683,
         "bounce": 0,
-        "bounceVelocity": -1.4050998396323628e-29,
+        "bounceVelocity": -9.821593094858055e-52,
         "braking": false,
         "destroying": false,
         "destroyed": false,
@@ -144,7 +144,7 @@
         "airHeight": 0,
         "airVelocity": 0
       },
-      "tick": 3600,
+      "tick": 3040,
       "district": "Kiln Market",
       "staticImpacts": 0,
       "paused": false,
@@ -207,13 +207,13 @@
         "strand"
       ],
       "camera": {
-        "heading": -3.125626967739817,
+        "heading": -3.0654893000869277,
         "preset": 1,
         "type": "PerspectiveCamera",
         "position": [
-          251.39804902641052,
-          4.24785370878825,
-          144.3218171823964
+          254.5660630567198,
+          4.729369021979382,
+          -45.44358586261858
         ]
       },
       "renderer": {
@@ -223,9 +223,9 @@
         "quality": "low",
         "width": 576,
         "height": 324,
-        "calls": 65,
-        "triangles": 8598,
-        "geometries": 97,
+        "calls": 56,
+        "triangles": 4994,
+        "geometries": 94,
         "textures": 2,
         "batches": 111,
         "instances": 2766
@@ -236,21 +236,21 @@
         "activeDistricts": 3,
         "detailedChunks": 4,
         "lowDetailChunks": 4,
-        "instances": 953,
-        "batches": 70,
+        "instances": 938,
+        "batches": 51,
         "maxLoadedChunks": 8,
         "settled": true,
-        "builds": 32,
-        "unloads": 24,
-        "cumulativeBuildMs": 173.1
+        "builds": 24,
+        "unloads": 16,
+        "cumulativeBuildMs": 141.3
       },
       "population": {
         "cars": 14,
         "walkers": 24,
         "parked": 4,
-        "crossings": 27,
+        "crossings": 23,
         "stumbles": 0,
-        "impacts": 1,
+        "impacts": 0,
         "thefts": 0,
         "lastWitness": false,
         "vehicles": [
@@ -267,69 +267,69 @@
           {
             "id": "civilian-1",
             "type": "compact",
-            "x": 374.8819094525278,
-            "z": -111,
+            "x": 213.45264463059604,
+            "z": -249,
             "speed": 0,
-            "heading": 1.5707963267948966,
+            "heading": -1.5707963267948966,
             "claimed": false,
             "parked": true
           },
           {
             "id": "civilian-2",
             "type": "saloon",
-            "x": 37.351964445859196,
-            "z": 129,
+            "x": 243,
+            "z": -299.69384801611307,
             "speed": 0,
-            "heading": 1.5707963267948966,
+            "heading": 3.141592653589793,
             "claimed": false,
             "parked": true
           },
           {
             "id": "civilian-3",
             "type": "van",
-            "x": -49.147122826986006,
-            "z": 111,
+            "x": 192.09385757155718,
+            "z": -231,
             "speed": 0,
-            "heading": -1.5707963267948966,
+            "heading": 1.5707963267948966,
             "claimed": false,
             "parked": true
           },
           {
             "id": "civilian-4",
             "type": "pickup",
-            "x": 408.79999999999995,
-            "z": -50.88570001244545,
+            "x": 172.03080474805085,
+            "z": -231,
             "speed": 0,
-            "heading": 3.141592653589793,
+            "heading": 1.5707963267948966,
             "claimed": false,
             "parked": true
           },
           {
             "id": "civilian-9",
             "type": "compact",
-            "x": 414.4,
-            "z": 25.903909308571848,
-            "speed": 11.671986396962081,
-            "heading": 3.141592653589793,
+            "x": 89.6,
+            "z": -139.46298215756886,
+            "speed": 10.881800316168206,
+            "heading": 6.283185307179586,
             "claimed": false,
             "parked": false
           },
           {
             "id": "civilian-10",
             "type": "saloon",
-            "x": 5.0501425194546385,
-            "z": -5.6,
-            "speed": 8.432069166281002,
-            "heading": -1.5707963267948966,
+            "x": 362.04815112273025,
+            "z": -234.4,
+            "speed": 8.43384813818776,
+            "heading": 1.5707963267948966,
             "claimed": false,
             "parked": false
           },
           {
             "id": "civilian-11",
             "type": "van",
-            "x": 69.10296446987218,
-            "z": 5.6,
-            "speed": 5.68855491519723,
+            "x": 440.0432327058119,
+            "z": -236,
+            "speed": 9.489872237199904,
             "heading": 1.5707963267948966,
             "claimed": false,
             "parked": false
@@ -337,49 +337,49 @@
           {
             "id": "civilian-12",
             "type": "pickup",
-            "x": 246.40000000000003,
-            "z": -3.1752489541274453,
-            "speed": 7.028613414278163,
-            "heading": 3.14159265359009,
+            "x": 96.63183897835313,
+            "z": -5.596114131831567,
+            "speed": 10.966115065204967,
+            "heading": 4.696463053203207,
             "claimed": false,
             "parked": false
           },
           {
             "id": "civilian-13",
             "type": "compact",
-            "x": 87.5487345380435,
-            "z": -2.8884201682454904,
-            "speed": 6.8961459775064755,
-            "heading": -2.1172466553734814,
+            "x": 265,
+            "z": -245.6,
+            "speed": 0.006985867892516653,
+            "heading": -1.5707963267948966,
             "claimed": false,
             "parked": false
           },
           {
             "id": "civilian-14",
             "type": "saloon",
-            "x": 414.4,
-            "z": -73.20329846520679,
-            "speed": 9.520384573814576,
-            "heading": 3.141592653589793,
+            "x": 363.54866843088615,
+            "z": -125.6,
+            "speed": 9.222163890814256,
+            "heading": -1.5707963267948966,
             "claimed": false,
             "parked": false
           },
           {
             "id": "civilian-15",
             "type": "van",
-            "x": 78.4,
-            "z": -49.06856609036585,
-            "speed": 9.751531730135222,
-            "heading": 3.141592653589793,
+            "x": 257.6,
+            "z": -317.22987088106197,
+            "speed": 8.12445880256327,
+            "heading": 0,
             "claimed": false,
             "parked": false
           },
           {
             "id": "civilian-16",
             "type": "pickup",
-            "x": 78.4,
-            "z": -34.54434156640754,
-            "speed": 9.533048132277798,
+            "x": 246.4,
+            "z": -152.91892539383252,
+            "speed": 9.74159990087796,
             "heading": 3.141592653589793,
             "claimed": false,
             "parked": false
@@ -387,30 +387,30 @@
           {
             "id": "civilian-17",
             "type": "compact",
-            "x": 412.7390249425747,
-            "z": 4.637742861048799,
-            "speed": 6.580845015804912,
-            "heading": 1.2440477269739358,
+            "x": 127.41178266969162,
+            "z": -125.6,
+            "speed": 10.258834467000726,
+            "heading": -1.5707963267948966,
             "claimed": false,
             "parked": false
           },
           {
             "id": "civilian-18",
             "type": "saloon",
-            "x": 38.380676999310296,
-            "z": 5.6,
-            "speed": 10.513589453967038,
-            "heading": 1.5707963267948966,
+            "x": 425.6,
+            "z": -135.39651868828872,
+            "speed": 8.697614345561936,
+            "heading": 0,
             "claimed": false,
             "parked": false
           },
           {
             "id": "seawall-dividend-car",
             "type": "sports",
-            "x": 251.2290418071408,
-            "z": 164.7136984880859,
-            "speed": 22.86637388740616,
-            "heading": -3.0487447044659466,
+            "x": 253.52441394108334,
+            "z": -26.4436348809577,
+            "speed": 21.458420732502034,
+            "heading": -2.9566247807970045,
             "claimed": true,
             "parked": false
           }
@@ -418,17 +418,17 @@
       },
       "police": {
         "level": 3,
-        "heat": 55,
+        "heat": 0,
         "state": "pursuit",
         "seen": true,
         "unseen": 0,
         "lastSeen": {
-          "x": 251.2290418071408,
-          "z": 164.7136984880859,
+          "x": 253.52441394108334,
+          "z": -26.4436348809577,
           "heading": 0
         },
         "searchRadius": 56,
-        "incident": "Reckless driving",
+        "incident": "Vehicle theft",
         "arrest": 0,
         "outcome": "",
         "checkpoint": {
@@ -440,42 +440,42 @@
         "units": [
           {
             "id": "RCP-01",
-            "x": 251.46819355404327,
-            "z": 157.1857586612935,
-            "speed": 20.23529753373218,
+            "x": 254.18416719111323,
+            "z": -39.72951752808877,
+            "speed": 20.301243451124982,
             "mode": "ramming",
             "condition": 79,
-            "ramTell": 0.48333333333333295,
-            "distance": 7.5317376211504845
+            "ramTell": 0.533333333333333,
+            "distance": 13.302253646065523
           },
           {
             "id": "RCP-02",
-            "x": 251.45963821979822,
-            "z": 156.90168143736886,
-            "speed": 20.237192527441724,
-            "mode": "pursuit",
-            "condition": 74,
-            "ramTell": 0,
-            "distance": 7.815419701220408
+            "x": 254.17351862800888,
+            "z": -39.38947711348149,
+            "speed": 20.3015807361861,
+            "mode": "ramming",
+            "condition": 87,
+            "ramTell": 0.6333333333333333,
+            "distance": 12.962105076104933
           },
           {
             "id": "RCP-03",
-            "x": 251.45499172058578,
-            "z": 156.6484340756385,
-            "speed": 20.236749278768393,
+            "x": 254.1713084138169,
+            "z": -39.58386965855851,
+            "speed": 20.301930715537626,
             "mode": "pursuit",
             "condition": 100,
             "ramTell": 0,
-            "distance": 8.068428806532047
+            "distance": 13.156148466375832
           }
         ],
         "helicopter": {
           "id": "KITE-1",
-          "x": 211.10401705770036,
-          "y": 29.1997557644707,
-          "z": 65.52255749657822,
-          "seen": true,
-          "distance": 106.99953300057138
+          "x": 289.5763585581103,
+          "y": 29.586774702214797,
+          "z": -110.15719855651477,
+          "seen": false,
+          "distance": 91.14660418211272
         },
         "roadblocks": []
       },
@@ -486,3371 +486,3301 @@
         "roadNodes": 43
       },
       "performance": {
-        "samples": 1420,
-        "medianMs": 33.4,
-        "p95Ms": 66.7
+        "samples": 858,
+        "medianMs": 66.6,
+        "p95Ms": 133.4
       }
     },
     "samples": [
       {
-        "ms": 8,
+        "ms": 9,
         "calls": 89,
-        "triangles": 25770,
+        "triangles": 25794,
         "speed": 17.805130611137752,
         "condition": 100
       },
       {
-        "ms": 147,
+        "ms": 510,
         "calls": 89,
         "triangles": 25794,
-        "speed": 19.292382225317155,
+        "speed": 18.551534849327798,
         "condition": 100
       },
       {
-        "ms": 273,
+        "ms": 639,
         "calls": 90,
-        "triangles": 26178,
-        "speed": 22.266275928779397,
+        "triangles": 26490,
+        "speed": 22.77706407727856,
         "condition": 93
       },
       {
-        "ms": 395,
-        "calls": 91,
-        "triangles": 26274,
-        "speed": 21.920882042949092,
-        "condition": 93
-      },
-      {
-        "ms": 519,
-        "calls": 91,
-        "triangles": 26238,
-        "speed": 21.7645194835764,
-        "condition": 93
-      },
-      {
-        "ms": 648,
+        "ms": 762,
         "calls": 90,
-        "triangles": 26018,
-        "speed": 9.697347239746005,
-        "condition": 93
-      },
-      {
-        "ms": 771,
-        "calls": 90,
-        "triangles": 25934,
-        "speed": 9.30698310533937,
+        "triangles": 26490,
+        "speed": 22.77706407727856,
         "condition": 93
       },
       {
         "ms": 894,
-        "calls": 89,
-        "triangles": 25778,
-        "speed": 9.976458357230543,
+        "calls": 90,
+        "triangles": 26126,
+        "speed": 22.441214035515493,
         "condition": 93
       },
       {
-        "ms": 1022,
-        "calls": 89,
-        "triangles": 25778,
-        "speed": 11.619891871346043,
+        "ms": 1023,
+        "calls": 90,
+        "triangles": 26066,
+        "speed": 15.48161748288849,
         "condition": 93
       },
       {
-        "ms": 1145,
-        "calls": 89,
-        "triangles": 25778,
-        "speed": 12.200042394529406,
+        "ms": 1146,
+        "calls": 90,
+        "triangles": 26066,
+        "speed": 15.48161748288849,
         "condition": 93
       },
       {
-        "ms": 1271,
-        "calls": 89,
-        "triangles": 25778,
-        "speed": 13.94518105952247,
+        "ms": 1272,
+        "calls": 90,
+        "triangles": 25946,
+        "speed": 12.078213448775198,
         "condition": 93
       },
       {
-        "ms": 1394,
-        "calls": 89,
-        "triangles": 25634,
-        "speed": 15.291876888649158,
+        "ms": 1406,
+        "calls": 90,
+        "triangles": 25838,
+        "speed": 11.33609906093545,
         "condition": 93
       },
       {
-        "ms": 1521,
-        "calls": 89,
-        "triangles": 25634,
-        "speed": 17.002656075954572,
+        "ms": 1529,
+        "calls": 90,
+        "triangles": 25742,
+        "speed": 11.827527606239844,
         "condition": 93
       },
       {
-        "ms": 1645,
+        "ms": 1655,
         "calls": 89,
-        "triangles": 25778,
-        "speed": 18.128843601702442,
+        "triangles": 25706,
+        "speed": 12.660602303169846,
         "condition": 93
       },
       {
-        "ms": 1768,
+        "ms": 1783,
         "calls": 89,
-        "triangles": 25778,
-        "speed": 19.42719027778067,
+        "triangles": 25706,
+        "speed": 12.660602303169846,
         "condition": 93
       },
       {
-        "ms": 1895,
+        "ms": 1910,
+        "calls": 90,
+        "triangles": 25808,
+        "speed": 14.545719726297316,
+        "condition": 93
+      },
+      {
+        "ms": 2038,
+        "calls": 90,
+        "triangles": 25808,
+        "speed": 14.545719726297316,
+        "condition": 93
+      },
+      {
+        "ms": 2167,
+        "calls": 90,
+        "triangles": 25736,
+        "speed": 15.69226072591947,
+        "condition": 93
+      },
+      {
+        "ms": 2290,
+        "calls": 90,
+        "triangles": 25736,
+        "speed": 16.641852961193496,
+        "condition": 93
+      },
+      {
+        "ms": 2413,
+        "calls": 90,
+        "triangles": 25736,
+        "speed": 16.641852961193496,
+        "condition": 93
+      },
+      {
+        "ms": 2541,
+        "calls": 90,
+        "triangles": 25736,
+        "speed": 17.958724966495122,
+        "condition": 93
+      },
+      {
+        "ms": 2668,
+        "calls": 90,
+        "triangles": 25808,
+        "speed": 18.88941419267828,
+        "condition": 93
+      },
+      {
+        "ms": 2799,
+        "calls": 90,
+        "triangles": 25880,
+        "speed": 19.811324255247573,
+        "condition": 93
+      },
+      {
+        "ms": 2923,
+        "calls": 90,
+        "triangles": 25808,
+        "speed": 21.447510004906448,
+        "condition": 93
+      },
+      {
+        "ms": 3055,
         "calls": 90,
         "triangles": 25496,
-        "speed": 21.070428987275974,
+        "speed": 21.26247070320826,
         "condition": 93
       },
       {
-        "ms": 2019,
+        "ms": 3179,
+        "calls": 90,
+        "triangles": 25496,
+        "speed": 21.26247070320826,
+        "condition": 93
+      },
+      {
+        "ms": 3310,
+        "calls": 90,
+        "triangles": 25568,
+        "speed": 22.159995525560234,
+        "condition": 93
+      },
+      {
+        "ms": 3433,
         "calls": 89,
-        "triangles": 25466,
-        "speed": 22.236888011183677,
+        "triangles": 25472,
+        "speed": 21.81457399101074,
         "condition": 93
       },
       {
-        "ms": 2146,
-        "calls": 89,
-        "triangles": 25466,
-        "speed": 22.042473875676563,
-        "condition": 93
-      },
-      {
-        "ms": 2271,
+        "ms": 3556,
         "calls": 88,
-        "triangles": 25370,
-        "speed": 21.66130728241482,
+        "triangles": 25460,
+        "speed": 21.62559588244055,
         "condition": 93
       },
       {
-        "ms": 2395,
+        "ms": 3682,
         "calls": 88,
-        "triangles": 25322,
-        "speed": 21.436730958926002,
+        "triangles": 25460,
+        "speed": 21.62559588244055,
         "condition": 93
       },
       {
-        "ms": 2520,
+        "ms": 3808,
         "calls": 87,
-        "triangles": 25310,
-        "speed": 21.21505116486386,
+        "triangles": 25400,
+        "speed": 21.43865413359932,
         "condition": 93
       },
       {
-        "ms": 2655,
-        "calls": 82,
-        "triangles": 25106,
-        "speed": 23.35358677662434,
+        "ms": 3938,
+        "calls": 87,
+        "triangles": 25400,
+        "speed": 21.43865413359932,
         "condition": 93
       },
       {
-        "ms": 2780,
-        "calls": 82,
-        "triangles": 25118,
-        "speed": 21.29755709829238,
+        "ms": 4069,
+        "calls": 84,
+        "triangles": 25364,
+        "speed": 21.14368526768648,
         "condition": 93
       },
       {
-        "ms": 2907,
-        "calls": 75,
-        "triangles": 24878,
-        "speed": 22.55078409768185,
+        "ms": 4228,
+        "calls": 79,
+        "triangles": 25160,
+        "speed": 22.931395922389836,
         "condition": 93
       },
       {
-        "ms": 3031,
+        "ms": 4352,
+        "calls": 76,
+        "triangles": 25124,
+        "speed": 22.770114151140874,
+        "condition": 93
+      },
+      {
+        "ms": 4483,
         "calls": 73,
         "triangles": 24728,
-        "speed": 22.275490106322295,
+        "speed": 22.373269000789627,
         "condition": 93
       },
       {
-        "ms": 3162,
+        "ms": 4605,
+        "calls": 73,
+        "triangles": 24728,
+        "speed": 22.17816754366658,
+        "condition": 93
+      },
+      {
+        "ms": 4735,
+        "calls": 73,
+        "triangles": 24728,
+        "speed": 22.17816754366658,
+        "condition": 93
+      },
+      {
+        "ms": 4880,
         "calls": 74,
         "triangles": 24790,
-        "speed": 22.004464002994823,
+        "speed": 21.794389834617537,
         "condition": 93
       },
       {
-        "ms": 3287,
-        "calls": 74,
-        "triangles": 24862,
-        "speed": 21.737588819806614,
-        "condition": 93
-      },
-      {
-        "ms": 3410,
+        "ms": 5009,
         "calls": 74,
         "triangles": 24814,
-        "speed": 21.47475172040879,
+        "speed": 21.605630068355033,
         "condition": 93
       },
       {
-        "ms": 3539,
-        "calls": 75,
-        "triangles": 24788,
-        "speed": 21.106059920251546,
+        "ms": 5132,
+        "calls": 74,
+        "triangles": 24814,
+        "speed": 21.530697375486195,
         "condition": 93
       },
       {
-        "ms": 3669,
+        "ms": 5255,
+        "calls": 74,
+        "triangles": 24814,
+        "speed": 21.530697375486195,
+        "condition": 93
+      },
+      {
+        "ms": 5384,
+        "calls": 73,
+        "triangles": 23492,
+        "speed": 21.2341677557151,
+        "condition": 93
+      },
+      {
+        "ms": 5508,
         "calls": 73,
         "triangles": 23516,
-        "speed": 22.36220971085728,
+        "speed": 22.132000077419995,
         "condition": 93
       },
       {
-        "ms": 3792,
+        "ms": 5631,
         "calls": 73,
         "triangles": 23516,
-        "speed": 22.089844804531083,
+        "speed": 21.939561846413714,
         "condition": 93
       },
       {
-        "ms": 3917,
-        "calls": 70,
-        "triangles": 23156,
-        "speed": 21.859726453430522,
+        "ms": 5754,
+        "calls": 74,
+        "triangles": 23618,
+        "speed": 21.7492272375473,
         "condition": 93
       },
       {
-        "ms": 4040,
-        "calls": 70,
-        "triangles": 23204,
-        "speed": 21.520160295075453,
+        "ms": 5876,
+        "calls": 74,
+        "triangles": 23618,
+        "speed": 21.7492272375473,
         "condition": 93
       },
       {
-        "ms": 4165,
-        "calls": 70,
-        "triangles": 21986,
-        "speed": 21.260576959165956,
+        "ms": 6008,
+        "calls": 74,
+        "triangles": 23618,
+        "speed": 21.7492272375473,
         "condition": 93
       },
       {
-        "ms": 4289,
-        "calls": 71,
-        "triangles": 22250,
-        "speed": 22.514370370015186,
-        "condition": 93
-      },
-      {
-        "ms": 4416,
+        "ms": 6136,
         "calls": 72,
-        "triangles": 22286,
-        "speed": 22.27862741958549,
+        "triangles": 23330,
+        "speed": 21.560955279207764,
         "condition": 93
       },
       {
-        "ms": 4538,
-        "calls": 72,
-        "triangles": 22334,
-        "speed": 21.89265597773953,
-        "condition": 93
-      },
-      {
-        "ms": 4662,
-        "calls": 72,
-        "triangles": 22154,
-        "speed": 21.665114035338693,
-        "condition": 93
-      },
-      {
-        "ms": 4785,
-        "calls": 70,
-        "triangles": 15890,
-        "speed": 21.44051656345664,
-        "condition": 93
-      },
-      {
-        "ms": 4909,
-        "calls": 70,
-        "triangles": 15890,
-        "speed": 21.108992873650422,
-        "condition": 93
-      },
-      {
-        "ms": 5033,
-        "calls": 69,
-        "triangles": 15666,
-        "speed": 22.186838209089693,
-        "condition": 93
-      },
-      {
-        "ms": 5156,
-        "calls": 70,
-        "triangles": 15736,
-        "speed": 21.878990613206,
-        "condition": 93
-      },
-      {
-        "ms": 5280,
-        "calls": 70,
-        "triangles": 15736,
-        "speed": 21.61402005503379,
-        "condition": 93
-      },
-      {
-        "ms": 5408,
-        "calls": 69,
-        "triangles": 15732,
-        "speed": 21.353036112721014,
-        "condition": 93
-      },
-      {
-        "ms": 5533,
-        "calls": 69,
-        "triangles": 15732,
-        "speed": 22.782725475711466,
-        "condition": 93
-      },
-      {
-        "ms": 5657,
-        "calls": 69,
-        "triangles": 15732,
-        "speed": 22.464307643053395,
-        "condition": 93
-      },
-      {
-        "ms": 5783,
-        "calls": 69,
-        "triangles": 15588,
-        "speed": 22.190359903746252,
-        "condition": 93
-      },
-      {
-        "ms": 5906,
-        "calls": 69,
-        "triangles": 15516,
-        "speed": 21.88245065290319,
-        "condition": 93
-      },
-      {
-        "ms": 6035,
-        "calls": 69,
-        "triangles": 15444,
-        "speed": 21.61742771790268,
-        "condition": 93
-      },
-      {
-        "ms": 6161,
-        "calls": 69,
-        "triangles": 15444,
-        "speed": 21.356392811530945,
-        "condition": 93
-      },
-      {
-        "ms": 6287,
-        "calls": 69,
-        "triangles": 15444,
-        "speed": 22.608716802733237,
+        "ms": 6277,
+        "calls": 73,
+        "triangles": 23390,
+        "speed": 21.263911136339285,
         "condition": 93
       },
       {
         "ms": 6415,
+        "calls": 73,
+        "triangles": 23414,
+        "speed": 22.161420436222844,
+        "condition": 93
+      },
+      {
+        "ms": 6555,
+        "calls": 74,
+        "triangles": 23678,
+        "speed": 21.968658988705833,
+        "condition": 93
+      },
+      {
+        "ms": 6683,
+        "calls": 74,
+        "triangles": 23678,
+        "speed": 21.968658988705833,
+        "condition": 93
+      },
+      {
+        "ms": 6806,
+        "calls": 74,
+        "triangles": 23678,
+        "speed": 21.778007479538402,
+        "condition": 93
+      },
+      {
+        "ms": 6929,
+        "calls": 73,
+        "triangles": 23606,
+        "speed": 21.62697775287611,
+        "condition": 93
+      },
+      {
+        "ms": 7056,
+        "calls": 73,
+        "triangles": 23606,
+        "speed": 21.44002117899239,
+        "condition": 93
+      },
+      {
+        "ms": 7181,
+        "calls": 72,
+        "triangles": 22310,
+        "speed": 21.108506901867536,
+        "condition": 93
+      },
+      {
+        "ms": 7308,
+        "calls": 72,
+        "triangles": 22334,
+        "speed": 22.007699118401067,
+        "condition": 93
+      },
+      {
+        "ms": 7431,
+        "calls": 70,
+        "triangles": 15890,
+        "speed": 21.816621762389634,
+        "condition": 93
+      },
+      {
+        "ms": 7554,
+        "calls": 70,
+        "triangles": 15890,
+        "speed": 21.62762149604776,
+        "condition": 93
+      },
+      {
+        "ms": 7678,
+        "calls": 70,
+        "triangles": 15890,
+        "speed": 21.440658014911293,
+        "condition": 93
+      },
+      {
+        "ms": 7805,
+        "calls": 69,
+        "triangles": 15666,
+        "speed": 21.182256306603875,
+        "condition": 93
+      },
+      {
+        "ms": 7929,
+        "calls": 70,
+        "triangles": 15808,
+        "speed": 22.08065135587765,
+        "condition": 93
+      },
+      {
+        "ms": 8055,
+        "calls": 70,
+        "triangles": 15736,
+        "speed": 21.888776226487376,
+        "condition": 93
+      },
+      {
+        "ms": 8187,
+        "calls": 70,
+        "triangles": 15736,
+        "speed": 21.69899372861639,
+        "condition": 93
+      },
+      {
+        "ms": 8314,
+        "calls": 69,
+        "triangles": 15732,
+        "speed": 21.399593214041616,
+        "condition": 93
+      },
+      {
+        "ms": 8446,
+        "calls": 69,
+        "triangles": 15732,
+        "speed": 22.295623428511323,
+        "condition": 93
+      },
+      {
+        "ms": 8570,
+        "calls": 69,
+        "triangles": 15732,
+        "speed": 22.101382189410295,
+        "condition": 93
+      },
+      {
+        "ms": 8694,
+        "calls": 69,
+        "triangles": 15732,
+        "speed": 21.947531250706398,
+        "condition": 93
+      },
+      {
+        "ms": 8822,
+        "calls": 69,
+        "triangles": 15732,
+        "speed": 21.757109887691605,
+        "condition": 93
+      },
+      {
+        "ms": 8952,
+        "calls": 69,
+        "triangles": 15588,
+        "speed": 21.382420183430966,
+        "condition": 93
+      },
+      {
+        "ms": 9079,
         "calls": 69,
         "triangles": 15444,
-        "speed": 22.254397847564462,
+        "speed": 22.278638105173464,
         "condition": 93
       },
       {
-        "ms": 6537,
+        "ms": 9203,
+        "calls": 69,
+        "triangles": 15444,
+        "speed": 22.08458464618991,
+        "condition": 93
+      },
+      {
+        "ms": 9330,
+        "calls": 69,
+        "triangles": 15444,
+        "speed": 21.89266642946631,
+        "condition": 93
+      },
+      {
+        "ms": 9454,
+        "calls": 69,
+        "triangles": 15444,
+        "speed": 21.515069695657782,
+        "condition": 93
+      },
+      {
+        "ms": 9582,
+        "calls": 69,
+        "triangles": 15444,
+        "speed": 21.329310767422633,
+        "condition": 93
+      },
+      {
+        "ms": 9708,
         "calls": 70,
         "triangles": 15374,
-        "speed": 22.060612128623944,
+        "speed": 22.226108272799507,
         "condition": 93
       },
       {
-        "ms": 6661,
+        "ms": 9833,
         "calls": 70,
-        "triangles": 15230,
-        "speed": 21.754967994923256,
+        "triangles": 15302,
+        "speed": 22.032634653083843,
         "condition": 93
       },
       {
-        "ms": 6785,
-        "calls": 70,
-        "triangles": 15158,
-        "speed": 21.529211433699526,
-        "condition": 93
-      },
-      {
-        "ms": 6909,
+        "ms": 9956,
         "calls": 70,
         "triangles": 15158,
-        "speed": 21.19599900417567,
+        "speed": 21.803266155519403,
         "condition": 93
       },
       {
-        "ms": 7035,
+        "ms": 10079,
         "calls": 70,
         "triangles": 15158,
-        "speed": 22.45077921992552,
+        "speed": 21.614410396432636,
         "condition": 93
       },
       {
-        "ms": 7158,
+        "ms": 10202,
+        "calls": 70,
+        "triangles": 15158,
+        "speed": 21.31645552141836,
+        "condition": 93
+      },
+      {
+        "ms": 10331,
+        "calls": 70,
+        "triangles": 15158,
+        "speed": 22.213393106999714,
+        "condition": 93
+      },
+      {
+        "ms": 10454,
+        "calls": 70,
+        "triangles": 15158,
+        "speed": 22.020059636252608,
+        "condition": 93
+      },
+      {
+        "ms": 10576,
+        "calls": 71,
+        "triangles": 15254,
+        "speed": 21.866922076593113,
+        "condition": 93
+      },
+      {
+        "ms": 10702,
+        "calls": 71,
+        "triangles": 15254,
+        "speed": 21.866922076593113,
+        "condition": 93
+      },
+      {
+        "ms": 10831,
         "calls": 71,
         "triangles": 15182,
-        "speed": 22.138283898518353,
+        "speed": 21.48987880684875,
         "condition": 93
       },
       {
-        "ms": 7281,
+        "ms": 10953,
         "calls": 71,
         "triangles": 15182,
-        "speed": 21.907529146025464,
+        "speed": 21.452621395625435,
         "condition": 93
       },
       {
-        "ms": 7405,
+        "ms": 11077,
         "calls": 70,
         "triangles": 15110,
-        "speed": 21.56703611259524,
+        "speed": 21.12086763790621,
         "condition": 93
       },
       {
-        "ms": 7533,
+        "ms": 11207,
         "calls": 70,
         "triangles": 15110,
-        "speed": 21.306754036303843,
+        "speed": 21.840897854562662,
         "condition": 93
       },
       {
-        "ms": 7658,
-        "calls": 70,
-        "triangles": 15110,
-        "speed": 22.203797282397908,
-        "condition": 93
-      },
-      {
-        "ms": 7783,
+        "ms": 11340,
         "calls": 71,
         "triangles": 15154,
-        "speed": 21.895652691818505,
+        "speed": 21.46441341149397,
         "condition": 93
       },
       {
-        "ms": 7908,
+        "ms": 11469,
         "calls": 71,
         "triangles": 15154,
-        "speed": 21.63042983363768,
+        "speed": 21.27919457700287,
         "condition": 93
       },
       {
-        "ms": 8031,
+        "ms": 11607,
         "calls": 71,
         "triangles": 15154,
-        "speed": 21.3322015950438,
+        "speed": 21.997856433410746,
         "condition": 93
       },
       {
-        "ms": 8154,
+        "ms": 11730,
         "calls": 71,
         "triangles": 15154,
-        "speed": 22.584897174198932,
+        "speed": 21.617991589053027,
         "condition": 93
       },
       {
-        "ms": 8278,
+        "ms": 11854,
         "calls": 71,
         "triangles": 15154,
-        "speed": 22.309070713697732,
+        "speed": 21.431131413795075,
         "condition": 93
       },
       {
-        "ms": 8405,
+        "ms": 11980,
         "calls": 71,
         "triangles": 15154,
-        "speed": 22.0375267959447,
+        "speed": 21.24626674013752,
         "condition": 93
       },
       {
-        "ms": 8527,
+        "ms": 12114,
         "calls": 71,
         "triangles": 15154,
-        "speed": 21.694503027726096,
+        "speed": 23.031721808001084,
         "condition": 93
       },
       {
-        "ms": 8650,
+        "ms": 12242,
+        "calls": 72,
+        "triangles": 15178,
+        "speed": 20.9792149224234,
+        "condition": 93
+      },
+      {
+        "ms": 12375,
         "calls": 71,
         "triangles": 15154,
-        "speed": 21.43231327502148,
+        "speed": 21.879798195046725,
         "condition": 93
       },
       {
-        "ms": 8775,
+        "ms": 12498,
         "calls": 71,
         "triangles": 15154,
-        "speed": 21.210696690721896,
+        "speed": 21.577288733795164,
         "condition": 93
       },
       {
-        "ms": 8902,
+        "ms": 12626,
+        "calls": 71,
+        "triangles": 15154,
+        "speed": 21.390864697271457,
+        "condition": 93
+      },
+      {
+        "ms": 12750,
         "calls": 72,
         "triangles": 15156,
-        "speed": 22.820113334955103,
+        "speed": 22.99670946535845,
         "condition": 93
       },
       {
-        "ms": 9025,
-        "calls": 71,
-        "triangles": 15084,
-        "speed": 22.501023042388972,
+        "ms": 12873,
+        "calls": 72,
+        "triangles": 15156,
+        "speed": 22.834831387211956,
         "condition": 93
       },
       {
-        "ms": 9152,
+        "ms": 13005,
         "calls": 70,
         "triangles": 15082,
-        "speed": 22.226504352830574,
+        "speed": 22.43653696544896,
         "condition": 93
       },
       {
-        "ms": 9279,
+        "ms": 13132,
         "calls": 70,
         "triangles": 15082,
-        "speed": 22.03302636616458,
+        "speed": 22.24073237744183,
         "condition": 93
       },
       {
-        "ms": 9402,
+        "ms": 13255,
         "calls": 70,
         "triangles": 15082,
-        "speed": 21.76571611067486,
+        "speed": 22.047097469439883,
         "condition": 93
       },
       {
-        "ms": 9524,
+        "ms": 13378,
+        "calls": 70,
+        "triangles": 15082,
+        "speed": 22.047097469439883,
+        "condition": 93
+      },
+      {
+        "ms": 13507,
+        "calls": 70,
+        "triangles": 15082,
+        "speed": 21.779572671806076,
+        "condition": 93
+      },
+      {
+        "ms": 13633,
         "calls": 69,
         "triangles": 15030,
-        "speed": 21.4651712758238,
+        "speed": 21.59097305887365,
         "condition": 93
       },
       {
-        "ms": 9655,
+        "ms": 13759,
         "calls": 69,
         "triangles": 15030,
-        "speed": 21.279944370369684,
+        "speed": 21.404402483483313,
         "condition": 93
       },
       {
-        "ms": 9781,
+        "ms": 13891,
         "calls": 68,
         "triangles": 14958,
-        "speed": 22.887991527758007,
+        "speed": 21.11001272293463,
         "condition": 93
       },
       {
-        "ms": 9904,
+        "ms": 14020,
         "calls": 68,
         "triangles": 14958,
-        "speed": 22.767189012174924,
+        "speed": 22.00918868969059,
         "condition": 93
       },
       {
-        "ms": 10029,
+        "ms": 14152,
         "calls": 68,
         "triangles": 14958,
-        "speed": 22.29212000604792,
+        "speed": 21.666717857570042,
         "condition": 93
       },
       {
-        "ms": 10153,
+        "ms": 14275,
         "calls": 68,
         "triangles": 14958,
-        "speed": 22.136585598217657,
+        "speed": 21.47933449582225,
         "condition": 93
       },
       {
-        "ms": 10276,
+        "ms": 14397,
         "calls": 68,
         "triangles": 14958,
-        "speed": 21.829616727920552,
+        "speed": 21.47933449582225,
         "condition": 93
       },
       {
-        "ms": 10399,
+        "ms": 14522,
+        "calls": 68,
+        "triangles": 14958,
+        "speed": 21.18367664089617,
+        "condition": 93
+      },
+      {
+        "ms": 14646,
+        "calls": 68,
+        "triangles": 14958,
+        "speed": 22.26055028597253,
+        "condition": 93
+      },
+      {
+        "ms": 14772,
         "calls": 67,
         "triangles": 14856,
-        "speed": 21.490633356617163,
+        "speed": 21.913150289965692,
         "condition": 93
       },
       {
-        "ms": 10522,
+        "ms": 14902,
         "calls": 67,
         "triangles": 14856,
-        "speed": 21.268273019243356,
+        "speed": 21.913150289965692,
         "condition": 93
       },
       {
-        "ms": 10646,
+        "ms": 15041,
         "calls": 67,
         "triangles": 14856,
-        "speed": 22.69945247266574,
+        "speed": 21.535112724838662,
         "condition": 93
       },
       {
-        "ms": 10768,
+        "ms": 15169,
+        "calls": 67,
+        "triangles": 14856,
+        "speed": 21.349139749508748,
+        "condition": 93
+      },
+      {
+        "ms": 15292,
         "calls": 66,
         "triangles": 14706,
-        "speed": 22.34331292209517,
+        "speed": 22.24572102381649,
         "condition": 93
       },
       {
-        "ms": 10891,
+        "ms": 15418,
         "calls": 65,
         "triangles": 12850,
-        "speed": 22.071240189962055,
+        "speed": 21.975153316427924,
         "condition": 93
       },
       {
-        "ms": 11014,
+        "ms": 15548,
         "calls": 64,
         "triangles": 12848,
-        "speed": 21.803346971628674,
+        "speed": 21.70872402267654,
         "condition": 93
       },
       {
-        "ms": 11140,
-        "calls": 62,
-        "triangles": 8252,
-        "speed": 21.539519425861958,
-        "condition": 93
-      },
-      {
-        "ms": 11269,
+        "ms": 15671,
         "calls": 63,
         "triangles": 8276,
-        "speed": 21.316534099694024,
+        "speed": 21.520888689367787,
         "condition": 93
       },
       {
-        "ms": 11393,
+        "ms": 15794,
         "calls": 63,
         "triangles": 8276,
-        "speed": 22.67446532419162,
+        "speed": 21.261294507405946,
         "condition": 93
       },
       {
-        "ms": 11516,
+        "ms": 15932,
         "calls": 63,
         "triangles": 8276,
-        "speed": 22.436573641528074,
+        "speed": 22.51507693744275,
         "condition": 93
       },
       {
-        "ms": 11639,
+        "ms": 16067,
+        "calls": 63,
+        "triangles": 8276,
+        "speed": 22.279324536959972,
+        "condition": 93
+      },
+      {
+        "ms": 16191,
+        "calls": 63,
+        "triangles": 8276,
+        "speed": 22.162629287449885,
+        "condition": 93
+      },
+      {
+        "ms": 16313,
         "calls": 62,
         "triangles": 8252,
-        "speed": 22.08568888656419,
+        "speed": 21.817156092741392,
         "condition": 93
       },
       {
-        "ms": 11762,
+        "ms": 16445,
         "calls": 62,
         "triangles": 8252,
-        "speed": 21.93197581686589,
+        "speed": 21.44118089062216,
         "condition": 93
       },
       {
-        "ms": 11884,
+        "ms": 16577,
         "calls": 62,
         "triangles": 8252,
-        "speed": 21.59100799796177,
+        "speed": 21.219451347529706,
         "condition": 93
       },
       {
-        "ms": 12009,
+        "ms": 16700,
         "calls": 61,
         "triangles": 8212,
-        "speed": 21.367362885372806,
+        "speed": 22.473873522935985,
         "condition": 93
       },
       {
-        "ms": 12135,
+        "ms": 16826,
         "calls": 62,
         "triangles": 8214,
-        "speed": 22.44183263165045,
+        "speed": 22.12224685079848,
         "condition": 93
       },
       {
-        "ms": 12257,
+        "ms": 16950,
         "calls": 62,
         "triangles": 8214,
-        "speed": 22.12949574177371,
+        "speed": 22.12224685079848,
         "condition": 93
       },
       {
-        "ms": 12381,
+        "ms": 17072,
         "calls": 62,
         "triangles": 8214,
-        "speed": 21.898856552462796,
+        "speed": 21.853573949643305,
         "condition": 93
       },
       {
-        "ms": 12505,
+        "ms": 17208,
         "calls": 62,
         "triangles": 8214,
-        "speed": 21.55853182592456,
+        "speed": 21.701888668315625,
         "condition": 93
       },
       {
-        "ms": 12634,
-        "calls": 61,
-        "triangles": 8142,
-        "speed": 21.335303052755812,
+        "ms": 17335,
+        "calls": 62,
+        "triangles": 8214,
+        "speed": 21.328378075264123,
         "condition": 93
       },
       {
-        "ms": 12758,
-        "calls": 61,
-        "triangles": 8142,
-        "speed": 22.587951014571107,
-        "condition": 93
-      },
-      {
-        "ms": 12886,
+        "ms": 17462,
         "calls": 60,
         "triangles": 8106,
-        "speed": 22.23404770714954,
+        "speed": 22.935464878685107,
         "condition": 93
       },
       {
-        "ms": 13009,
+        "ms": 17584,
+        "calls": 60,
+        "triangles": 8106,
+        "speed": 22.694037744950364,
+        "condition": 93
+      },
+      {
+        "ms": 17707,
         "calls": 59,
         "triangles": 8084,
-        "speed": 22.00203071802225,
+        "speed": 22.416502332375096,
         "condition": 93
       },
       {
-        "ms": 13136,
+        "ms": 17829,
         "calls": 57,
         "triangles": 7808,
-        "speed": 21.887170034500784,
+        "speed": 22.220920613664944,
         "condition": 93
       },
       {
-        "ms": 13259,
+        "ms": 17952,
         "calls": 50,
         "triangles": 7552,
-        "speed": 21.472391510653342,
+        "speed": 22.02750418294549,
         "condition": 93
       },
       {
-        "ms": 13388,
+        "ms": 18075,
         "calls": 50,
         "triangles": 7552,
-        "speed": 21.25026402646381,
+        "speed": 21.72243593527966,
         "condition": 93
       },
       {
-        "ms": 13517,
+        "ms": 18200,
         "calls": 50,
         "triangles": 7552,
-        "speed": 22.5042152195538,
+        "speed": 21.53445287807937,
         "condition": 93
       },
       {
-        "ms": 13640,
+        "ms": 18324,
         "calls": 50,
         "triangles": 7552,
-        "speed": 22.22964684570085,
+        "speed": 21.23785943647064,
         "condition": 93
       },
       {
-        "ms": 13765,
+        "ms": 18447,
         "calls": 50,
         "triangles": 7552,
-        "speed": 21.95932640127066,
+        "speed": 22.49200031631311,
         "condition": 93
       },
       {
-        "ms": 13887,
+        "ms": 18582,
         "calls": 50,
         "triangles": 7552,
-        "speed": 21.617826778155774,
+        "speed": 22.140012651147785,
         "condition": 93
       },
       {
-        "ms": 14014,
+        "ms": 18704,
         "calls": 50,
         "triangles": 7552,
-        "speed": 21.282920231847537,
+        "speed": 21.87106776447296,
         "condition": 93
       },
       {
-        "ms": 14137,
+        "ms": 18827,
         "calls": 50,
         "triangles": 7552,
-        "speed": 22.358497550914223,
+        "speed": 21.75706556004392,
         "condition": 93
       },
       {
-        "ms": 14261,
+        "ms": 18951,
         "calls": 50,
         "triangles": 7552,
-        "speed": 22.047633403545298,
+        "speed": 21.45666928263745,
         "condition": 93
       },
       {
-        "ms": 14384,
+        "ms": 19075,
+        "calls": 50,
+        "triangles": 7552,
+        "speed": 21.161395460495456,
+        "condition": 93
+      },
+      {
+        "ms": 19203,
         "calls": 51,
         "triangles": 7564,
-        "speed": 21.78010043183661,
+        "speed": 22.416703269411258,
         "condition": 93
       },
       {
-        "ms": 14507,
+        "ms": 19326,
         "calls": 51,
         "triangles": 7564,
-        "speed": 21.516623363639784,
+        "speed": 22.104811050710172,
         "condition": 93
       },
       {
-        "ms": 14632,
+        "ms": 19449,
         "calls": 51,
         "triangles": 7564,
-        "speed": 21.293930930118577,
+        "speed": 21.91267114273942,
         "condition": 93
       },
       {
-        "ms": 14757,
-        "calls": 49,
-        "triangles": 6730,
-        "speed": 22.90170097010294,
+        "ms": 19575,
+        "calls": 51,
+        "triangles": 7564,
+        "speed": 21.722629032122544,
         "condition": 93
       },
       {
-        "ms": 14880,
+        "ms": 19713,
         "calls": 48,
         "triangles": 4810,
-        "speed": 22.62089134997608,
+        "speed": 21.422823559165284,
         "condition": 93
       },
       {
-        "ms": 15003,
-        "calls": 47,
-        "triangles": 4654,
-        "speed": 22.344502186086217,
+        "ms": 19850,
+        "calls": 48,
+        "triangles": 4810,
+        "speed": 21.311720962848007,
         "condition": 93
       },
       {
-        "ms": 15129,
-        "calls": 47,
-        "triangles": 4654,
-        "speed": 22.111022605979077,
+        "ms": 19973,
+        "calls": 56,
+        "triangles": 13062,
+        "speed": 21.66868340775951,
         "condition": 93
       },
       {
-        "ms": 15272,
+        "ms": 20103,
         "calls": 58,
         "triangles": 13174,
-        "speed": 21.804499976959917,
+        "speed": 21.481278916804776,
         "condition": 93
       },
       {
-        "ms": 15395,
+        "ms": 20233,
+        "calls": 59,
+        "triangles": 13246,
+        "speed": 21.112449339277546,
+        "condition": 93
+      },
+      {
+        "ms": 20367,
+        "calls": 58,
+        "triangles": 13198,
+        "speed": 22.72380177468463,
+        "condition": 93
+      },
+      {
+        "ms": 20490,
+        "calls": 58,
+        "triangles": 13198,
+        "speed": 22.72380177468463,
+        "condition": 93
+      },
+      {
+        "ms": 20615,
         "calls": 60,
         "triangles": 13696,
-        "speed": 21.690932173511932,
+        "speed": 22.524779821578278,
         "condition": 93
       },
       {
-        "ms": 15523,
+        "ms": 20737,
         "calls": 60,
         "triangles": 13696,
-        "speed": 21.3176551769114,
+        "speed": 22.172138625279008,
         "condition": 93
       },
       {
-        "ms": 15651,
+        "ms": 20859,
         "calls": 60,
         "triangles": 13696,
-        "speed": 21.856990047836735,
+        "speed": 21.94093826130087,
         "condition": 93
       },
       {
-        "ms": 15773,
+        "ms": 20982,
         "calls": 60,
         "triangles": 13696,
-        "speed": 21.51747688666147,
+        "speed": 21.750588671156933,
         "condition": 93
       },
       {
-        "ms": 15901,
+        "ms": 21104,
         "calls": 60,
         "triangles": 13696,
-        "speed": 21.184488277608924,
+        "speed": 21.56230202248574,
         "condition": 93
       },
       {
-        "ms": 16029,
+        "ms": 21233,
         "calls": 60,
         "triangles": 13696,
-        "speed": 22.794422139973392,
+        "speed": 21.376038365415067,
         "condition": 93
       },
       {
-        "ms": 16151,
+        "ms": 21371,
         "calls": 60,
         "triangles": 13696,
-        "speed": 22.554910534661847,
+        "speed": 23.15862535060558,
         "condition": 93
       },
       {
-        "ms": 16274,
+        "ms": 21498,
+        "calls": 61,
+        "triangles": 13720,
+        "speed": 21.1047356501707,
+        "condition": 93
+      },
+      {
+        "ms": 21621,
         "calls": 60,
         "triangles": 13696,
-        "speed": 22.47579404789675,
+        "speed": 21.824904732109943,
         "condition": 93
       },
       {
-        "ms": 16399,
+        "ms": 21744,
         "calls": 60,
         "triangles": 13696,
-        "speed": 22.08548862117638,
+        "speed": 21.59824270929443,
         "condition": 93
       },
       {
-        "ms": 16522,
+        "ms": 21870,
         "calls": 60,
         "triangles": 13696,
-        "speed": 21.817377782435294,
+        "speed": 21.59824270929443,
         "condition": 93
       },
       {
-        "ms": 16645,
+        "ms": 21996,
         "calls": 60,
         "triangles": 13696,
-        "speed": 21.478631074096775,
+        "speed": 21.374504764034242,
         "condition": 93
       },
       {
-        "ms": 16769,
+        "ms": 22137,
         "calls": 58,
         "triangles": 13682,
-        "speed": 21.219665520693358,
+        "speed": 23.157125738772493,
         "condition": 93
       },
       {
-        "ms": 16894,
+        "ms": 22263,
+        "calls": 59,
+        "triangles": 13706,
+        "speed": 20.287824905792082,
+        "condition": 93
+      },
+      {
+        "ms": 22386,
         "calls": 58,
         "triangles": 13682,
-        "speed": 21.75963561770247,
+        "speed": 21.376137066904427,
         "condition": 93
       },
       {
-        "ms": 17021,
+        "ms": 22525,
         "calls": 58,
         "triangles": 13682,
-        "speed": 21.347859565184667,
+        "speed": 22.27242362896015,
         "condition": 93
       },
       {
-        "ms": 17145,
+        "ms": 22647,
         "calls": 58,
         "triangles": 13682,
-        "speed": 22.244454805504574,
+        "speed": 22.078438838140876,
         "condition": 93
       },
       {
-        "ms": 17267,
+        "ms": 22778,
         "calls": 58,
         "triangles": 13682,
-        "speed": 21.93559728711185,
+        "speed": 21.96307492840377,
         "condition": 93
       },
       {
-        "ms": 17390,
+        "ms": 22910,
         "calls": 58,
         "triangles": 13682,
-        "speed": 21.632123194446002,
+        "speed": 21.546501197209345,
         "condition": 93
       },
       {
-        "ms": 17517,
+        "ms": 23042,
         "calls": 56,
         "triangles": 12914,
-        "speed": 21.33386604777833,
+        "speed": 21.360406511729558,
         "condition": 93
       },
       {
-        "ms": 17642,
-        "calls": 56,
-        "triangles": 12914,
-        "speed": 22.230613895904714,
+        "ms": 23175,
+        "calls": 55,
+        "triangles": 11378,
+        "speed": 22.256864837811655,
         "condition": 93
       },
       {
-        "ms": 17765,
+        "ms": 23298,
         "calls": 54,
         "triangles": 11246,
-        "speed": 21.883803853126416,
+        "speed": 21.909537512931625,
         "condition": 93
       },
       {
-        "ms": 17888,
+        "ms": 23421,
         "calls": 54,
         "triangles": 11246,
-        "speed": 21.618760431635465,
+        "speed": 21.64410426288152,
         "condition": 93
       },
       {
-        "ms": 18017,
-        "calls": 54,
-        "triangles": 11246,
-        "speed": 21.320731345325648,
-        "condition": 93
-      },
-      {
-        "ms": 18140,
+        "ms": 23545,
         "calls": 53,
         "triangles": 11126,
-        "speed": 22.573602972312028,
+        "speed": 21.345642518292475,
         "condition": 93
       },
       {
-        "ms": 18263,
-        "calls": 52,
-        "triangles": 10962,
-        "speed": 22.297952892907965,
-        "condition": 93
-      },
-      {
-        "ms": 18387,
-        "calls": 52,
-        "triangles": 10962,
-        "speed": 21.949814704059154,
-        "condition": 93
-      },
-      {
-        "ms": 18510,
-        "calls": 52,
-        "triangles": 10962,
-        "speed": 21.72152830532566,
-        "condition": 93
-      },
-      {
-        "ms": 18636,
-        "calls": 52,
-        "triangles": 10962,
-        "speed": 21.38463048396268,
-        "condition": 93
-      },
-      {
-        "ms": 18767,
-        "calls": 52,
-        "triangles": 10962,
-        "speed": 22.63652022384212,
-        "condition": 93
-      },
-      {
-        "ms": 18896,
-        "calls": 52,
-        "triangles": 10962,
-        "speed": 22.32072156147627,
-        "condition": 93
-      },
-      {
-        "ms": 19020,
-        "calls": 52,
-        "triangles": 10962,
-        "speed": 22.126202591075753,
-        "condition": 93
-      },
-      {
-        "ms": 19149,
+        "ms": 23668,
         "calls": 53,
-        "triangles": 10986,
-        "speed": 19.26958608224768,
+        "triangles": 11126,
+        "speed": 22.06372713196144,
         "condition": 93
       },
       {
-        "ms": 19273,
+        "ms": 23792,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 21.720191513715257,
+        "condition": 93
+      },
+      {
+        "ms": 23916,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 21.38331942140812,
+        "condition": 93
+      },
+      {
+        "ms": 24052,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 22.279527517773552,
+        "condition": 93
+      },
+      {
+        "ms": 24175,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 22.6921881237555,
+        "condition": 93
+      },
+      {
+        "ms": 24298,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 22.375394176556306,
+        "condition": 93
+      },
+      {
+        "ms": 24430,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 22.06423186155119,
+        "condition": 93
+      },
+      {
+        "ms": 24555,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 21.79644563232374,
+        "condition": 93
+      },
+      {
+        "ms": 24695,
+        "calls": 52,
+        "triangles": 10962,
+        "speed": 21.38380476030054,
+        "condition": 93
+      },
+      {
+        "ms": 24825,
         "calls": 51,
         "triangles": 10906,
-        "speed": 15.651482707131953,
+        "speed": 18.942382381331633,
         "condition": 93
       },
       {
-        "ms": 19398,
+        "ms": 24961,
         "calls": 50,
         "triangles": 10834,
-        "speed": 12.479822291391597,
+        "speed": 17.731267878670455,
         "condition": 93
       },
       {
-        "ms": 19522,
+        "ms": 25105,
         "calls": 50,
         "triangles": 10834,
-        "speed": 10.51397010467464,
+        "speed": 14.533446178947305,
         "condition": 93
       },
       {
-        "ms": 19646,
+        "ms": 25231,
         "calls": 49,
         "triangles": 10762,
-        "speed": 6.999968333160952,
+        "speed": 10.585993674402372,
         "condition": 93
       },
       {
-        "ms": 19770,
+        "ms": 25356,
+        "calls": 49,
+        "triangles": 10762,
+        "speed": 8.238996397116878,
+        "condition": 93
+      },
+      {
+        "ms": 25479,
+        "calls": 49,
+        "triangles": 10762,
+        "speed": 7.070387589504649,
+        "condition": 93
+      },
+      {
+        "ms": 25609,
+        "calls": 49,
+        "triangles": 10762,
+        "speed": 4.3524695835090474,
+        "condition": 93
+      },
+      {
+        "ms": 25743,
         "calls": 48,
         "triangles": 10738,
-        "speed": 6.883347618567638,
+        "speed": 5.967263322678943,
         "condition": 93
       },
       {
-        "ms": 19893,
+        "ms": 25866,
         "calls": 48,
         "triangles": 10738,
-        "speed": 6.767535012210833,
+        "speed": 5.8237738903850325,
         "condition": 93
       },
       {
-        "ms": 20020,
-        "calls": 48,
-        "triangles": 10738,
-        "speed": 6.635421016557893,
-        "condition": 93
-      },
-      {
-        "ms": 20142,
-        "calls": 48,
-        "triangles": 10738,
-        "speed": 6.5366417288062895,
-        "condition": 93
-      },
-      {
-        "ms": 20273,
-        "calls": 48,
-        "triangles": 10738,
-        "speed": 6.389838523434279,
-        "condition": 93
-      },
-      {
-        "ms": 20398,
+        "ms": 26004,
         "calls": 49,
         "triangles": 11074,
-        "speed": 12.919245188769196,
+        "speed": 12.701457521341208,
         "condition": 90.5
       },
       {
-        "ms": 20525,
+        "ms": 26127,
         "calls": 50,
         "triangles": 11098,
-        "speed": 10.103316730423934,
+        "speed": 10.887575868357509,
         "condition": 90.5
       },
       {
-        "ms": 20648,
+        "ms": 26251,
         "calls": 50,
-        "triangles": 11026,
-        "speed": 7.370552177016783,
+        "triangles": 11086,
+        "speed": 7.760223345230346,
         "condition": 90.5
       },
       {
-        "ms": 20781,
+        "ms": 26378,
         "calls": 50,
-        "triangles": 10918,
-        "speed": 14.149646121377868,
+        "triangles": 10990,
+        "speed": 12.405250223439635,
         "condition": 90.5
       },
       {
-        "ms": 20905,
+        "ms": 26501,
         "calls": 50,
-        "triangles": 10798,
-        "speed": 10.919058632777148,
+        "triangles": 10978,
+        "speed": 11.223209375076443,
         "condition": 90.5
       },
       {
-        "ms": 21032,
+        "ms": 26626,
+        "calls": 50,
+        "triangles": 10894,
+        "speed": 9.313348475040476,
+        "condition": 90.5
+      },
+      {
+        "ms": 26751,
         "calls": 49,
         "triangles": 10762,
-        "speed": 7.722785091409055,
+        "speed": 7.569790582837844,
         "condition": 90.5
       },
       {
-        "ms": 21155,
+        "ms": 26889,
         "calls": 49,
         "triangles": 10762,
-        "speed": 5.4757787074260085,
+        "speed": 5.230136750507671,
         "condition": 90.5
       },
       {
-        "ms": 21283,
+        "ms": 27024,
         "calls": 48,
         "triangles": 10738,
-        "speed": 6.749365460737331,
+        "speed": 6.036592636705873,
         "condition": 90.5
       },
       {
-        "ms": 21406,
+        "ms": 27150,
         "calls": 48,
         "triangles": 10738,
-        "speed": 6.634033223470323,
+        "speed": 5.8929731250824355,
         "condition": 90.5
       },
       {
-        "ms": 21531,
+        "ms": 27273,
         "calls": 48,
         "triangles": 10738,
-        "speed": 6.535841902441326,
+        "speed": 5.813537605161749,
         "condition": 90.5
       },
       {
-        "ms": 21655,
+        "ms": 27400,
+        "calls": 48,
+        "triangles": 10738,
+        "speed": 5.7027197500084394,
+        "condition": 90.5
+      },
+      {
+        "ms": 27522,
         "calls": 47,
         "triangles": 10306,
-        "speed": 6.5397339013854525,
+        "speed": 5.560898933577539,
         "condition": 90.5
       },
       {
-        "ms": 21780,
-        "calls": 47,
-        "triangles": 10306,
-        "speed": 6.50705894609808,
-        "condition": 90.5
-      },
-      {
-        "ms": 21903,
+        "ms": 27648,
         "calls": 46,
         "triangles": 10234,
-        "speed": 6.359750082138019,
+        "speed": 5.482420247282308,
         "condition": 90.5
       },
       {
-        "ms": 22026,
+        "ms": 27783,
         "calls": 46,
         "triangles": 10234,
-        "speed": 6.277457185528581,
+        "speed": 5.809250899418444,
         "condition": 90.5
       },
       {
-        "ms": 22148,
+        "ms": 27911,
+        "calls": 46,
+        "triangles": 10234,
+        "speed": 6.020849443923885,
+        "condition": 90.5
+      },
+      {
+        "ms": 28039,
+        "calls": 46,
+        "triangles": 10234,
+        "speed": 5.940364999981945,
+        "condition": 90.5
+      },
+      {
+        "ms": 28163,
+        "calls": 46,
+        "triangles": 10234,
+        "speed": 5.84335875709335,
+        "condition": 90.5
+      },
+      {
+        "ms": 28289,
         "calls": 47,
         "triangles": 10666,
-        "speed": 6.161693806980054,
+        "speed": 5.729713498190962,
         "condition": 90.5
       },
       {
-        "ms": 22271,
+        "ms": 28416,
         "calls": 47,
         "triangles": 10666,
-        "speed": 6.573548819451665,
+        "speed": 5.648410271921855,
         "condition": 90.5
       },
       {
-        "ms": 22395,
+        "ms": 28541,
         "calls": 47,
         "triangles": 10666,
-        "speed": 6.782402308016846,
+        "speed": 6.009566656732658,
         "condition": 90.5
       },
       {
-        "ms": 22518,
+        "ms": 28663,
         "calls": 48,
         "triangles": 10678,
-        "speed": 6.621273856208162,
+        "speed": 6.1227034221645305,
         "condition": 90.5
       },
       {
-        "ms": 22641,
-        "calls": 51,
-        "triangles": 10906,
-        "speed": 6.516674381852824,
+        "ms": 28789,
+        "calls": 49,
+        "triangles": 10774,
+        "speed": 6.036929682491393,
         "condition": 90.5
       },
       {
-        "ms": 22763,
+        "ms": 28912,
         "calls": 50,
         "triangles": 10474,
-        "speed": 6.831924275589112,
+        "speed": 5.952453455126536,
         "condition": 90.5
       },
       {
-        "ms": 22893,
+        "ms": 29039,
+        "calls": 50,
+        "triangles": 10474,
+        "speed": 5.835540277938785,
+        "condition": 90.5
+      },
+      {
+        "ms": 29162,
+        "calls": 50,
+        "triangles": 10474,
+        "speed": 6.5102291245504675,
+        "condition": 90.5
+      },
+      {
+        "ms": 29292,
         "calls": 51,
         "triangles": 10476,
-        "speed": 7.018477159559596,
+        "speed": 6.358645441521052,
         "condition": 90.5
       },
       {
-        "ms": 23025,
-        "calls": 52,
-        "triangles": 10500,
-        "speed": 5.457433280335196,
+        "ms": 29420,
+        "calls": 53,
+        "triangles": 10896,
+        "speed": 6.270224210599379,
         "condition": 90.5
       },
       {
-        "ms": 23148,
-        "calls": 58,
-        "triangles": 13264,
-        "speed": 5.479640870992826,
-        "condition": 90.5
-      },
-      {
-        "ms": 23271,
+        "ms": 29548,
         "calls": 60,
         "triangles": 14896,
-        "speed": 5.563151783255606,
+        "speed": 6.730190255790671,
         "condition": 90.5
       },
       {
-        "ms": 23393,
+        "ms": 29672,
+        "calls": 60,
+        "triangles": 14896,
+        "speed": 6.730190255790671,
+        "condition": 90.5
+      },
+      {
+        "ms": 29794,
         "calls": 62,
         "triangles": 14746,
-        "speed": 5.41444581690376,
+        "speed": 6.524184070233719,
         "condition": 90.5
       },
       {
-        "ms": 23520,
+        "ms": 29922,
         "calls": 67,
         "triangles": 15518,
-        "speed": 5.590839201964586,
+        "speed": 7.00867219172345,
         "condition": 90.5
       },
       {
-        "ms": 23644,
+        "ms": 30045,
         "calls": 67,
         "triangles": 15518,
-        "speed": 7.043452557343749,
+        "speed": 7.790113068721029,
         "condition": 90.5
       },
       {
-        "ms": 23768,
+        "ms": 30167,
+        "calls": 67,
+        "triangles": 15518,
+        "speed": 7.790113068721029,
+        "condition": 90.5
+      },
+      {
+        "ms": 30292,
         "calls": 69,
         "triangles": 15532,
-        "speed": 8.2311408286949,
+        "speed": 8.972628190307713,
         "condition": 90.5
       },
       {
-        "ms": 23896,
+        "ms": 30417,
         "calls": 70,
         "triangles": 15568,
-        "speed": 10.01698950532036,
+        "speed": 9.961086174647384,
         "condition": 90.5
       },
       {
-        "ms": 24020,
+        "ms": 30558,
         "calls": 69,
         "triangles": 15544,
-        "speed": 11.397432668453954,
+        "speed": 11.930259241999439,
         "condition": 90.5
       },
       {
-        "ms": 24143,
-        "calls": 69,
-        "triangles": 15544,
-        "speed": 12.571563934218936,
-        "condition": 90.5
-      },
-      {
-        "ms": 24268,
+        "ms": 30681,
         "calls": 70,
         "triangles": 15556,
-        "speed": 14.123755152027542,
+        "speed": 12.906157037868589,
         "condition": 90.5
       },
       {
-        "ms": 24395,
+        "ms": 30806,
         "calls": 70,
         "triangles": 15556,
-        "speed": 14.700503476445379,
+        "speed": 12.906157037868589,
         "condition": 90.5
       },
       {
-        "ms": 24518,
-        "calls": 73,
-        "triangles": 15988,
-        "speed": 16.417115413880875,
+        "ms": 30935,
+        "calls": 70,
+        "triangles": 15556,
+        "speed": 14.069649338481456,
         "condition": 90.5
       },
       {
-        "ms": 24643,
-        "calls": 73,
-        "triangles": 15988,
-        "speed": 17.92211690418603,
-        "condition": 90.5
-      },
-      {
-        "ms": 24775,
-        "calls": 74,
-        "triangles": 16148,
-        "speed": 19.771629971254207,
-        "condition": 90.5
-      },
-      {
-        "ms": 24900,
-        "calls": 75,
-        "triangles": 16200,
-        "speed": 20.68181990756392,
-        "condition": 90.5
-      },
-      {
-        "ms": 25025,
-        "calls": 75,
-        "triangles": 16200,
-        "speed": 22.118390533873733,
-        "condition": 90.5
-      },
-      {
-        "ms": 25149,
+        "ms": 31063,
         "calls": 71,
         "triangles": 15580,
-        "speed": 21.7301112471392,
+        "speed": 15.029599971843803,
         "condition": 90.5
       },
       {
-        "ms": 25282,
+        "ms": 31208,
         "calls": 73,
         "triangles": 15988,
-        "speed": 21.539938678112286,
+        "speed": 15.982010055079886,
         "condition": 90.5
       },
       {
-        "ms": 25414,
+        "ms": 31331,
         "calls": 73,
         "triangles": 15988,
-        "speed": 21.352480347644992,
+        "speed": 15.982010055079886,
         "condition": 90.5
       },
       {
-        "ms": 25541,
+        "ms": 31468,
+        "calls": 75,
+        "triangles": 16200,
+        "speed": 16.928572676217897,
+        "condition": 90.5
+      },
+      {
+        "ms": 31591,
+        "calls": 75,
+        "triangles": 16200,
+        "speed": 17.867532815661704,
+        "condition": 90.5
+      },
+      {
+        "ms": 31716,
+        "calls": 73,
+        "triangles": 15988,
+        "speed": 19.352193378559154,
+        "condition": 90.5
+      },
+      {
+        "ms": 31846,
+        "calls": 73,
+        "triangles": 15988,
+        "speed": 20.268664023655855,
+        "condition": 90.5
+      },
+      {
+        "ms": 31969,
+        "calls": 73,
+        "triangles": 15988,
+        "speed": 21.175606623678604,
+        "condition": 90.5
+      },
+      {
+        "ms": 32100,
+        "calls": 75,
+        "triangles": 16200,
+        "speed": 22.960488391885555,
+        "condition": 90.5
+      },
+      {
+        "ms": 32222,
+        "calls": 75,
+        "triangles": 16200,
+        "speed": 22.960488391885555,
+        "condition": 90.5
+      },
+      {
+        "ms": 32346,
+        "calls": 75,
+        "triangles": 16200,
+        "speed": 22.717065246418503,
+        "condition": 90.5
+      },
+      {
+        "ms": 32474,
         "calls": 71,
-        "triangles": 15588,
-        "speed": 22.41354009709314,
+        "triangles": 15580,
+        "speed": 22.316118295799917,
         "condition": 90.5
       },
       {
-        "ms": 25663,
-        "calls": 68,
-        "triangles": 15452,
-        "speed": 22.13638090667232,
+        "ms": 32598,
+        "calls": 71,
+        "triangles": 15580,
+        "speed": 22.316118295799917,
         "condition": 90.5
       },
       {
-        "ms": 25788,
-        "calls": 68,
-        "triangles": 15452,
-        "speed": 21.938930647676038,
+        "ms": 32725,
+        "calls": 70,
+        "triangles": 15540,
+        "speed": 22.002640177397183,
         "condition": 90.5
       },
       {
-        "ms": 25912,
-        "calls": 68,
-        "triangles": 15452,
-        "speed": 21.583741172159804,
+        "ms": 32858,
+        "calls": 70,
+        "triangles": 15540,
+        "speed": 21.692123557408003,
         "condition": 90.5
       },
       {
-        "ms": 26041,
+        "ms": 32981,
+        "calls": 69,
+        "triangles": 15500,
+        "speed": 21.50216721588354,
+        "condition": 90.5
+      },
+      {
+        "ms": 33108,
         "calls": 66,
-        "triangles": 15378,
-        "speed": 21.28075382960914,
+        "triangles": 15284,
+        "speed": 21.15915523304943,
         "condition": 90.5
       },
       {
-        "ms": 26166,
+        "ms": 33233,
+        "calls": 65,
+        "triangles": 15282,
+        "speed": 21.871269207085405,
+        "condition": 90.5
+      },
+      {
+        "ms": 33359,
+        "calls": 66,
+        "triangles": 15382,
+        "speed": 21.56297869270528,
+        "condition": 90.5
+      },
+      {
+        "ms": 33483,
         "calls": 67,
-        "triangles": 15478,
-        "speed": 22.3477957505238,
+        "triangles": 15430,
+        "speed": 21.20901934299422,
         "condition": 90.5
       },
       {
-        "ms": 26299,
-        "calls": 67,
-        "triangles": 15478,
-        "speed": 21.94865426410622,
-        "condition": 90.5
-      },
-      {
-        "ms": 26430,
-        "calls": 69,
-        "triangles": 15602,
-        "speed": 21.633470711327163,
-        "condition": 90.5
-      },
-      {
-        "ms": 26553,
-        "calls": 69,
-        "triangles": 15602,
-        "speed": 21.398369376079085,
-        "condition": 90.5
-      },
-      {
-        "ms": 26684,
-        "calls": 69,
-        "triangles": 15602,
-        "speed": 22.996222253858463,
-        "condition": 90.5
-      },
-      {
-        "ms": 26807,
+        "ms": 33623,
         "calls": 69,
         "triangles": 15554,
-        "speed": 22.702539635955958,
+        "speed": 22.445268727058746,
         "condition": 90.5
       },
       {
-        "ms": 26933,
+        "ms": 33761,
+        "calls": 70,
+        "triangles": 15578,
+        "speed": 20.395510328668927,
+        "condition": 90.5
+      },
+      {
+        "ms": 33890,
+        "calls": 69,
+        "triangles": 15554,
+        "speed": 19.682085703409324,
+        "condition": 90.5
+      },
+      {
+        "ms": 34012,
+        "calls": 69,
+        "triangles": 15554,
+        "speed": 20.945547157213962,
+        "condition": 90.5
+      },
+      {
+        "ms": 34153,
         "calls": 68,
-        "triangles": 14110,
-        "speed": 22.379063880288502,
+        "triangles": 15518,
+        "speed": 22.551995402241133,
         "condition": 90.5
       },
       {
-        "ms": 27063,
+        "ms": 34277,
         "calls": 68,
-        "triangles": 14110,
-        "speed": 22.13715669817596,
+        "triangles": 13858,
+        "speed": 22.345717301631005,
         "condition": 90.5
       },
       {
-        "ms": 27186,
-        "calls": 68,
-        "triangles": 10294,
-        "speed": 21.85893571947864,
-        "condition": 90.5
-      },
-      {
-        "ms": 27311,
-        "calls": 66,
-        "triangles": 9922,
-        "speed": 21.51115649659594,
-        "condition": 90.5
-      },
-      {
-        "ms": 27435,
-        "calls": 66,
-        "triangles": 9922,
-        "speed": 21.206804662986467,
-        "condition": 90.5
-      },
-      {
-        "ms": 27561,
-        "calls": 66,
-        "triangles": 9970,
-        "speed": 22.455231402232375,
-        "condition": 90.5
-      },
-      {
-        "ms": 27685,
-        "calls": 66,
+        "ms": 34406,
+        "calls": 67,
         "triangles": 10018,
-        "speed": 22.174943018566616,
+        "speed": 21.988373154847366,
         "condition": 90.5
       },
       {
-        "ms": 27815,
-        "calls": 65,
-        "triangles": 9972,
-        "speed": 21.900283156809106,
+        "ms": 34534,
+        "calls": 66,
+        "triangles": 9982,
+        "speed": 21.831286121651754,
         "condition": 90.5
       },
       {
-        "ms": 27937,
+        "ms": 34661,
         "calls": 64,
+        "triangles": 9658,
+        "speed": 21.4787740148698,
+        "condition": 90.5
+      },
+      {
+        "ms": 34787,
+        "calls": 63,
+        "triangles": 9694,
+        "speed": 21.32683712367937,
+        "condition": 90.5
+      },
+      {
+        "ms": 34912,
+        "calls": 63,
+        "triangles": 9694,
+        "speed": 22.22085770759137,
+        "condition": 90.5
+      },
+      {
+        "ms": 35039,
+        "calls": 63,
+        "triangles": 9694,
+        "speed": 22.019426673673102,
+        "condition": 90.5
+      },
+      {
+        "ms": 35163,
+        "calls": 66,
+        "triangles": 10066,
+        "speed": 21.742095537621438,
+        "condition": 90.5
+      },
+      {
+        "ms": 35298,
+        "calls": 64,
+        "triangles": 9960,
+        "speed": 21.357512048684377,
+        "condition": 90.5
+      },
+      {
+        "ms": 35427,
+        "calls": 64,
+        "triangles": 10008,
+        "speed": 22.06869834760653,
+        "condition": 90.5
+      },
+      {
+        "ms": 35550,
+        "calls": 68,
+        "triangles": 10200,
+        "speed": 21.67969500506812,
+        "condition": 90.5
+      },
+      {
+        "ms": 35678,
+        "calls": 68,
+        "triangles": 10248,
+        "speed": 21.486058086279012,
+        "condition": 90.5
+      },
+      {
+        "ms": 35804,
+        "calls": 68,
+        "triangles": 10248,
+        "speed": 21.296546778936722,
+        "condition": 90.5
+      },
+      {
+        "ms": 35929,
+        "calls": 68,
+        "triangles": 10248,
+        "speed": 22.3681418580068,
+        "condition": 90.5
+      },
+      {
+        "ms": 36065,
+        "calls": 69,
+        "triangles": 10298,
+        "speed": 22.014478125017646,
+        "condition": 90.5
+      },
+      {
+        "ms": 36195,
+        "calls": 69,
+        "triangles": 10298,
+        "speed": 21.860175167975207,
+        "condition": 90.5
+      },
+      {
+        "ms": 36326,
+        "calls": 69,
+        "triangles": 10394,
+        "speed": 21.480438164666406,
+        "condition": 90.5
+      },
+      {
+        "ms": 36450,
+        "calls": 68,
+        "triangles": 10392,
+        "speed": 21.181777375337308,
+        "condition": 90.5
+      },
+      {
+        "ms": 36578,
+        "calls": 68,
+        "triangles": 10414,
+        "speed": 22.07563559387112,
+        "condition": 90.5
+      },
+      {
+        "ms": 36705,
+        "calls": 68,
+        "triangles": 10414,
+        "speed": 21.919488023929922,
+        "condition": 90.5
+      },
+      {
+        "ms": 36830,
+        "calls": 68,
+        "triangles": 10414,
+        "speed": 21.649648361443727,
+        "condition": 90.5
+      },
+      {
+        "ms": 36962,
+        "calls": 69,
+        "triangles": 10514,
+        "speed": 21.266259276607112,
+        "condition": 90.5
+      },
+      {
+        "ms": 37096,
+        "calls": 69,
+        "triangles": 10514,
+        "speed": 21.98249526140889,
+        "condition": 90.5
+      },
+      {
+        "ms": 37220,
+        "calls": 69,
+        "triangles": 10610,
+        "speed": 21.671443120729577,
+        "condition": 90.5
+      },
+      {
+        "ms": 37344,
+        "calls": 68,
+        "triangles": 10510,
+        "speed": 21.47507789717734,
+        "condition": 90.5
+      },
+      {
+        "ms": 37474,
+        "calls": 67,
+        "triangles": 10546,
+        "speed": 21.13501776241795,
+        "condition": 90.5
+      },
+      {
+        "ms": 37601,
+        "calls": 67,
+        "triangles": 10546,
+        "speed": 22.027933969518976,
+        "condition": 90.5
+      },
+      {
+        "ms": 37725,
+        "calls": 68,
+        "triangles": 10548,
+        "speed": 21.830403325823735,
+        "condition": 90.5
+      },
+      {
+        "ms": 37848,
+        "calls": 68,
+        "triangles": 10548,
+        "speed": 21.4852078950068,
+        "condition": 90.5
+      },
+      {
+        "ms": 37978,
+        "calls": 67,
+        "triangles": 10440,
+        "speed": 21.293353055647675,
+        "condition": 90.5
+      },
+      {
+        "ms": 38110,
+        "calls": 67,
+        "triangles": 10440,
+        "speed": 22.186191893038544,
+        "condition": 90.5
+      },
+      {
+        "ms": 38238,
+        "calls": 67,
+        "triangles": 10440,
+        "speed": 21.750436870554786,
+        "condition": 90.5
+      },
+      {
+        "ms": 38364,
+        "calls": 67,
+        "triangles": 10440,
+        "speed": 21.5516028977336,
+        "condition": 90.5
+      },
+      {
+        "ms": 38500,
+        "calls": 68,
+        "triangles": 10464,
+        "speed": 17.893167202042125,
+        "condition": 90.5
+      },
+      {
+        "ms": 38625,
+        "calls": 67,
+        "triangles": 10416,
+        "speed": 15.88395932919553,
+        "condition": 90.5
+      },
+      {
+        "ms": 38747,
+        "calls": 67,
+        "triangles": 10416,
+        "speed": 12.308380853420957,
+        "condition": 90.5
+      },
+      {
+        "ms": 38872,
+        "calls": 67,
+        "triangles": 10368,
+        "speed": 10.73513408126836,
+        "condition": 90.5
+      },
+      {
+        "ms": 38996,
+        "calls": 67,
         "triangles": 10320,
-        "speed": 21.629909657312954,
+        "speed": 7.608513792156309,
         "condition": 90.5
       },
       {
-        "ms": 28061,
-        "calls": 68,
-        "triangles": 10560,
-        "speed": 21.285934619591355,
-        "condition": 90.5
-      },
-      {
-        "ms": 28185,
-        "calls": 68,
-        "triangles": 10560,
-        "speed": 22.35303376347404,
-        "condition": 90.5
-      },
-      {
-        "ms": 28313,
+        "ms": 39126,
         "calls": 68,
         "triangles": 10656,
-        "speed": 22.036497360517956,
-        "condition": 90.5
+        "speed": 17.78971897516221,
+        "condition": 88
       },
       {
-        "ms": 28437,
+        "ms": 39252,
         "calls": 68,
-        "triangles": 10656,
-        "speed": 21.72095590778971,
-        "condition": 90.5
-      },
-      {
-        "ms": 28560,
-        "calls": 69,
-        "triangles": 10706,
-        "speed": 21.49145583630661,
-        "condition": 90.5
-      },
-      {
-        "ms": 28686,
-        "calls": 69,
-        "triangles": 10706,
-        "speed": 21.186674113828285,
-        "condition": 90.5
-      },
-      {
-        "ms": 28818,
-        "calls": 69,
-        "triangles": 10706,
-        "speed": 22.78593621194921,
-        "condition": 90.5
-      },
-      {
-        "ms": 28941,
-        "calls": 70,
-        "triangles": 10876,
-        "speed": 22.58201171470719,
-        "condition": 90.5
-      },
-      {
-        "ms": 29065,
-        "calls": 68,
-        "triangles": 10822,
-        "speed": 22.19738015267218,
-        "condition": 90.5
-      },
-      {
-        "ms": 29188,
-        "calls": 68,
-        "triangles": 10834,
-        "speed": 19.72568252833165,
-        "condition": 90.5
-      },
-      {
-        "ms": 29311,
-        "calls": 67,
-        "triangles": 10774,
-        "speed": 16.495783107572606,
-        "condition": 90.5
-      },
-      {
-        "ms": 29437,
-        "calls": 67,
-        "triangles": 10774,
-        "speed": 13.704721489533192,
-        "condition": 90.5
-      },
-      {
-        "ms": 29562,
-        "calls": 66,
-        "triangles": 10798,
-        "speed": 15.03811392997569,
-        "condition": 90.5
-      },
-      {
-        "ms": 29686,
-        "calls": 68,
-        "triangles": 10870,
-        "speed": 16.54884619406519,
-        "condition": 90.5
-      },
-      {
-        "ms": 29812,
-        "calls": 68,
-        "triangles": 10870,
-        "speed": 18.049532178310372,
-        "condition": 90.5
-      },
-      {
-        "ms": 29946,
-        "calls": 67,
-        "triangles": 10810,
-        "speed": 19.69338542644247,
-        "condition": 90.5
-      },
-      {
-        "ms": 30069,
-        "calls": 68,
-        "triangles": 10776,
-        "speed": 16.85388664640111,
-        "condition": 90.5
-      },
-      {
-        "ms": 30194,
-        "calls": 67,
-        "triangles": 10680,
-        "speed": 14.06101213646134,
-        "condition": 90.5
-      },
-      {
-        "ms": 30323,
-        "calls": 66,
-        "triangles": 10656,
-        "speed": 15.59042061181639,
-        "condition": 90.5
-      },
-      {
-        "ms": 30447,
-        "calls": 66,
-        "triangles": 10656,
-        "speed": 16.720138720443888,
-        "condition": 90.5
-      },
-      {
-        "ms": 30574,
-        "calls": 67,
-        "triangles": 10752,
-        "speed": 18.402368229915442,
-        "condition": 90.5
-      },
-      {
-        "ms": 30698,
-        "calls": 67,
-        "triangles": 10704,
-        "speed": 21.004448738100837,
-        "condition": 90.5
-      },
-      {
-        "ms": 30831,
-        "calls": 66,
-        "triangles": 10656,
-        "speed": 23.59583507013618,
-        "condition": 90.5
-      },
-      {
-        "ms": 30956,
-        "calls": 67,
-        "triangles": 10680,
-        "speed": 20.309891244415905,
-        "condition": 90.5
-      },
-      {
-        "ms": 31082,
-        "calls": 67,
-        "triangles": 10680,
-        "speed": 18.283987618402595,
-        "condition": 90.5
-      },
-      {
-        "ms": 31211,
-        "calls": 68,
-        "triangles": 11016,
-        "speed": 18.54623392756035,
-        "condition": 88
-      },
-      {
-        "ms": 31336,
-        "calls": 68,
-        "triangles": 10968,
-        "speed": 15.736982966484472,
-        "condition": 88
-      },
-      {
-        "ms": 31460,
-        "calls": 68,
-        "triangles": 10932,
-        "speed": 14.819559291393594,
-        "condition": 88
-      },
-      {
-        "ms": 31584,
-        "calls": 68,
-        "triangles": 10824,
-        "speed": 12.049762863853509,
-        "condition": 88
-      },
-      {
-        "ms": 31711,
-        "calls": 68,
-        "triangles": 10764,
-        "speed": 11.37434814130661,
-        "condition": 88
-      },
-      {
-        "ms": 31847,
-        "calls": 67,
-        "triangles": 10632,
-        "speed": 14.73850521132456,
-        "condition": 88
-      },
-      {
-        "ms": 31970,
-        "calls": 67,
-        "triangles": 10536,
-        "speed": 11.782161289697582,
-        "condition": 88
-      },
-      {
-        "ms": 32093,
-        "calls": 67,
-        "triangles": 10536,
-        "speed": 10.40469853299885,
-        "condition": 88
-      },
-      {
-        "ms": 32218,
-        "calls": 67,
-        "triangles": 10536,
-        "speed": 8.631040820701156,
-        "condition": 88
-      },
-      {
-        "ms": 32341,
-        "calls": 67,
-        "triangles": 10536,
-        "speed": 7.78707244575248,
-        "condition": 88
-      },
-      {
-        "ms": 32467,
-        "calls": 67,
-        "triangles": 10536,
-        "speed": 5.488179430727611,
-        "condition": 88
-      },
-      {
-        "ms": 32597,
-        "calls": 66,
-        "triangles": 10512,
-        "speed": 6.974865802492303,
-        "condition": 88
-      },
-      {
-        "ms": 32719,
-        "calls": 65,
-        "triangles": 10452,
-        "speed": 6.858673161179805,
-        "condition": 88
-      },
-      {
-        "ms": 32842,
-        "calls": 65,
-        "triangles": 10452,
-        "speed": 6.948168086972339,
-        "condition": 88
-      },
-      {
-        "ms": 32967,
-        "calls": 65,
-        "triangles": 10500,
-        "speed": 6.829438759413143,
-        "condition": 88
-      },
-      {
-        "ms": 33090,
-        "calls": 65,
-        "triangles": 10596,
-        "speed": 6.692846976135885,
-        "condition": 88
-      },
-      {
-        "ms": 33213,
-        "calls": 65,
-        "triangles": 10596,
-        "speed": 6.573058268077123,
-        "condition": 88
-      },
-      {
-        "ms": 33336,
-        "calls": 67,
-        "triangles": 11068,
-        "speed": 6.487591668816316,
-        "condition": 88
-      },
-      {
-        "ms": 33460,
-        "calls": 69,
-        "triangles": 11176,
-        "speed": 7.374806226857438,
-        "condition": 88
-      },
-      {
-        "ms": 33585,
-        "calls": 70,
-        "triangles": 11296,
-        "speed": 5.938917533421719,
-        "condition": 88
-      },
-      {
-        "ms": 33708,
-        "calls": 71,
-        "triangles": 11638,
-        "speed": 6.656830949342827,
-        "condition": 88
-      },
-      {
-        "ms": 33834,
-        "calls": 72,
-        "triangles": 11652,
-        "speed": 6.4716653562365485,
-        "condition": 88
-      },
-      {
-        "ms": 33957,
-        "calls": 76,
-        "triangles": 11944,
-        "speed": 6.767586019584139,
-        "condition": 88
-      },
-      {
-        "ms": 34079,
-        "calls": 76,
-        "triangles": 11632,
-        "speed": 6.663747902779448,
-        "condition": 88
-      },
-      {
-        "ms": 34207,
-        "calls": 75,
-        "triangles": 11630,
-        "speed": 7.212055248295368,
-        "condition": 88
-      },
-      {
-        "ms": 34330,
-        "calls": 76,
-        "triangles": 11702,
-        "speed": 8.385215805244567,
-        "condition": 88
-      },
-      {
-        "ms": 34457,
-        "calls": 77,
-        "triangles": 11866,
-        "speed": 9.648006607726757,
-        "condition": 88
-      },
-      {
-        "ms": 34580,
-        "calls": 81,
-        "triangles": 14814,
-        "speed": 11.216830694269465,
-        "condition": 88
-      },
-      {
-        "ms": 34702,
-        "calls": 84,
-        "triangles": 15402,
-        "speed": 12.001282219721237,
-        "condition": 88
-      },
-      {
-        "ms": 34831,
-        "calls": 85,
-        "triangles": 17810,
-        "speed": 13.942362818287588,
-        "condition": 88
-      },
-      {
-        "ms": 34954,
-        "calls": 85,
-        "triangles": 17810,
-        "speed": 15.283537880927527,
-        "condition": 88
-      },
-      {
-        "ms": 35078,
-        "calls": 85,
-        "triangles": 18122,
-        "speed": 16.613918592095885,
-        "condition": 88
-      },
-      {
-        "ms": 35202,
-        "calls": 84,
-        "triangles": 18120,
-        "speed": 18.104497566479917,
-        "condition": 88
-      },
-      {
-        "ms": 35327,
-        "calls": 85,
-        "triangles": 18768,
-        "speed": 19.206669638516594,
-        "condition": 88
-      },
-      {
-        "ms": 35454,
-        "calls": 86,
-        "triangles": 18792,
-        "speed": 16.38741959142786,
-        "condition": 88
-      },
-      {
-        "ms": 35580,
-        "calls": 85,
-        "triangles": 19488,
-        "speed": 17.699367161936753,
-        "condition": 88
-      },
-      {
-        "ms": 35703,
-        "calls": 85,
-        "triangles": 19488,
-        "speed": 19.54645960989453,
-        "condition": 88
-      },
-      {
-        "ms": 35831,
-        "calls": 85,
-        "triangles": 19560,
-        "speed": 20.638520339174605,
-        "condition": 88
-      },
-      {
-        "ms": 35955,
-        "calls": 84,
-        "triangles": 19488,
-        "speed": 21.716573962070367,
-        "condition": 88
-      },
-      {
-        "ms": 36079,
-        "calls": 84,
-        "triangles": 19536,
-        "speed": 21.41154458597946,
-        "condition": 88
-      },
-      {
-        "ms": 36215,
-        "calls": 83,
-        "triangles": 19512,
-        "speed": 21.18219436418647,
-        "condition": 88
-      },
-      {
-        "ms": 36341,
-        "calls": 83,
-        "triangles": 19582,
-        "speed": 22.784507825577723,
-        "condition": 88
-      },
-      {
-        "ms": 36466,
-        "calls": 82,
-        "triangles": 19510,
-        "speed": 22.455400040783744,
-        "condition": 88
-      },
-      {
-        "ms": 36588,
-        "calls": 83,
-        "triangles": 19394,
-        "speed": 22.131008445934736,
-        "condition": 88
-      },
-      {
-        "ms": 36715,
-        "calls": 84,
-        "triangles": 19568,
-        "speed": 21.856289217460287,
-        "condition": 88
-      },
-      {
-        "ms": 36839,
-        "calls": 82,
-        "triangles": 18852,
-        "speed": 21.54811207753298,
-        "condition": 88
-      },
-      {
-        "ms": 36970,
-        "calls": 85,
-        "triangles": 24168,
-        "speed": 21.243182676603986,
-        "condition": 88
-      },
-      {
-        "ms": 37099,
-        "calls": 85,
-        "triangles": 24168,
-        "speed": 22.133684879936173,
-        "condition": 88
-      },
-      {
-        "ms": 37223,
-        "calls": 87,
-        "triangles": 26026,
-        "speed": 21.821541911447625,
-        "condition": 88
-      },
-      {
-        "ms": 37347,
-        "calls": 86,
-        "triangles": 25354,
-        "speed": 21.55062211532248,
-        "condition": 88
-      },
-      {
-        "ms": 37471,
-        "calls": 85,
-        "triangles": 23712,
-        "speed": 21.21197685518523,
-        "condition": 88
-      },
-      {
-        "ms": 37597,
-        "calls": 85,
-        "triangles": 23736,
-        "speed": 22.284517084323777,
-        "condition": 88
-      },
-      {
-        "ms": 37726,
-        "calls": 85,
-        "triangles": 23736,
-        "speed": 21.97145784012939,
-        "condition": 88
-      },
-      {
-        "ms": 37851,
-        "calls": 84,
-        "triangles": 23760,
-        "speed": 21.587274524900177,
-        "condition": 88
-      },
-      {
-        "ms": 37981,
-        "calls": 86,
-        "triangles": 23952,
-        "speed": 21.286654177024296,
-        "condition": 88
-      },
-      {
-        "ms": 38106,
-        "calls": 86,
-        "triangles": 23952,
-        "speed": 22.35793184956198,
-        "condition": 88
-      },
-      {
-        "ms": 38229,
-        "calls": 85,
-        "triangles": 23952,
-        "speed": 22.082530863928895,
-        "condition": 88
-      },
-      {
-        "ms": 38359,
-        "calls": 85,
-        "triangles": 23640,
-        "speed": 21.764329598696364,
-        "condition": 88
-      },
-      {
-        "ms": 38482,
-        "calls": 87,
-        "triangles": 23604,
-        "speed": 21.526919859939753,
-        "condition": 88
-      },
-      {
-        "ms": 38613,
-        "calls": 86,
-        "triangles": 22772,
-        "speed": 21.30000393110706,
-        "condition": 88
-      },
-      {
-        "ms": 38745,
-        "calls": 87,
-        "triangles": 23604,
-        "speed": 22.37940861036726,
-        "condition": 88
-      },
-      {
-        "ms": 38873,
-        "calls": 89,
-        "triangles": 23614,
-        "speed": 19.093576650796862,
-        "condition": 88
-      },
-      {
-        "ms": 38997,
-        "calls": 90,
-        "triangles": 24046,
-        "speed": 16.67542797804774,
-        "condition": 88
-      },
-      {
-        "ms": 39122,
-        "calls": 88,
-        "triangles": 23590,
-        "speed": 18.350835470794824,
-        "condition": 88
-      },
-      {
-        "ms": 39250,
-        "calls": 88,
-        "triangles": 23374,
-        "speed": 19.815671816494532,
+        "triangles": 10920,
+        "speed": 15.78564841453656,
         "condition": 88
       },
       {
         "ms": 39377,
-        "calls": 87,
-        "triangles": 22518,
-        "speed": 20.725507312830562,
-        "condition": 88
-      },
-      {
-        "ms": 39505,
-        "calls": 87,
-        "triangles": 22518,
-        "speed": 21.804244413733613,
-        "condition": 88
-      },
-      {
-        "ms": 39628,
-        "calls": 84,
-        "triangles": 20058,
-        "speed": 21.499574562905398,
-        "condition": 88
-      },
-      {
-        "ms": 39755,
-        "calls": 83,
-        "triangles": 19706,
-        "speed": 21.237172572873945,
-        "condition": 88
-      },
-      {
-        "ms": 39879,
-        "calls": 82,
-        "triangles": 19658,
-        "speed": 22.13335186549188,
-        "condition": 88
-      },
-      {
-        "ms": 40009,
-        "calls": 82,
-        "triangles": 19610,
-        "speed": 21.777071394793946,
-        "condition": 88
-      },
-      {
-        "ms": 40131,
-        "calls": 80,
-        "triangles": 19132,
-        "speed": 21.464182365876848,
-        "condition": 88
-      },
-      {
-        "ms": 40254,
-        "calls": 79,
-        "triangles": 17840,
-        "speed": 21.237946497179525,
-        "condition": 88
-      },
-      {
-        "ms": 40381,
-        "calls": 77,
-        "triangles": 17088,
-        "speed": 22.299480660492648,
-        "condition": 88
-      },
-      {
-        "ms": 40507,
-        "calls": 76,
-        "triangles": 16494,
-        "speed": 22.051727368230374,
-        "condition": 88
-      },
-      {
-        "ms": 40632,
-        "calls": 75,
-        "triangles": 16732,
-        "speed": 21.70051419115052,
-        "condition": 88
-      },
-      {
-        "ms": 40757,
-        "calls": 72,
-        "triangles": 15230,
-        "speed": 21.39064540769768,
-        "condition": 88
-      },
-      {
-        "ms": 40882,
-        "calls": 73,
-        "triangles": 14848,
-        "speed": 22.460436725893413,
-        "condition": 88
-      },
-      {
-        "ms": 41006,
-        "calls": 70,
-        "triangles": 14642,
-        "speed": 22.219936995661286,
-        "condition": 88
-      },
-      {
-        "ms": 41135,
-        "calls": 69,
-        "triangles": 14264,
-        "speed": 21.866340195521058,
-        "condition": 88
-      },
-      {
-        "ms": 41268,
-        "calls": 69,
-        "triangles": 14120,
-        "speed": 21.672534426922947,
-        "condition": 88
-      },
-      {
-        "ms": 41392,
-        "calls": 69,
-        "triangles": 14120,
-        "speed": 21.405573064626598,
-        "condition": 88
-      },
-      {
-        "ms": 41518,
-        "calls": 69,
-        "triangles": 14432,
-        "speed": 21.10454619919919,
-        "condition": 88
-      },
-      {
-        "ms": 41646,
         "calls": 68,
-        "triangles": 14024,
-        "speed": 22.53113611227501,
+        "triangles": 10920,
+        "speed": 14.194136624952632,
         "condition": 88
       },
       {
-        "ms": 41771,
+        "ms": 39508,
         "calls": 68,
-        "triangles": 14024,
-        "speed": 22.290319323547934,
+        "triangles": 10896,
+        "speed": 13.091225727862664,
         "condition": 88
       },
       {
-        "ms": 41895,
+        "ms": 39659,
         "calls": 68,
-        "triangles": 13880,
-        "speed": 21.929690639571213,
+        "triangles": 10812,
+        "speed": 11.121463601498784,
         "condition": 88
       },
       {
-        "ms": 42017,
+        "ms": 39794,
         "calls": 68,
-        "triangles": 13880,
-        "speed": 21.659255050292742,
+        "triangles": 10716,
+        "speed": 9.532364744435998,
         "condition": 88
       },
       {
-        "ms": 42143,
+        "ms": 39917,
+        "calls": 68,
+        "triangles": 10572,
+        "speed": 7.580928612253683,
+        "condition": 88
+      },
+      {
+        "ms": 40044,
+        "calls": 68,
+        "triangles": 10572,
+        "speed": 7.580928612253683,
+        "condition": 88
+      },
+      {
+        "ms": 40172,
         "calls": 67,
-        "triangles": 13878,
-        "speed": 21.428012477980594,
+        "triangles": 10488,
+        "speed": 13.845825848701367,
         "condition": 88
       },
       {
-        "ms": 42266,
-        "calls": 66,
-        "triangles": 13854,
-        "speed": 21.124887433594143,
-        "condition": 88
-      },
-      {
-        "ms": 42391,
-        "calls": 68,
-        "triangles": 13922,
-        "speed": 22.198017700658315,
-        "condition": 88
-      },
-      {
-        "ms": 42514,
-        "calls": 68,
-        "triangles": 13922,
-        "speed": 21.84648667543065,
-        "condition": 88
-      },
-      {
-        "ms": 42638,
-        "calls": 70,
-        "triangles": 14102,
-        "speed": 21.573564414632926,
-        "condition": 88
-      },
-      {
-        "ms": 42762,
-        "calls": 69,
-        "triangles": 13878,
-        "speed": 21.26640130398161,
-        "condition": 88
-      },
-      {
-        "ms": 42891,
+        "ms": 40297,
         "calls": 67,
-        "triangles": 13334,
-        "speed": 22.864133122572607,
+        "triangles": 10440,
+        "speed": 12.14266231612303,
         "condition": 88
       },
       {
-        "ms": 43013,
+        "ms": 40424,
+        "calls": 67,
+        "triangles": 10440,
+        "speed": 10.427553806186932,
+        "condition": 88
+      },
+      {
+        "ms": 40551,
+        "calls": 67,
+        "triangles": 10440,
+        "speed": 8.590525389988379,
+        "condition": 88
+      },
+      {
+        "ms": 40690,
+        "calls": 67,
+        "triangles": 10440,
+        "speed": 5.955504049276295,
+        "condition": 88
+      },
+      {
+        "ms": 40817,
         "calls": 66,
-        "triangles": 13010,
-        "speed": 22.613970444134065,
+        "triangles": 10368,
+        "speed": 5.963733754204266,
         "condition": 88
       },
       {
-        "ms": 43138,
-        "calls": 64,
-        "triangles": 12914,
-        "speed": 22.332820285762715,
-        "condition": 88
-      },
-      {
-        "ms": 43263,
-        "calls": 64,
-        "triangles": 12914,
-        "speed": 22.054257857525403,
-        "condition": 88
-      },
-      {
-        "ms": 43389,
-        "calls": 64,
-        "triangles": 12914,
-        "speed": 21.78275712984667,
-        "condition": 88
-      },
-      {
-        "ms": 43514,
-        "calls": 64,
-        "triangles": 12974,
-        "speed": 21.430126769136262,
-        "condition": 88
-      },
-      {
-        "ms": 43638,
-        "calls": 64,
-        "triangles": 12974,
-        "speed": 21.15790975555713,
-        "condition": 88
-      },
-      {
-        "ms": 43761,
+        "ms": 40943,
         "calls": 65,
-        "triangles": 12998,
-        "speed": 19.527434685609617,
+        "triangles": 10356,
+        "speed": 6.223816168791467,
         "condition": 88
       },
       {
-        "ms": 43888,
+        "ms": 41067,
         "calls": 64,
-        "triangles": 12974,
-        "speed": 21.331677533980862,
+        "triangles": 10132,
+        "speed": 6.3609203396883816,
         "condition": 88
       },
       {
-        "ms": 44011,
-        "calls": 63,
-        "triangles": 12938,
-        "speed": 22.74459671506467,
-        "condition": 88
-      },
-      {
-        "ms": 44134,
-        "calls": 62,
-        "triangles": 12542,
-        "speed": 22.50117086978992,
-        "condition": 88
-      },
-      {
-        "ms": 44258,
-        "calls": 62,
-        "triangles": 12542,
-        "speed": 22.259048081508496,
-        "condition": 88
-      },
-      {
-        "ms": 44383,
-        "calls": 62,
-        "triangles": 12230,
-        "speed": 21.867106647060428,
-        "condition": 88
-      },
-      {
-        "ms": 44515,
-        "calls": 61,
-        "triangles": 12158,
-        "speed": 21.596384176645348,
-        "condition": 88
-      },
-      {
-        "ms": 44638,
-        "calls": 61,
-        "triangles": 12158,
-        "speed": 21.331877868568505,
-        "condition": 88
-      },
-      {
-        "ms": 44766,
-        "calls": 61,
-        "triangles": 12158,
-        "speed": 22.925307197475604,
-        "condition": 88
-      },
-      {
-        "ms": 44888,
-        "calls": 61,
-        "triangles": 12158,
-        "speed": 22.712858318043647,
-        "condition": 88
-      },
-      {
-        "ms": 45011,
-        "calls": 62,
-        "triangles": 12230,
-        "speed": 22.389030218413907,
-        "condition": 88
-      },
-      {
-        "ms": 45136,
-        "calls": 61,
-        "triangles": 12086,
-        "speed": 22.057601860042624,
-        "condition": 88
-      },
-      {
-        "ms": 45268,
-        "calls": 61,
-        "triangles": 12086,
-        "speed": 21.693404218400097,
-        "condition": 88
-      },
-      {
-        "ms": 45394,
-        "calls": 61,
-        "triangles": 10254,
-        "speed": 18.84000232037348,
-        "condition": 88
-      },
-      {
-        "ms": 45518,
-        "calls": 60,
-        "triangles": 12074,
-        "speed": 20.288949665320672,
-        "condition": 88
-      },
-      {
-        "ms": 45642,
-        "calls": 61,
-        "triangles": 12242,
-        "speed": 8.978827511044738,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 45766,
+        "ms": 41198,
         "calls": 64,
-        "triangles": 12338,
-        "speed": 4.839883657594846,
-        "condition": 82.11084757000627
+        "triangles": 10132,
+        "speed": 6.295893160678441,
+        "condition": 88
       },
       {
-        "ms": 45892,
-        "calls": 62,
-        "triangles": 12142,
-        "speed": 6.1314583670872755,
-        "condition": 82.11084757000627
+        "ms": 41321,
+        "calls": 65,
+        "triangles": 10356,
+        "speed": 6.214672725652922,
+        "condition": 88
+      },
+      {
+        "ms": 41449,
+        "calls": 64,
+        "triangles": 10344,
+        "speed": 6.764158121927558,
+        "condition": 88
+      },
+      {
+        "ms": 41579,
+        "calls": 65,
+        "triangles": 10356,
+        "speed": 7.112420212096709,
+        "condition": 88
+      },
+      {
+        "ms": 41708,
+        "calls": 66,
+        "triangles": 10380,
+        "speed": 5.16869324902362,
+        "condition": 88
+      },
+      {
+        "ms": 41835,
+        "calls": 65,
+        "triangles": 10356,
+        "speed": 5.772694504705459,
+        "condition": 88
+      },
+      {
+        "ms": 41961,
+        "calls": 65,
+        "triangles": 10548,
+        "speed": 6.526514525939912,
+        "condition": 88
+      },
+      {
+        "ms": 42085,
+        "calls": 65,
+        "triangles": 10596,
+        "speed": 6.437403049653876,
+        "condition": 88
+      },
+      {
+        "ms": 42207,
+        "calls": 66,
+        "triangles": 11008,
+        "speed": 6.350518820701355,
+        "condition": 88
+      },
+      {
+        "ms": 42330,
+        "calls": 69,
+        "triangles": 11128,
+        "speed": 6.264854711539822,
+        "condition": 88
+      },
+      {
+        "ms": 42453,
+        "calls": 69,
+        "triangles": 11440,
+        "speed": 6.095662968782031,
+        "condition": 88
+      },
+      {
+        "ms": 42576,
+        "calls": 69,
+        "triangles": 11584,
+        "speed": 6.486221892184656,
+        "condition": 88
+      },
+      {
+        "ms": 42699,
+        "calls": 71,
+        "triangles": 11638,
+        "speed": 6.8410959286828374,
+        "condition": 88
+      },
+      {
+        "ms": 42839,
+        "calls": 72,
+        "triangles": 11340,
+        "speed": 7.0672204846934195,
+        "condition": 88
+      },
+      {
+        "ms": 42964,
+        "calls": 73,
+        "triangles": 11364,
+        "speed": 5.880156213235486,
+        "condition": 88
+      },
+      {
+        "ms": 43089,
+        "calls": 76,
+        "triangles": 11944,
+        "speed": 6.346093920821544,
+        "condition": 88
+      },
+      {
+        "ms": 43216,
+        "calls": 76,
+        "triangles": 11944,
+        "speed": 6.219163034925588,
+        "condition": 88
+      },
+      {
+        "ms": 43351,
+        "calls": 75,
+        "triangles": 11942,
+        "speed": 6.416224067766926,
+        "condition": 88
+      },
+      {
+        "ms": 43475,
+        "calls": 75,
+        "triangles": 11942,
+        "speed": 6.616421309573709,
+        "condition": 88
+      },
+      {
+        "ms": 43598,
+        "calls": 75,
+        "triangles": 11942,
+        "speed": 6.616421309573709,
+        "condition": 88
+      },
+      {
+        "ms": 43739,
+        "calls": 76,
+        "triangles": 12014,
+        "speed": 6.838222747641363,
+        "condition": 88
+      },
+      {
+        "ms": 43864,
+        "calls": 81,
+        "triangles": 15126,
+        "speed": 7.989324889468075,
+        "condition": 88
+      },
+      {
+        "ms": 43986,
+        "calls": 81,
+        "triangles": 15126,
+        "speed": 7.989324889468075,
+        "condition": 88
+      },
+      {
+        "ms": 44109,
+        "calls": 85,
+        "triangles": 18122,
+        "speed": 9.763644268268337,
+        "condition": 88
+      },
+      {
+        "ms": 44245,
+        "calls": 85,
+        "triangles": 18122,
+        "speed": 10.75194022231889,
+        "condition": 88
+      },
+      {
+        "ms": 44370,
+        "calls": 85,
+        "triangles": 18122,
+        "speed": 11.734653069411515,
+        "condition": 88
+      },
+      {
+        "ms": 44497,
+        "calls": 85,
+        "triangles": 18122,
+        "speed": 12.904739181369955,
+        "condition": 88
+      },
+      {
+        "ms": 44620,
+        "calls": 85,
+        "triangles": 18122,
+        "speed": 13.873956525344147,
+        "condition": 88
+      },
+      {
+        "ms": 44743,
+        "calls": 85,
+        "triangles": 18122,
+        "speed": 14.837143577683278,
+        "condition": 88
+      },
+      {
+        "ms": 44866,
+        "calls": 85,
+        "triangles": 18122,
+        "speed": 14.837143577683278,
+        "condition": 88
+      },
+      {
+        "ms": 44992,
+        "calls": 85,
+        "triangles": 18456,
+        "speed": 16.356079266557916,
+        "condition": 88
+      },
+      {
+        "ms": 45123,
+        "calls": 85,
+        "triangles": 18456,
+        "speed": 17.29362909408409,
+        "condition": 88
+      },
+      {
+        "ms": 45249,
+        "calls": 85,
+        "triangles": 18456,
+        "speed": 18.227538009926203,
+        "condition": 88
+      },
+      {
+        "ms": 45388,
+        "calls": 85,
+        "triangles": 18504,
+        "speed": 20.06173731153107,
+        "condition": 88
+      },
+      {
+        "ms": 45515,
+        "calls": 84,
+        "triangles": 18528,
+        "speed": 20.96142673183638,
+        "condition": 88
+      },
+      {
+        "ms": 45640,
+        "calls": 84,
+        "triangles": 18840,
+        "speed": 22.214407064277218,
+        "condition": 88
+      },
+      {
+        "ms": 45765,
+        "calls": 84,
+        "triangles": 19200,
+        "speed": 21.8477502365108,
+        "condition": 88
+      },
+      {
+        "ms": 45888,
+        "calls": 84,
+        "triangles": 19152,
+        "speed": 21.60395114834936,
+        "condition": 88
       },
       {
         "ms": 46015,
-        "calls": 62,
-        "triangles": 12106,
-        "speed": 6.913947758752892,
-        "condition": 82.11084757000627
+        "calls": 85,
+        "triangles": 19176,
+        "speed": 18.347441755936792,
+        "condition": 88
       },
       {
-        "ms": 46140,
-        "calls": 63,
-        "triangles": 12182,
-        "speed": 18.777846464988766,
-        "condition": 82.11084757000627
+        "ms": 46144,
+        "calls": 83,
+        "triangles": 19174,
+        "speed": 19.63060708767354,
+        "condition": 88
       },
       {
-        "ms": 46264,
-        "calls": 61,
-        "triangles": 10314,
-        "speed": 20.24866696697161,
-        "condition": 82.11084757000627
+        "ms": 46274,
+        "calls": 82,
+        "triangles": 19486,
+        "speed": 21.255768700280427,
+        "condition": 88
       },
       {
-        "ms": 46395,
-        "calls": 62,
-        "triangles": 12170,
-        "speed": 21.506603564783255,
-        "condition": 82.11084757000627
+        "ms": 46398,
+        "calls": 83,
+        "triangles": 19682,
+        "speed": 22.678275688142623,
+        "condition": 88
       },
       {
         "ms": 46520,
-        "calls": 62,
-        "triangles": 12040,
-        "speed": 21.198129850970375,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 46644,
-        "calls": 61,
-        "triangles": 11992,
-        "speed": 22.446935539010777,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 46771,
-        "calls": 57,
-        "triangles": 5504,
-        "speed": 22.1623637203796,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 46894,
-        "calls": 57,
-        "triangles": 5504,
-        "speed": 21.9260667997662,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47019,
-        "calls": 58,
-        "triangles": 5552,
-        "speed": 21.533801599864123,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47143,
-        "calls": 58,
-        "triangles": 5552,
-        "speed": 21.260895437081114,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47274,
-        "calls": 58,
-        "triangles": 5552,
-        "speed": 21.440356389772766,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47403,
-        "calls": 58,
-        "triangles": 5552,
-        "speed": 22.12884271452107,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47525,
-        "calls": 56,
-        "triangles": 5300,
-        "speed": 21.887560877056032,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47650,
-        "calls": 56,
-        "triangles": 5300,
-        "speed": 21.57903445474269,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47780,
-        "calls": 56,
-        "triangles": 5300,
-        "speed": 21.234962351874316,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 47902,
-        "calls": 55,
-        "triangles": 5228,
-        "speed": 22.270625363779423,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48028,
-        "calls": 55,
-        "triangles": 5228,
-        "speed": 22.032012969598554,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48153,
-        "calls": 54,
-        "triangles": 4914,
-        "speed": 21.71267604011867,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48277,
-        "calls": 54,
-        "triangles": 4698,
-        "speed": 21.368934503493936,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48402,
-        "calls": 53,
-        "triangles": 4626,
-        "speed": 22.60791528143176,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48524,
-        "calls": 53,
-        "triangles": 4626,
-        "speed": 22.35800567226767,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48646,
-        "calls": 53,
-        "triangles": 4626,
-        "speed": 22.040732894677802,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48770,
-        "calls": 53,
-        "triangles": 4626,
-        "speed": 21.670356024187075,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 48893,
-        "calls": 54,
-        "triangles": 4650,
-        "speed": 19.20712553269286,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 49015,
-        "calls": 54,
-        "triangles": 4650,
-        "speed": 16.385091349491468,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 49142,
-        "calls": 54,
-        "triangles": 4650,
-        "speed": 13.199734804308585,
-        "condition": 82.11084757000627
-      },
-      {
-        "ms": 49266,
-        "calls": 54,
-        "triangles": 4962,
-        "speed": 16.645869092243185,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 49388,
-        "calls": 54,
-        "triangles": 4962,
-        "speed": 18.830773887076717,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 49513,
-        "calls": 55,
-        "triangles": 5076,
-        "speed": 20.112852008630686,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 49636,
-        "calls": 55,
-        "triangles": 4884,
-        "speed": 21.555709849662023,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 49760,
-        "calls": 55,
-        "triangles": 4812,
-        "speed": 21.289960859557965,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 49883,
-        "calls": 54,
-        "triangles": 4788,
-        "speed": 22.532040853610386,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50006,
-        "calls": 54,
-        "triangles": 4788,
-        "speed": 22.211910104929714,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50129,
-        "calls": 54,
-        "triangles": 4788,
-        "speed": 21.890181641523945,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50252,
-        "calls": 55,
-        "triangles": 4910,
-        "speed": 21.650098868440065,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50375,
-        "calls": 55,
-        "triangles": 4910,
-        "speed": 21.345425506280368,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50499,
-        "calls": 54,
-        "triangles": 4886,
-        "speed": 22.752474661872352,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50623,
-        "calls": 54,
-        "triangles": 4886,
-        "speed": 22.453237476785038,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50747,
-        "calls": 57,
-        "triangles": 5018,
-        "speed": 19.588889629953858,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50870,
-        "calls": 56,
-        "triangles": 4994,
-        "speed": 21.030957095225144,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 50999,
-        "calls": 56,
-        "triangles": 4994,
-        "speed": 22.44841231220039,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51123,
-        "calls": 57,
-        "triangles": 5066,
-        "speed": 22.209047913321303,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51248,
-        "calls": 57,
-        "triangles": 5066,
-        "speed": 21.89260399725741,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51371,
-        "calls": 57,
-        "triangles": 5066,
-        "speed": 21.58536411178201,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51498,
-        "calls": 57,
-        "triangles": 5066,
-        "speed": 21.28419884877584,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51622,
-        "calls": 57,
-        "triangles": 5066,
-        "speed": 22.35772392849961,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51751,
-        "calls": 57,
-        "triangles": 5066,
-        "speed": 22.005996437668074,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51874,
-        "calls": 57,
-        "triangles": 5066,
-        "speed": 21.775429791508188,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 51997,
-        "calls": 56,
-        "triangles": 5042,
-        "speed": 21.471919683552365,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52123,
-        "calls": 57,
-        "triangles": 5044,
-        "speed": 21.248129590474917,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52249,
-        "calls": 56,
-        "triangles": 4972,
-        "speed": 22.667463515023506,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52371,
-        "calls": 57,
-        "triangles": 5068,
-        "speed": 22.29803604306727,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52493,
-        "calls": 57,
-        "triangles": 5068,
-        "speed": 22.0998591444808,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52621,
-        "calls": 57,
-        "triangles": 5068,
-        "speed": 21.72734125240943,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52743,
-        "calls": 56,
-        "triangles": 5068,
-        "speed": 18.451455676073625,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52868,
-        "calls": 80,
-        "triangles": 14938,
-        "speed": 15.640590026634891,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 52994,
         "calls": 84,
-        "triangles": 15130,
-        "speed": 17.146289684353814,
-        "condition": 79.61084757000627
+        "triangles": 19856,
+        "speed": 22.39189541262537,
+        "condition": 88
       },
       {
-        "ms": 53116,
+        "ms": 46645,
         "calls": 84,
-        "triangles": 15102,
-        "speed": 18.07485436871635,
-        "condition": 79.61084757000627
+        "triangles": 19856,
+        "speed": 22.11392790138846,
+        "condition": 88
       },
       {
-        "ms": 53242,
+        "ms": 46768,
+        "calls": 85,
+        "triangles": 24432,
+        "speed": 21.8363239048337,
+        "condition": 88
+      },
+      {
+        "ms": 46891,
+        "calls": 82,
+        "triangles": 22116,
+        "speed": 21.529197036051556,
+        "condition": 88
+      },
+      {
+        "ms": 47015,
+        "calls": 85,
+        "triangles": 24106,
+        "speed": 21.25936450405422,
+        "condition": 88
+      },
+      {
+        "ms": 47138,
+        "calls": 87,
+        "triangles": 26314,
+        "speed": 22.678769880698823,
+        "condition": 88
+      },
+      {
+        "ms": 47264,
+        "calls": 87,
+        "triangles": 25644,
+        "speed": 22.354195227152562,
+        "condition": 88
+      },
+      {
+        "ms": 47388,
         "calls": 84,
-        "triangles": 15102,
-        "speed": 19.735886519354143,
-        "condition": 79.61084757000627
+        "triangles": 23976,
+        "speed": 22.027751300075575,
+        "condition": 88
       },
       {
-        "ms": 53365,
-        "calls": 82,
-        "triangles": 14978,
-        "speed": 21.18621593741196,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 53488,
-        "calls": 80,
-        "triangles": 14822,
-        "speed": 22.43765720192626,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 53612,
-        "calls": 79,
-        "triangles": 14686,
-        "speed": 22.19548524632656,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 53735,
-        "calls": 81,
-        "triangles": 14850,
-        "speed": 21.878160363309345,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 53859,
-        "calls": 79,
-        "triangles": 14694,
-        "speed": 21.646352093906593,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 53985,
-        "calls": 79,
-        "triangles": 14694,
-        "speed": 21.299777822949718,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54112,
-        "calls": 79,
-        "triangles": 14694,
-        "speed": 22.193412155948234,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54238,
-        "calls": 80,
-        "triangles": 14838,
-        "speed": 21.87736247097608,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54361,
-        "calls": 80,
-        "triangles": 14838,
-        "speed": 21.5659467313116,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54485,
-        "calls": 80,
-        "triangles": 14838,
-        "speed": 21.261211171933628,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54609,
-        "calls": 79,
-        "triangles": 14806,
-        "speed": 22.507070516164347,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54739,
-        "calls": 79,
-        "triangles": 14806,
-        "speed": 22.26754416647931,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54862,
-        "calls": 79,
-        "triangles": 14766,
-        "speed": 21.87167619505594,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 54989,
-        "calls": 82,
-        "triangles": 14842,
-        "speed": 21.565092165938427,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 55113,
-        "calls": 81,
-        "triangles": 14810,
-        "speed": 21.300946880940504,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 55239,
-        "calls": 81,
-        "triangles": 14810,
-        "speed": 22.728142991199313,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 55364,
-        "calls": 80,
-        "triangles": 14798,
-        "speed": 22.40578145905094,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 55488,
-        "calls": 80,
-        "triangles": 14798,
-        "speed": 22.129852968808333,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 55616,
-        "calls": 81,
-        "triangles": 14940,
-        "speed": 21.80939575243482,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 55739,
+        "ms": 47513,
         "calls": 83,
-        "triangles": 15096,
-        "speed": 21.531791768650752,
-        "condition": 79.61084757000627
+        "triangles": 23544,
+        "speed": 21.792514572726944,
+        "condition": 88
       },
       {
-        "ms": 55868,
+        "ms": 47637,
         "calls": 83,
-        "triangles": 15096,
-        "speed": 19.492043780804064,
-        "condition": 79.61084757000627
+        "triangles": 23568,
+        "speed": 21.48290968386494,
+        "condition": 88
       },
       {
-        "ms": 55997,
-        "calls": 82,
-        "triangles": 15048,
-        "speed": 21.469387999008553,
-        "condition": 79.61084757000627
+        "ms": 47762,
+        "calls": 84,
+        "triangles": 23664,
+        "speed": 21.215072706988806,
+        "condition": 88
       },
       {
-        "ms": 56123,
-        "calls": 82,
-        "triangles": 15048,
-        "speed": 21.26743502834429,
-        "condition": 79.61084757000627
+        "ms": 47886,
+        "calls": 85,
+        "triangles": 23808,
+        "speed": 22.64045544083846,
+        "condition": 88
       },
       {
-        "ms": 56250,
+        "ms": 48008,
+        "calls": 87,
+        "triangles": 23892,
+        "speed": 22.35746565289751,
+        "condition": 88
+      },
+      {
+        "ms": 48133,
+        "calls": 87,
+        "triangles": 23988,
+        "speed": 22.03962320220116,
+        "condition": 88
+      },
+      {
+        "ms": 48255,
+        "calls": 87,
+        "triangles": 23988,
+        "speed": 21.76515834548293,
+        "condition": 88
+      },
+      {
+        "ms": 48382,
+        "calls": 87,
+        "triangles": 23988,
+        "speed": 21.496933591151816,
+        "condition": 88
+      },
+      {
+        "ms": 48505,
+        "calls": 87,
+        "triangles": 23988,
+        "speed": 21.195901914152117,
+        "condition": 88
+      },
+      {
+        "ms": 48629,
+        "calls": 89,
+        "triangles": 24096,
+        "speed": 22.44385242524538,
+        "condition": 88
+      },
+      {
+        "ms": 48751,
+        "calls": 89,
+        "triangles": 23952,
+        "speed": 22.123434731805453,
+        "condition": 88
+      },
+      {
+        "ms": 48880,
+        "calls": 89,
+        "triangles": 23952,
+        "speed": 21.848488733393438,
+        "condition": 88
+      },
+      {
+        "ms": 49003,
+        "calls": 88,
+        "triangles": 22424,
+        "speed": 21.577410817522463,
+        "condition": 88
+      },
+      {
+        "ms": 49134,
+        "calls": 87,
+        "triangles": 21918,
+        "speed": 21.273633952515596,
+        "condition": 88
+      },
+      {
+        "ms": 49257,
+        "calls": 86,
+        "triangles": 21846,
+        "speed": 22.874354432183523,
+        "condition": 88
+      },
+      {
+        "ms": 49390,
+        "calls": 84,
+        "triangles": 19386,
+        "speed": 22.627328522498395,
+        "condition": 88
+      },
+      {
+        "ms": 49518,
         "calls": 83,
-        "triangles": 15072,
-        "speed": 18.014503301486652,
-        "condition": 79.61084757000627
+        "triangles": 19274,
+        "speed": 22.383197923964026,
+        "condition": 88
       },
       {
-        "ms": 56374,
+        "ms": 49641,
         "calls": 82,
-        "triangles": 14740,
-        "speed": 19.48665641400806,
-        "condition": 79.61084757000627
+        "triangles": 18950,
+        "speed": 22.185283535923517,
+        "condition": 88
       },
       {
-        "ms": 56498,
-        "calls": 82,
-        "triangles": 14740,
-        "speed": 21.115309585996304,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 56622,
-        "calls": 80,
-        "triangles": 13924,
-        "speed": 22.188151056960837,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 56749,
-        "calls": 79,
-        "triangles": 13900,
-        "speed": 21.874851708491878,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 56875,
-        "calls": 79,
-        "triangles": 13900,
-        "speed": 21.681805143494035,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 57006,
+        "ms": 49769,
         "calls": 81,
-        "triangles": 13996,
-        "speed": 21.294558166180952,
-        "condition": 79.61084757000627
+        "triangles": 18398,
+        "speed": 21.834538216320073,
+        "condition": 88
       },
       {
-        "ms": 57131,
-        "calls": 80,
-        "triangles": 13164,
-        "speed": 22.188786076067895,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 57254,
+        "ms": 49893,
         "calls": 79,
-        "triangles": 12396,
-        "speed": 21.82086579431945,
-        "condition": 79.61084757000627
+        "triangles": 18024,
+        "speed": 21.529561017890337,
+        "condition": 88
       },
       {
-        "ms": 57378,
+        "ms": 50019,
         "calls": 79,
-        "triangles": 12396,
-        "speed": 21.576377575792446,
-        "condition": 79.61084757000627
+        "triangles": 16130,
+        "speed": 21.228046210832126,
+        "condition": 88
       },
       {
-        "ms": 57507,
-        "calls": 79,
-        "triangles": 12418,
-        "speed": 18.320074904714136,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 57633,
-        "calls": 76,
-        "triangles": 12310,
-        "speed": 19.603823423924297,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 57756,
+        "ms": 50143,
         "calls": 78,
-        "triangles": 12348,
-        "speed": 20.688684802110718,
-        "condition": 79.61084757000627
+        "triangles": 15966,
+        "speed": 22.12387069785588,
+        "condition": 88
       },
       {
-        "ms": 57880,
-        "calls": 78,
-        "triangles": 12348,
-        "speed": 22.123963686474085,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 58004,
-        "calls": 78,
-        "triangles": 12348,
-        "speed": 21.886883022918422,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 58126,
-        "calls": 77,
-        "triangles": 12312,
-        "speed": 21.617405721383943,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 58250,
-        "calls": 78,
-        "triangles": 12348,
-        "speed": 21.308956971473933,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 58375,
-        "calls": 77,
-        "triangles": 12228,
-        "speed": 22.55089548216345,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 58498,
-        "calls": 76,
-        "triangles": 11004,
-        "speed": 22.31065805152933,
-        "condition": 79.61084757000627
-      },
-      {
-        "ms": 58622,
+        "ms": 50267,
         "calls": 74,
-        "triangles": 10966,
-        "speed": 21.936951310326325,
-        "condition": 79.61084757000627
+        "triangles": 15508,
+        "speed": 21.76792078449068,
+        "condition": 88
       },
       {
-        "ms": 58745,
-        "calls": 74,
-        "triangles": 10858,
-        "speed": 20.698515185967633,
-        "condition": 79.61084757000627
+        "ms": 50389,
+        "calls": 73,
+        "triangles": 14436,
+        "speed": 21.45534843701927,
+        "condition": 88
       },
       {
-        "ms": 58868,
-        "calls": 74,
-        "triangles": 10858,
-        "speed": 16.246011877236533,
-        "condition": 79.61084757000627
+        "ms": 50514,
+        "calls": 73,
+        "triangles": 14172,
+        "speed": 21.22923786146898,
+        "condition": 88
       },
       {
-        "ms": 58992,
+        "ms": 50637,
         "calls": 71,
-        "triangles": 9736,
-        "speed": 17.744294782704852,
-        "condition": 79.61084757000627
+        "triangles": 13504,
+        "speed": 22.46474989698771,
+        "condition": 88
       },
       {
-        "ms": 59117,
+        "ms": 50763,
+        "calls": 70,
+        "triangles": 13136,
+        "speed": 22.092782775759805,
+        "condition": 88
+      },
+      {
+        "ms": 50887,
         "calls": 69,
-        "triangles": 9594,
-        "speed": 19.220640391549175,
-        "condition": 79.61084757000627
+        "triangles": 13124,
+        "speed": 21.857645144804966,
+        "condition": 88
       },
       {
-        "ms": 59241,
+        "ms": 51011,
         "calls": 69,
-        "triangles": 9594,
-        "speed": 19.954343039588313,
-        "condition": 79.61084757000627
+        "triangles": 13052,
+        "speed": 21.53133545371541,
+        "condition": 88
       },
       {
-        "ms": 59366,
+        "ms": 51134,
         "calls": 68,
-        "triangles": 9174,
-        "speed": 21.404226794877967,
-        "condition": 79.61084757000627
+        "triangles": 12956,
+        "speed": 21.250104911665694,
+        "condition": 88
       },
       {
-        "ms": 59491,
+        "ms": 51260,
+        "calls": 70,
+        "triangles": 12982,
+        "speed": 17.999273524490665,
+        "condition": 88
+      },
+      {
+        "ms": 51385,
+        "calls": 68,
+        "triangles": 12956,
+        "speed": 19.46676113366102,
+        "condition": 88
+      },
+      {
+        "ms": 51507,
+        "calls": 68,
+        "triangles": 12956,
+        "speed": 20.55049739307049,
+        "condition": 88
+      },
+      {
+        "ms": 51632,
+        "calls": 68,
+        "triangles": 12884,
+        "speed": 21.98767608850486,
+        "condition": 88
+      },
+      {
+        "ms": 51762,
         "calls": 67,
-        "triangles": 9102,
-        "speed": 21.069712249882503,
-        "condition": 79.61084757000627
+        "triangles": 12882,
+        "speed": 21.74575966565732,
+        "condition": 88
       },
       {
-        "ms": 59616,
+        "ms": 51885,
+        "calls": 66,
+        "triangles": 13170,
+        "speed": 21.375900311538846,
+        "condition": 88
+      },
+      {
+        "ms": 52008,
+        "calls": 69,
+        "triangles": 13334,
+        "speed": 18.52599120755872,
+        "condition": 88
+      },
+      {
+        "ms": 52131,
+        "calls": 68,
+        "triangles": 13250,
+        "speed": 19.809171025745453,
+        "condition": 88
+      },
+      {
+        "ms": 52255,
+        "calls": 70,
+        "triangles": 13406,
+        "speed": 21.067135200079363,
+        "condition": 88
+      },
+      {
+        "ms": 52383,
+        "calls": 69,
+        "triangles": 13182,
+        "speed": 22.669997547064515,
+        "condition": 88
+      },
+      {
+        "ms": 52508,
+        "calls": 69,
+        "triangles": 13182,
+        "speed": 22.38076591787363,
+        "condition": 88
+      },
+      {
+        "ms": 52635,
         "calls": 67,
-        "triangles": 9102,
-        "speed": 22.142976111234237,
-        "condition": 79.61084757000627
+        "triangles": 12698,
+        "speed": 22.095092916829763,
+        "condition": 88
       },
       {
-        "ms": 59746,
+        "ms": 52760,
         "calls": 66,
-        "triangles": 8706,
-        "speed": 21.793187883029027,
-        "condition": 79.61084757000627
+        "triangles": 12314,
+        "speed": 21.821641008577966,
+        "condition": 88
       },
       {
-        "ms": 59870,
-        "calls": 66,
-        "triangles": 8718,
-        "speed": 21.562911202880063,
-        "condition": 79.61084757000627
+        "ms": 52884,
+        "calls": 65,
+        "triangles": 12290,
+        "speed": 21.549734254957336,
+        "condition": 88
       },
       {
-        "ms": 59995,
-        "calls": 66,
-        "triangles": 8718,
-        "speed": 21.262345250729826,
-        "condition": 79.61084757000627
+        "ms": 53008,
+        "calls": 64,
+        "triangles": 12218,
+        "speed": 21.2853820480442,
+        "condition": 88
+      },
+      {
+        "ms": 53133,
+        "calls": 64,
+        "triangles": 12266,
+        "speed": 22.89100168014822,
+        "condition": 88
+      },
+      {
+        "ms": 53258,
+        "calls": 64,
+        "triangles": 12218,
+        "speed": 22.648621416475567,
+        "condition": 88
+      },
+      {
+        "ms": 53383,
+        "calls": 64,
+        "triangles": 12170,
+        "speed": 22.25078146645153,
+        "condition": 88
+      },
+      {
+        "ms": 53516,
+        "calls": 64,
+        "triangles": 12170,
+        "speed": 21.9777849342177,
+        "condition": 88
+      },
+      {
+        "ms": 53639,
+        "calls": 60,
+        "triangles": 11822,
+        "speed": 21.705790344480775,
+        "condition": 88
+      },
+      {
+        "ms": 53763,
+        "calls": 59,
+        "triangles": 11426,
+        "speed": 21.36465164501571,
+        "condition": 88
+      },
+      {
+        "ms": 53887,
+        "calls": 59,
+        "triangles": 11426,
+        "speed": 22.434988841111746,
+        "condition": 88
+      },
+      {
+        "ms": 54013,
+        "calls": 59,
+        "triangles": 11426,
+        "speed": 22.119152911734176,
+        "condition": 88
+      },
+      {
+        "ms": 54136,
+        "calls": 59,
+        "triangles": 11426,
+        "speed": 21.847028140034652,
+        "condition": 88
+      },
+      {
+        "ms": 54261,
+        "calls": 59,
+        "triangles": 11426,
+        "speed": 21.541978397704202,
+        "condition": 88
+      },
+      {
+        "ms": 54388,
+        "calls": 58,
+        "triangles": 11354,
+        "speed": 21.31551081928354,
+        "condition": 88
+      },
+      {
+        "ms": 54515,
+        "calls": 58,
+        "triangles": 11354,
+        "speed": 22.74244202461031,
+        "condition": 88
+      },
+      {
+        "ms": 54640,
+        "calls": 58,
+        "triangles": 11354,
+        "speed": 22.50018259714193,
+        "condition": 88
+      },
+      {
+        "ms": 54764,
+        "calls": 58,
+        "triangles": 11354,
+        "speed": 22.14390015343991,
+        "condition": 88
+      },
+      {
+        "ms": 54892,
+        "calls": 58,
+        "triangles": 11354,
+        "speed": 21.869269983904395,
+        "condition": 88
+      },
+      {
+        "ms": 55015,
+        "calls": 58,
+        "triangles": 11354,
+        "speed": 21.56302461363671,
+        "condition": 88
+      },
+      {
+        "ms": 55147,
+        "calls": 59,
+        "triangles": 11438,
+        "speed": 21.251546542517055,
+        "condition": 88
+      },
+      {
+        "ms": 55271,
+        "calls": 59,
+        "triangles": 11438,
+        "speed": 22.13710217809388,
+        "condition": 88
+      },
+      {
+        "ms": 55395,
+        "calls": 59,
+        "triangles": 11338,
+        "speed": 18.46785605332254,
+        "condition": 88
+      },
+      {
+        "ms": 55521,
+        "calls": 59,
+        "triangles": 11438,
+        "speed": 19.92834050101195,
+        "condition": 88
+      },
+      {
+        "ms": 55644,
+        "calls": 58,
+        "triangles": 9582,
+        "speed": 21.18603093383285,
+        "condition": 88
+      },
+      {
+        "ms": 55767,
+        "calls": 56,
+        "triangles": 4986,
+        "speed": 22.611961047651985,
+        "condition": 88
+      },
+      {
+        "ms": 55894,
+        "calls": 58,
+        "triangles": 9560,
+        "speed": 22.270463323590604,
+        "condition": 88
+      },
+      {
+        "ms": 56017,
+        "calls": 60,
+        "triangles": 11440,
+        "speed": 19.392084179211075,
+        "condition": 88
+      },
+      {
+        "ms": 56141,
+        "calls": 59,
+        "triangles": 11392,
+        "speed": 17.37139016240479,
+        "condition": 88
+      },
+      {
+        "ms": 56266,
+        "calls": 58,
+        "triangles": 11380,
+        "speed": 19.220662189436315,
+        "condition": 88
+      },
+      {
+        "ms": 56396,
+        "calls": 55,
+        "triangles": 4928,
+        "speed": 20.49105918467401,
+        "condition": 88
+      },
+      {
+        "ms": 56519,
+        "calls": 55,
+        "triangles": 4928,
+        "speed": 21.393726785270594,
+        "condition": 88
+      },
+      {
+        "ms": 56647,
+        "calls": 55,
+        "triangles": 4928,
+        "speed": 22.806834214399544,
+        "condition": 88
+      },
+      {
+        "ms": 56780,
+        "calls": 56,
+        "triangles": 9452,
+        "speed": 22.35126010487926,
+        "condition": 88
+      },
+      {
+        "ms": 56906,
+        "calls": 53,
+        "triangles": 4754,
+        "speed": 22.06890098989397,
+        "condition": 88
+      },
+      {
+        "ms": 57030,
+        "calls": 52,
+        "triangles": 4604,
+        "speed": 21.823523808535562,
+        "condition": 88
+      },
+      {
+        "ms": 57157,
+        "calls": 53,
+        "triangles": 4676,
+        "speed": 21.474334419734753,
+        "condition": 88
+      },
+      {
+        "ms": 57290,
+        "calls": 52,
+        "triangles": 4604,
+        "speed": 21.244498738758818,
+        "condition": 88
+      },
+      {
+        "ms": 57419,
+        "calls": 51,
+        "triangles": 4602,
+        "speed": 22.4486370902412,
+        "condition": 88
+      },
+      {
+        "ms": 57542,
+        "calls": 51,
+        "triangles": 4602,
+        "speed": 22.557094513867064,
+        "condition": 88
+      },
+      {
+        "ms": 57665,
+        "calls": 53,
+        "triangles": 4626,
+        "speed": 22.229880633580436,
+        "condition": 88
+      },
+      {
+        "ms": 57787,
+        "calls": 53,
+        "triangles": 4626,
+        "speed": 21.954022927903626,
+        "condition": 88
+      },
+      {
+        "ms": 57912,
+        "calls": 53,
+        "triangles": 4626,
+        "speed": 21.639067557744248,
+        "condition": 88
+      },
+      {
+        "ms": 58038,
+        "calls": 53,
+        "triangles": 4626,
+        "speed": 21.36618468849408,
+        "condition": 88
+      },
+      {
+        "ms": 58164,
+        "calls": 53,
+        "triangles": 4626,
+        "speed": 22.61308580393276,
+        "condition": 88
+      },
+      {
+        "ms": 58290,
+        "calls": 53,
+        "triangles": 4626,
+        "speed": 22.287930319941783,
+        "condition": 88
+      },
+      {
+        "ms": 58412,
+        "calls": 53,
+        "triangles": 4626,
+        "speed": 21.97322201914551,
+        "condition": 88
+      },
+      {
+        "ms": 58544,
+        "calls": 54,
+        "triangles": 4788,
+        "speed": 21.74189946081617,
+        "condition": 88
+      },
+      {
+        "ms": 58671,
+        "calls": 54,
+        "triangles": 4788,
+        "speed": 21.43888071844958,
+        "condition": 88
+      },
+      {
+        "ms": 58795,
+        "calls": 54,
+        "triangles": 4788,
+        "speed": 21.213734898313888,
+        "condition": 88
+      },
+      {
+        "ms": 58918,
+        "calls": 54,
+        "triangles": 4788,
+        "speed": 22.8191018998653,
+        "condition": 88
+      },
+      {
+        "ms": 59043,
+        "calls": 54,
+        "triangles": 4788,
+        "speed": 22.494326473649455,
+        "condition": 88
+      },
+      {
+        "ms": 59167,
+        "calls": 54,
+        "triangles": 4788,
+        "speed": 22.256183063712285,
+        "condition": 88
+      },
+      {
+        "ms": 59296,
+        "calls": 54,
+        "triangles": 4788,
+        "speed": 22.017688802314154,
+        "condition": 88
+      },
+      {
+        "ms": 59418,
+        "calls": 55,
+        "triangles": 4910,
+        "speed": 21.586208952562036,
+        "condition": 88
+      },
+      {
+        "ms": 59543,
+        "calls": 54,
+        "triangles": 4886,
+        "speed": 21.43401307250843,
+        "condition": 88
+      },
+      {
+        "ms": 59666,
+        "calls": 54,
+        "triangles": 4886,
+        "speed": 21.056594000426283,
+        "condition": 88
+      },
+      {
+        "ms": 59792,
+        "calls": 54,
+        "triangles": 4886,
+        "speed": 22.132026042879865,
+        "condition": 88
+      },
+      {
+        "ms": 59920,
+        "calls": 56,
+        "triangles": 4994,
+        "speed": 21.773347631557044,
+        "condition": 88
       }
     ]
   }
