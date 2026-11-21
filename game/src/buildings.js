@@ -1,6 +1,8 @@
 import { ART_DIRECTION as A } from './art-direction.js';
 import { addPalm, districtSign, meshLettering, neonBoard } from './geometry.js';
 import { getDistrictAt } from './world.js';
+import { AVENUES, STREETS } from './config.js';
+import { createRandom } from './random.js';
 
 export const CITY_CHUNK_SIZE = 192;
 
@@ -38,6 +40,31 @@ export function createDistrictBuildings(chunk, b, far = false) {
     if (far) continue;
     b.box(x, h + 0.25, z, w + 1, 0.5, d + 1, A.cream);
     if (variant % 2 === 0) b.box(x + w * 0.18, h + 0.9, z, w * 0.38, 1.3, d * 0.36, A.metal);
+    const front = z + d / 2 + 0.34, side = x + w / 2 + 0.32;
+    for (const edge of [-1, 1]) {
+      b.box(x + edge * (w / 2 - 0.42), h / 2, front, 0.24, h, 0.22, district === 'strand' ? A.cream : A.sidewalk);
+      b.box(x + edge * (w / 2 - 0.12), h / 2, side, 0.22, h, 0.24, A.sidewalk);
+      b.add('cylinder', x + edge * (w / 2 - 0.42), 1.15, front + 0.14, 0.11, 0.09, 0.11, A.metal);
+    }
+    b.box(x, Math.min(h - 0.3, 3.45), front, w * 0.9, 0.13, 0.18, A.metal);
+    if (variant % 3 !== 1 && h > 13) {
+      const units = 1 + (variant % 2);
+      for (let i = 0; i < units; i++) {
+        const acX = x + (i - (units - 1) / 2) * Math.min(w * 0.42, 7.5);
+        const acY = 4.2 + i * 3.3;
+        b.box(acX, acY, front + 0.18, 1.25, 0.85, 0.5, A.sidewalk);
+        b.box(acX, acY, front + 0.45, 0.85, 0.58, 0.07, A.ink);
+        for (let slat = -1; slat <= 1; slat++) b.box(acX + slat * 0.2, acY, front + 0.5, 0.035, 0.42, 0.018, A.metal);
+        for (const boltX of [-0.48, 0.48]) b.add('cylinder', acX + boltX, acY - 0.27, front + 0.52,
+          0.045, 0.045, 0.045, A.cream);
+      }
+      const pipeX = x - w / 2 + 0.72;
+      b.box(pipeX, h * 0.48, front + 0.18, 0.085, h * 0.92, 0.09, A.metal);
+      for (let floor = 1; floor < floors; floor += 3) b.box(pipeX + 0.08, floor * 3.3, front + 0.12, 0.22, 0.09, 0.14, A.ink);
+    }
+    for (let vent = -1; vent <= 1; vent++) {
+      b.box(x + vent * 0.21, h + 0.55, z, 0.09, 0.28, d * 0.46, A.metal);
+    }
     if (district === 'market') {
       for (let i = -1; i <= 1; i++) {
         b.box(x + i * w * 0.3, 2.7, z + d / 2 + 1.3, w * 0.28, 0.23, 2.7,
@@ -50,11 +77,26 @@ export function createDistrictBuildings(chunk, b, far = false) {
     }
   }
   if (far) return;
+  const random = createRandom(hashChunk(chunk.id));
+  for (let i = 0; i < 54; i++) {
+    const x = chunk.cx * CITY_CHUNK_SIZE + 5 + (i % 10) * 18.1 + random() * 7;
+    const z = chunk.cz * CITY_CHUNK_SIZE + 5 + Math.floor(i / 10) * 18.1 + random() * 7;
+    if (x < -520 || x > 432 || Math.abs(z) > 420) continue;
+    if (AVENUES.some(axis => Math.abs(axis - x) < 18) || STREETS.some(axis => Math.abs(axis - z) < 18)) continue;
+    if (chunk.buildings.some(house => Math.abs(house.x - x) < house.width / 2 + 2 && Math.abs(house.z - z) < house.depth / 2 + 2)) continue;
+    const tint = [0x789258, 0x8da05a, 0xa3a463][Math.floor(random() * 3)];
+    b.addGrass(x, z, 0.45 + random() * 0.3, tint, random() * Math.PI);
+    if (i % 4 === 0) b.addStone(x + random() * 1.6 - 0.8, z + random() * 1.6 - 0.8,
+      0.16 + random() * 0.22, [0x867b71, 0x9b8c79, 0x756f6b][Math.floor(random() * 3)], random() * Math.PI);
+  }
   for (const palm of chunk.palms) addPalm(b, palm);
   for (const lamp of chunk.lamps) {
     b.box(lamp.x, 3.3, lamp.z, 0.17, 6.6, 0.17, A.metal);
     b.box(lamp.x + 0.8, 6.5, lamp.z, 1.8, 0.18, 0.25, A.metal);
     b.box(lamp.x + 1.3, 6.4, lamp.z, 0.8, 0.12, 0.4, A.white, 0, 'light');
+    b.add('cylinder', lamp.x, 0.2, lamp.z, 0.4, 0.35, 0.4, A.ink);
+    b.box(lamp.x + 1.3, 6.24, lamp.z, 0.92, 0.08, 0.5, A.metal);
+    b.box(lamp.x + 1.3, 6.31, lamp.z, 0.62, 0.07, 0.28, A.white, 0, 'light');
   }
   for (const sign of chunk.signs) districtSign(b, sign);
   instanceCityLandmarks(b, chunk.landmarks);
@@ -66,6 +108,12 @@ export function createDistrictBuildings(chunk, b, far = false) {
     neonBoard(b, 'FISH DISCO', 316, 19.5, 306, .42, 0, A.neonMagenta, A.neonPink);
     neonBoard(b, 'FISH DISCO', 316, 19.5, 302, .42, Math.PI, A.neonMagenta, A.neonPink);
   }
+}
+
+function hashChunk(text) {
+  let value = 2166136261;
+  for (const char of text) value = Math.imul(value ^ char.charCodeAt(0), 16777619);
+  return value >>> 0;
 }
 
 export function instanceCityLandmarks(b, landmarks) {

@@ -116,7 +116,7 @@ export function bootOpenWorldCrimeGame() {
   }
 
   function renderFrame(alpha, dt, actions = blank) {
-    updateActorModels(player, car, visuals, alpha);
+    updateActorModels(player, car, visuals, alpha, combat.snapshot().weapon);
     updateChaseCamera(rig, player, car, actions, world, dt);
     rig.camera.updateMatrixWorld();
     paintPopulation(rig.camera, car, alpha, lowQuality);

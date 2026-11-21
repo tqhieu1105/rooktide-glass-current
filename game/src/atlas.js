@@ -12,6 +12,20 @@ export function createCityAtlas(seed) {
     ctx.save(); ctx.beginPath(); ctx.rect(x, y, 128, 128); ctx.clip();
     ctx.translate(x + 8, y + 8);
     draw(); ctx.restore();
+    const pixels = ctx.getImageData(x + 8, y + 8, 112, 112), phase = random() * Math.PI * 2;
+    const strength = index === 6 ? 6 : index === 8 ? 5 : index === 9 ? 6 : index === 7 ? 3 : 2;
+    for (let py = 0; py < 112; py++) for (let px = 0; px < 112; px++) {
+      const u = px / 112, v = py / 112;
+      const broad = Math.sin((u * 3 + v * 2) * Math.PI * 2 + phase)
+        * Math.cos((v * 3 - u * 2) * Math.PI * 2 + phase * 0.7);
+      const fine = Math.sin((u * 37 + v * 19) * Math.PI * 2 + phase * 1.3)
+        * Math.cos((v * 29 - u * 11) * Math.PI * 2 + phase);
+      const delta = broad * strength + fine * 1.8;
+      const offset = (py * 112 + px) * 4;
+      for (let channel = 0; channel < 3; channel++) pixels.data[offset + channel] = Math.max(0, Math.min(255,
+        Math.round(pixels.data[offset + channel] + delta)));
+    }
+    ctx.putImageData(pixels, x + 8, y + 8);
     ctx.drawImage(canvas, x + 8, y + 8, 1, 112, x, y + 8, 8, 112);
     ctx.drawImage(canvas, x + 119, y + 8, 1, 112, x + 120, y + 8, 8, 112);
     ctx.drawImage(canvas, x, y + 8, 128, 1, x, y, 128, 8);
@@ -70,8 +84,10 @@ export function createCityAtlas(seed) {
   return atlas;
 }
 
-export function useCityAtlas(material, texture, facade) {
+export function useCityAtlas(material, texture, roughness, facade) {
   material.map = texture;
+  material.roughnessMap = roughness;
+  material.roughness = 1;
   material.customProgramCacheKey = () => facade ? 'facades' : 'surfaces';
   material.onBeforeCompile = shader => {
     shader.vertexShader = `attribute vec4 atlasStyle;
@@ -92,6 +108,15 @@ export function useCityAtlas(material, texture, facade) {
       vec2 repeatUV = fract(vTileUV);
       vec2 tileUV = tileOffset + vec2(.0166) + repeatUV * .217;
       diffuseColor *= textureGrad(map, tileUV, dFdx(vTileUV) * .217, dFdy(vTileUV) * .217);
+    `);
+    shader.fragmentShader = shader.fragmentShader.replace('#include <roughnessmap_fragment>', `
+      float roughnessFactor = roughness;
+      #ifdef USE_ROUGHNESSMAP
+        float tileRoughness = tile < 1. ? .96 : tile < 5. ? .93 : tile < 6. ? .80
+          : tile < 7. ? .95 : tile < 8. ? .91 : tile < 9. ? .99 : .32;
+        vec4 texelRoughness = textureGrad(roughnessMap, fract(vTileUV), dFdx(vTileUV), dFdy(vTileUV));
+        roughnessFactor *= texelRoughness.g * tileRoughness;
+      #endif
     `);
   };
 }

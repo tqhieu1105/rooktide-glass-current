@@ -29,7 +29,7 @@ export function createCityRenderer(canvas, world) {
   const atlas = createCityAtlas(world.seed);
   const sky = createSky(); scene.add(sky);
   const sea = createSea(atlas); scene.add(sea);
-  const builder = createGeometryBuilder(scene, atlas);
+  const builder = createGeometryBuilder(scene, atlas, world.seed, { terrain: true });
   createBeachAndHarbour(world, builder);
   const environment = builder.finish();
   const chunks = createCityChunks(world);
@@ -61,8 +61,9 @@ export function createCityRenderer(canvas, world) {
     }
     sea.material.uniforms.time.value = time;
     sky.position.set(camera.position.x, camera.position.y, camera.position.z);
+    environment.setQuality?.(quality === 'high');
     environment.updateDrawDistance(camera, quality === 'low' ? 245 : 420);
-    streamer.update(target, camera, quality);
+    streamer.update(target, camera, quality, time);
     renderer.render(scene, camera);
   }
   function setRenderQuality(value) {
@@ -116,7 +117,12 @@ function createSea(atlas) {
       varying vec3 vWorld; varying float vDepth;
       void main(){vec2 wave=vWorld.xz*vec2(.031,.090)+vec2(.021,.012)*time;
       float sparkle=textureGrad(atlas, vec2(.2666,.5166)+fract(wave)*.217,dFdx(wave)*.217,dFdy(wave)*.217).g;
-      vec3 sea=mix(color,deep,smoothstep(480.,760.,vWorld.x)) + vec3(.20,.26,.20)*sparkle;
+      float swell=sin(vWorld.x*.036+vWorld.z*.014+time*.62)*sin(vWorld.z*.052-vWorld.x*.012-time*.39);
+      float crest=smoothstep(.54,.88,swell);
+      float shoreBand=1.-smoothstep(492.,522.,vWorld.x);
+      float shoreFoam=smoothstep(.73,.96,sin(vWorld.z*.11+time*1.35))*shoreBand;
+      vec3 sea=mix(color,deep,smoothstep(480.,760.,vWorld.x)) + vec3(.11,.15,.12)*sparkle
+        + vec3(.08,.20,.17)*crest + vec3(.34,.36,.27)*shoreFoam;
       gl_FragColor=vec4(mix(sea,haze,smoothstep(140.,920.,vDepth)*.67),1.);
       #include <tonemapping_fragment>
       #include <colorspace_fragment>

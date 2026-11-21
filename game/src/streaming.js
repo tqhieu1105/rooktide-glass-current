@@ -16,7 +16,7 @@ export function createCityStreamer(scene, atlas, chunks) {
 
   function build(chunk, far) {
     const started = performance.now();
-    const builder = createGeometryBuilder(scene, atlas);
+    const builder = createGeometryBuilder(scene, atlas, chunkSeed(chunk));
     createDistrictBuildings(chunk, builder, far);
     const resources = builder.finish();
     const elapsed = performance.now() - started;
@@ -24,6 +24,12 @@ export function createCityStreamer(scene, atlas, chunks) {
     totalBuilds++;
     loadMs += elapsed;
     maxLoaded = Math.max(maxLoaded, loaded.size);
+  }
+
+  function chunkSeed(chunk) {
+    let value = 2166136261;
+    for (const char of chunk.id) value = Math.imul(value ^ char.charCodeAt(0), 16777619);
+    return value >>> 0;
   }
 
   function release(id) {
@@ -58,7 +64,7 @@ export function createCityStreamer(scene, atlas, chunks) {
     return selected;
   }
 
-  function update(target, camera, quality) {
+  function update(target, camera, quality, time = 0) {
     frame++;
     if (frame % 8 === 0 || desiredCache.size === 0 || lastQuality !== quality) {
       desiredCache = plan(target, quality); lastQuality = quality;
@@ -78,7 +84,11 @@ export function createCityStreamer(scene, atlas, chunks) {
       }
     }
     const drawDistance = quality === 'low' ? 245 : 420;
-    for (const { resources } of loaded.values()) resources.updateDrawDistance(camera, drawDistance);
+    for (const { resources } of loaded.values()) {
+      resources.setQuality?.(quality === 'high');
+      resources.updateDrawDistance(camera, drawDistance);
+      resources.setTime?.(time);
+    }
   }
 
   function prime(target, quality) {

@@ -1,0 +1,107 @@
+{
+  "chromium": "Chrome/154.0.8037.57",
+  "viewport": [
+    1280,
+    720
+  ],
+  "iterations": 5,
+  "runs": [
+    {
+      "navigationWallMs": 1750.47,
+      "readyMs": 1744.5,
+      "responseEndMs": 13.8,
+      "domInteractiveMs": 67.5,
+      "buildings": 172,
+      "loadedChunks": 6,
+      "totalChunks": 49,
+      "activeDistricts": 2,
+      "detailedChunks": 4,
+      "lowDetailChunks": 2,
+      "renderer": {
+        "geometries": 40,
+        "textures": 1,
+        "calls": 101,
+        "triangles": 8288
+      },
+      "initializationMs": 1730.7
+    },
+    {
+      "navigationWallMs": 3304.04,
+      "readyMs": 3299.1,
+      "responseEndMs": 5.3,
+      "domInteractiveMs": 16.3,
+      "buildings": 172,
+      "loadedChunks": 4,
+      "totalChunks": 49,
+      "activeDistricts": 1,
+      "detailedChunks": 4,
+      "lowDetailChunks": 0,
+      "renderer": {
+        "geometries": 38,
+        "textures": 1,
+        "calls": 99,
+        "triangles": 8216
+      },
+      "initializationMs": 3293.8
+    },
+    {
+      "navigationWallMs": 3363.01,
+      "readyMs": 3357,
+      "responseEndMs": 3,
+      "domInteractiveMs": 12.5,
+      "buildings": 172,
+      "loadedChunks": 4,
+      "totalChunks": 49,
+      "activeDistricts": 1,
+      "detailedChunks": 4,
+      "lowDetailChunks": 0,
+      "renderer": {
+        "geometries": 38,
+        "textures": 1,
+        "calls": 99,
+        "triangles": 8216
+      },
+      "initializationMs": 3354
+    },
+    {
+      "navigationWallMs": 3706.71,
+      "readyMs": 3703.8,
+      "responseEndMs": 2.8,
+      "domInteractiveMs": 13.7,
+      "buildings": 172,
+      "loadedChunks": 4,
+      "totalChunks": 49,
+      "activeDistricts": 1,
+      "detailedChunks": 4,
+      "lowDetailChunks": 0,
+      "renderer": {
+        "geometries": 38,
+        "textures": 1,
+        "calls": 99,
+        "triangles": 8216
+      },
+      "initializationMs": 3701
+    },
+    {
+      "navigationWallMs": 3549.15,
+      "readyMs": 3545.3,
+      "responseEndMs": 4.3,
+      "domInteractiveMs": 12.6,
+      "buildings": 172,
+      "loadedChunks": 5,
+      "totalChunks": 49,
+      "activeDistricts": 2,
+      "detailedChunks": 4,
+      "lowDetailChunks": 1,
+      "renderer": {
+        "geometries": 38,
+        "textures": 1,
+        "calls": 99,
+        "triangles": 8216
+      },
+      "initializationMs": 3541
+    }
+  ],
+  "medianReadyMs": 3357,
+  "medianInitializationMs": 3354
+}

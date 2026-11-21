@@ -4,7 +4,7 @@ import { AVENUES, STREETS } from './config.js';
 const ASPHALT = [6, 0.15, 0, 0], TILES = [7, 0.26, 0, 0], SAND = [8, 0.27, 0, 0];
 
 export function createBeachAndHarbour(world, b) {
-  b.box(-20, -1.5, 0, 1020, 3, 880, A.grass, 0, 'ground');
+  b.box(-20, -1.5, 0, 1020, 3, 880, A.grass, 0, 'terrain');
   b.box(463, -0.13, 0, 54, 0.25, 880, A.sand, 0, 'surface', SAND);
   b.box(445, 0.02, 0, 17, 0.08, 880, A.sidewalk, 0, 'surface', TILES);
   for (const x of AVENUES) {
