@@ -1,0 +1,39 @@
+{
+  "witnessedTheft": true,
+  "dispatchedMetres": 132,
+  "responded": true,
+  "lineOfSightOccluded": true,
+  "oneStarEscapeSeconds": 10,
+  "levels": [
+    {
+      "level": 1,
+      "patrols": 1,
+      "helicopter": false
+    },
+    {
+      "level": 2,
+      "patrols": 2,
+      "helicopter": false
+    },
+    {
+      "level": 3,
+      "patrols": 3,
+      "helicopter": true
+    },
+    {
+      "level": 4,
+      "patrols": 4,
+      "helicopter": true
+    },
+    {
+      "level": 5,
+      "patrols": 5,
+      "helicopter": true
+    }
+  ],
+  "rammingWarningAndContact": true,
+  "barricadeCollides": true,
+  "gapDrivable": true,
+  "barricadeRemoved": true,
+  "surrenderAndReset": true
+}

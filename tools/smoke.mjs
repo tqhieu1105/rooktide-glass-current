@@ -85,6 +85,11 @@ try {
 
   // Sixty real wall-clock seconds of keyboard-controlled driving on normal roads.
   await navigate('?shot=chase&seed=20261121');
+  const chaseStart = await snapshot();
+  check('Cover starts in a live three-star pursuit with three patrols and a helicopter', chaseStart.frozen
+    && chaseStart.police.level === 3 && chaseStart.police.units.length === 3 && chaseStart.police.helicopter);
+  check('Wanted stars and air dispatch are visible', await browser.evaluate(`document.querySelectorAll('#wanted-stars .lit').length === 3
+    && [...document.querySelectorAll('#dispatch-units li')].some(row => !row.hidden && row.textContent.includes('SPOTLIGHT'))`));
   const waypoints = [[426, -360], [252, -360], [252, 360], [420, 360], [420, 0]];
   const held = new Set();
   async function keys(wanted) {

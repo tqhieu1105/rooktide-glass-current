@@ -14,14 +14,15 @@ export function createStreetHUD(world, minimap) {
   const $ = id => document.getElementById(id);
   const elements = Object.fromEntries(['district', 'district-subtitle', 'explored', 'objective', 'prompt',
     'speed', 'speed-unit', 'mode', 'condition', 'condition-row', 'toast', 'compass', 'status', 'map-label',
-    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-meter'].map(id => [id, $(id)]));
+    'wanted-level', 'wanted-stars', 'dispatch-readout', 'heat-meter', 'dispatch-units'].map(id => [id, $(id)]));
   const stars = [...elements['wanted-stars'].children];
+  const rows = [...elements['dispatch-units'].children];
   const cache = {};
   function text(id, value) {
     if (cache[id] !== value) { cache[id] = value; elements[id].textContent = value; }
   }
   let timer = 1, prompt = -1, bodywork = -1;
-  function updateStreetHUD(player, car, rig, dt, expanded, target, police) {
+  function updateStreetHUD(player, car, rig, dt, expanded, target, police, cash) {
     timer += dt;
     const mapChanged = cache.expanded !== expanded;
     if (timer < 0.08 && !mapChanged) return;
@@ -65,11 +66,24 @@ export function createStreetHUD(world, minimap) {
       elements['wanted-stars'].classList.toggle('searching', law.state === 'search');
       stars.forEach((star, i) => star.classList.toggle('lit', i < level));
     }
-    const nearest = law.units.reduce((best, unit) => Math.min(best, unit.distance), Infinity);
     const dispatch = level
-      ? `${law.units.length} RCP ${law.units.length === 1 ? 'unit' : 'units'} / ${Number.isFinite(nearest) ? `${Math.round(nearest)} M` : 'INBOUND'}${law.helicopter ? ' / AIR UNIT' : ''}`
-      : 'Rooktide Civic Patrol / Area quiet';
+      ? law.state === 'search' ? `${Math.max(1, Math.ceil(law.escapeSeconds - law.unseen))} S TO CLEAR / STAY OUT OF SIGHT`
+        : `${law.units.length} PATROL${law.units.length === 1 ? '' : 'S'}${law.helicopter ? ' + AIR SUPPORT' : ''}`
+      : `AREA QUIET  /  $${cash}`;
     text('dispatch-readout', dispatch);
+    const entries = level ? law.units.sort((a, b) => a.distance - b.distance) : [];
+    const priority = [];
+    if (law.helicopter) priority.push([law.helicopter, 'SPOTLIGHT']);
+    if (law.roadblocks.length) priority.push([law.roadblocks[0], 'ROADBLOCK']);
+    const lineup = entries.slice(0, rows.length - priority.length).map(unit => [unit, unit.ramTell ? 'RAM WARNING' : unit.mode.toUpperCase()]).concat(priority);
+    elements['dispatch-units'].hidden = !lineup.length;
+    rows.forEach((row, index) => {
+      const entry = lineup[index]; row.hidden = !entry;
+      if (!entry) return;
+      const [unit, tactic] = entry;
+      const label = `${unit.id || 'RCP'}  /  ${tactic}  /  ${Math.round(unit.distance)} M`;
+      if (row.textContent !== label) row.textContent = label;
+    });
     minimap.drawRotatingMinimap(player, car, rig.heading, expanded, police);
   }
   return { updateStreetHUD };

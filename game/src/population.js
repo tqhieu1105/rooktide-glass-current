@@ -145,7 +145,7 @@ export function createPopulation(world, firstCar, onCrime = () => {}) {
   }
   function westEastGreen(node) { return (world.clock + node * 1.1) % 13 >= 6.5; }
   function blockedAhead(car, fx, fz, range, side, player) {
-    for (const box of world.grid.query(car.x, car.z, range + 1)) if (box.kind === 'roadblock') {
+    if (world.police?.roadblocks.length) for (const box of world.grid.query(car.x, car.z, range + 1)) if (box.kind === 'roadblock') {
       for (let d = 0; d <= range; d += 1.5) {
         const x = car.x + d * fx, z = car.z + d * fz;
         if (x > box.minX - .9 && x < box.maxX + .9 && z > box.minZ - .9 && z < box.maxZ + .9) return true;

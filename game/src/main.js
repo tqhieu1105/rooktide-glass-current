@@ -30,6 +30,7 @@ export function bootOpenWorldCrimeGame() {
   });
   const population = createPopulation(world, firstCar, (kind, x, z, witnessed) => police.reportCrime(kind, x, z, witnessed));
   world.population = population;
+  world.police = police;
   const paintPopulation = createPopulationModels(view.scene, population);
   const paintPolice = createPoliceModels(view.scene, police, world);
   const visuals = { player: createPlayerModel(), car: createVehicleModel() };
@@ -76,7 +77,7 @@ export function bootOpenWorldCrimeGame() {
     paintPopulation(rig.camera, car, alpha, lowQuality);
     paintPolice(alpha);
     view.renderWorldFrame(player.inVehicle ? car : player);
-    hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player), police);
+    hud.updateStreetHUD(player, car, rig, dt, expanded, player.inVehicle ? null : population.findEnterable(player), police, cash);
   }
 
   function setPaused(value) {
