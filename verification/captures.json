@@ -2,9 +2,9 @@
   "browser": "Chrome/154.0.8037.57",
   "source": {
     "branch": "main",
-    "baseCommit": "52e244004026c68a75e38e65ca405d8045551915",
+    "baseCommit": "0a9e5ad6a8af434d40abcff8165ee94fafde80d4",
     "workingTree": true,
-    "gameTreeSha256": "f88d2caf833d8c5d9894285492b07fabdf311d078540227ccf810e006e1b484c"
+    "gameTreeSha256": "84071606f9fccd7b375d26e3c78e429a7bceb8e88e927d2104729bd0d9bbee3f"
   },
   "errors": [],
   "external": [],
@@ -18,8 +18,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 138491,
-      "sha256": "82a1709b80c022495b7928093784fe6eea7b7527024e920207106f4932bfd510",
+      "bytes": 146220,
+      "sha256": "4e4bc5bfb928655cf64b4bdff3e25b23fcc1e35b10c8971db5111e0e2add24dd",
       "state": {
         "player": {
           "x": 426,
@@ -35,7 +35,7 @@
           "health": 100
         },
         "car": {
-          "id": "driftline-01",
+          "id": "seawall-dividend-car",
           "type": "sports",
           "x": 426,
           "z": 60.31529544861458,
@@ -48,13 +48,17 @@
           "steer": 0,
           "wheelSpin": 32.582629884250984,
           "condition": 100,
+          "recoveries": 0,
           "impactCooldown": 0,
           "roll": 0,
           "pitch": -0.02599679134509374,
           "bounce": 0,
           "bounceVelocity": 0,
           "braking": false,
-          "active": true
+          "paint": 13000532,
+          "active": true,
+          "claimed": true,
+          "locked": false
         },
         "tick": 91,
         "district": "Saffron Strand",
@@ -62,6 +66,51 @@
         "paused": false,
         "frozen": true,
         "cash": 250,
+        "mission": {
+          "id": "seawall-dividend",
+          "title": "Seawall Dividend",
+          "contact": "Ilex",
+          "chapter": "Sunline Debt",
+          "active": true,
+          "index": 1,
+          "total": 4,
+          "kind": "reach",
+          "gate": 0,
+          "held": 0,
+          "seconds": 0,
+          "lost": 0,
+          "failed": "",
+          "text": "Hit both seawall checkpoints",
+          "next": "Break sight and lose the helicopter",
+          "point": {
+            "x": 426,
+            "z": -5,
+            "radius": 13,
+            "label": "Seawall checkpoint",
+            "style": "waypoint"
+          },
+          "distance": 65,
+          "guardCount": 0,
+          "targetCondition": null,
+          "cash": 250,
+          "rp": 0,
+          "rank": "Runner",
+          "done": 0,
+          "replay": false,
+          "ending": false,
+          "scan": 0,
+          "scanCooldown": 0,
+          "weapon": 1,
+          "rounds": 12,
+          "reserve": 36,
+          "reload": false,
+          "radio": {
+            "contact": "Ilex",
+            "line": "North up the seawall. Two gates. The helicopter is free, the parking is not.",
+            "until": 9.016666666666667
+          },
+          "payout": null
+        },
         "visited": [
           "market",
           "strand"
@@ -83,9 +132,9 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 97,
-          "triangles": 16514,
-          "geometries": 43,
+          "calls": 102,
+          "triangles": 16738,
+          "geometries": 47,
           "textures": 2,
           "batches": 310,
           "instances": 7736
@@ -103,9 +152,9 @@
             {
               "id": "driftline-01",
               "type": "sports",
-              "x": 426,
-              "z": 60.31529544861458,
-              "speed": 17.805130611137752,
+              "x": 91.5,
+              "z": 29,
+              "speed": 0,
               "heading": 0,
               "claimed": false,
               "parked": false
@@ -249,6 +298,16 @@
               "heading": -1.5707963267948966,
               "claimed": false,
               "parked": false
+            },
+            {
+              "id": "seawall-dividend-car",
+              "type": "sports",
+              "x": 426,
+              "z": 60.31529544861458,
+              "speed": 17.805130611137752,
+              "heading": 0,
+              "claimed": true,
+              "parked": false
             }
           ]
         },
@@ -336,8 +395,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 126196,
-      "sha256": "c4bb2ed3a7e3c282921fb81bd099de624ac98c9fb561acd0d5b756f607d0c559",
+      "bytes": 127347,
+      "sha256": "9ad798e5ca85082e96c58a60fa8aa3978c3d03644a90bfca957135653acc7940",
       "state": {
         "player": {
           "x": 95.5,
@@ -366,6 +425,7 @@
           "steer": 0,
           "wheelSpin": 0,
           "condition": 100,
+          "recoveries": 0,
           "impactCooldown": 0,
           "roll": 0,
           "pitch": 0,
@@ -380,6 +440,40 @@
         "paused": false,
         "frozen": true,
         "cash": 250,
+        "mission": {
+          "id": "borrowed-voltage",
+          "title": "Borrowed Voltage",
+          "contact": "Ilex",
+          "chapter": "Loose Ends",
+          "active": false,
+          "seconds": 0,
+          "lost": 0,
+          "failed": "",
+          "point": {
+            "x": 100,
+            "z": 8,
+            "radius": 4.5,
+            "label": "Ilex · Kiln Market",
+            "style": "contact"
+          },
+          "distance": 21,
+          "guardCount": 0,
+          "targetCondition": null,
+          "cash": 250,
+          "rp": 0,
+          "rank": "Runner",
+          "done": 0,
+          "replay": false,
+          "ending": false,
+          "scan": 0,
+          "scanCooldown": 0,
+          "weapon": 1,
+          "rounds": 12,
+          "reserve": 36,
+          "reload": false,
+          "radio": null,
+          "payout": null
+        },
         "visited": [
           "market"
         ],
@@ -400,9 +494,9 @@
           "quality": "high",
           "width": 1120,
           "height": 630,
-          "calls": 134,
-          "triangles": 19508,
-          "geometries": 44,
+          "calls": 145,
+          "triangles": 19804,
+          "geometries": 47,
           "textures": 2,
           "batches": 310,
           "instances": 7736
@@ -610,8 +704,8 @@
       "width": 1280,
       "height": 720,
       "quality": 84,
-      "bytes": 120368,
-      "sha256": "533f88f0265606b69ae2d96ce065a0c1526d3e67f9e1ea26743e099beaceae86",
+      "bytes": 120229,
+      "sha256": "27e9fb963f9648362381899a2ca2102c41aa767a167999ab99c48f96973bc063",
       "state": {
         "player": {
           "x": 443.6847045513853,
@@ -640,6 +734,7 @@
           "steer": 0,
           "wheelSpin": 32.582629884250984,
           "condition": 100,
+          "recoveries": 0,
           "impactCooldown": 0,
           "roll": 0,
           "pitch": -0.02599679134509374,
@@ -654,6 +749,40 @@
         "paused": false,
         "frozen": true,
         "cash": 250,
+        "mission": {
+          "id": "borrowed-voltage",
+          "title": "Borrowed Voltage",
+          "contact": "Ilex",
+          "chapter": "Loose Ends",
+          "active": false,
+          "seconds": 0,
+          "lost": 0,
+          "failed": "",
+          "point": {
+            "x": 100,
+            "z": 8,
+            "radius": 4.5,
+            "label": "Ilex · Kiln Market",
+            "style": "contact"
+          },
+          "distance": 424,
+          "guardCount": 0,
+          "targetCondition": null,
+          "cash": 250,
+          "rp": 0,
+          "rank": "Runner",
+          "done": 0,
+          "replay": false,
+          "ending": false,
+          "scan": 0,
+          "scanCooldown": 0,
+          "weapon": 1,
+          "rounds": 12,
+          "reserve": 36,
+          "reload": false,
+          "radio": null,
+          "payout": null
+        },
         "visited": [
           "market",
           "strand"
