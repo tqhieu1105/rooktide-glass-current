@@ -17,19 +17,19 @@ export function stagePlayableScreenshot(name, game) {
       Object.assign(player, { x: 429, z: 74 });
       enterOrStealVehicle(player, car, world);
     }
-    rig.heading = name === 'chase' ? 0.50 : 0.32; rig.orbitHold = 4;
+    rig.heading = name === 'chase' ? 0.47 : 0.32; rig.orbitHold = 4;
     if (name === 'chase') {
-      rig.preset = 1; rig.zoom = 3; rig.pitch = -0.12;
+      rig.preset = 1; rig.zoom = 1.8; rig.pitch = -0.10;
       game.police.restorePursuit(3, [[411, 84, -0.18, 8], [414, 28, Math.PI, 5], [426, 175, 0, 12]], [482, 26, -59]);
     }
   } else if (name === 'bridge') {
     Object.assign(car, { x: 430, z: -240, heading: Math.PI / 2 });
     Object.assign(player, { x: 430, z: -237 });
     enterOrStealVehicle(player, car, world);
-    rig.heading = Math.PI / 2 - 0.30; rig.orbitHold = 4;
-    rig.pitch = -0.12; rig.zoom = 3;
+    rig.heading = Math.PI / 2 - 0.27; rig.orbitHold = 4;
+    rig.pitch = -0.12; rig.zoom = 2.6;
   } else if (name === 'market') {
-    rig.heading = -0.30;
+    rig.heading = -0.34; rig.zoom = 0.35;
   } else if (name === 'quay') {
     Object.assign(player, { x: 267, z: 328, heading: 0 });
     Object.assign(car, { x: 259, z: 328, heading: 0 });

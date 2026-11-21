@@ -43,7 +43,7 @@ export function createPoliceModels(scene, police, world) {
     blade.rotation.z = i * Math.PI / 2; tailRotor.add(blade);
   }
   const beam = new THREE.Mesh(new THREE.ConeGeometry(1, 1, 14, 1, true),
-    new THREE.MeshBasicMaterial({ color: 0xffe7a1, transparent: true, opacity: 0.14, depthWrite: false, side: THREE.DoubleSide }));
+    new THREE.MeshBasicMaterial({ color: 0xffe7a1, transparent: true, opacity: 0.09, depthWrite: false, side: THREE.DoubleSide }));
   beam.visible = false; scene.add(beam);
   scene.add(helicopter);
 
@@ -55,7 +55,7 @@ export function createPoliceModels(scene, police, world) {
 
   const start = new THREE.Vector3(), end = new THREE.Vector3(), axis = new THREE.Vector3(), up = new THREE.Vector3(0, 1, 0);
   const pool = new THREE.Mesh(new THREE.CircleGeometry(1, 24).rotateX(-Math.PI / 2),
-    new THREE.MeshBasicMaterial({ color: 0xffeaac, transparent: true, opacity: 0.19, depthWrite: false }));
+    new THREE.MeshBasicMaterial({ color: 0xffeaac, transparent: true, opacity: 0.13, depthWrite: false }));
   scene.add(pool);
   return function paintPolice(alpha) {
     parts.count = 0;

@@ -105,15 +105,15 @@ export function createVehicleModel() {
   ], 3));
   cabin.setIndex([0,4,5,0,5,1, 1,5,6,1,6,2, 2,6,7,2,7,3, 3,7,4,3,4,0, 4,7,6,4,6,5]);
   cabin.computeVertexNormals();
-  const windowMaterial = new THREE.MeshPhysicalMaterial({ color: 0x3a7178, metalness: 0.04, roughness: 0.19,
-    clearcoat: 1, clearcoatRoughness: 0.08, transparent: true, opacity: 0.84, side: THREE.DoubleSide });
+  const windowMaterial = new THREE.MeshPhysicalMaterial({ color: 0x366873, metalness: 0.04, roughness: 0.19,
+    clearcoat: 1, clearcoatRoughness: 0.08, transparent: true, opacity: 0.88, side: THREE.DoubleSide });
   const windows = new THREE.Mesh(cabin, windowMaterial); windows.castShadow = true; windows.name = 'teal glass canopy'; chassis.add(windows);
   box(chassis, 0, 1.46, 0.12, 1.42, 0.10, 1.12, paint, true);
   for (const side of [-1, 1]) {
     box(chassis, side * 0.82, 1.09, 0.3, 0.08, 0.65, 0.12, paint);
     box(chassis, side * 1.04, 0.89, -0.48, 0.24, 0.13, 0.2, paint, true);
     box(chassis, side * 0.55, 0.66, -2.26, 0.55, 0.18, 0.045, 0xffe5b0);
-    box(chassis, side * 0.60, 0.65, 2.26, 0.55, 0.17, 0.045, 0xa3312e);
+    box(chassis, side * 0.60, 0.65, 2.26, 0.55, 0.17, 0.045, 0xf77e64);
     box(chassis, side * 0.58, 0.86, -1.52, 0.10, 0.018, 1.08, A.cream);
     box(chassis, side * 0.58, 0.84, 1.61, 0.10, 0.018, 0.78, A.cream);
     box(chassis, side * 0.986, 0.59, -0.42, 0.025, 0.30, 0.018, 0x8b403a);
@@ -167,7 +167,8 @@ export function createVehicleModel() {
 export function createPlayerModel() {
   const root = new THREE.Group(); root.name = 'Neri Voss — articulated courier';
   contactShadow(root, 0.43, 0.55);
-  const jacket = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.29, 0.58, 12), material(A.mustard));
+  const jacketTint = 0xe8a33d;
+  const jacket = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.29, 0.58, 12), material(jacketTint));
   jacket.position.set(0, 1.13, 0); jacket.castShadow = true; jacket.receiveShadow = true; root.add(jacket);
   box(root, 0, 0.88, 0, 0.39, 0.17, 0.27, 0x294c58);
   box(root, 0, 1.18, 0.17, 0.26, 0.36, 0.17, 0x315360);
@@ -200,7 +201,7 @@ export function createPlayerModel() {
   for (const side of [-1, 1]) {
     const arm = new THREE.Group(); arm.position.set(side * 0.31, 1.34, 0); root.add(arm);
     oval(arm, 0, -0.03, 0, 0.12, 0.12, 0.13, A.terracotta);
-    const sleeve = new THREE.Mesh(new THREE.CylinderGeometry(0.105, 0.075, 0.31, 9), material(A.mustard));
+    const sleeve = new THREE.Mesh(new THREE.CylinderGeometry(0.105, 0.075, 0.31, 9), material(jacketTint));
     sleeve.position.y = -0.16; sleeve.castShadow = true; arm.add(sleeve);
     const forearm = new THREE.Mesh(new THREE.CylinderGeometry(0.074, 0.059, 0.26, 9), material(0xcf9976));
     forearm.position.y = -0.42; forearm.castShadow = true; arm.add(forearm);

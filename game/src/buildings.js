@@ -1,7 +1,7 @@
 import { ART_DIRECTION as A } from './art-direction.js';
 import { addPalm, districtSign, meshLettering, neonBoard } from './geometry.js';
 import { getDistrictAt } from './world.js';
-import { AVENUES, STREETS } from './config.js';
+import { AVENUES, STREETS, GLASSHOOK_GANTRY } from './config.js';
 import { createRandom } from './random.js';
 
 export const CITY_CHUNK_SIZE = 192;
@@ -24,7 +24,7 @@ export function createCityChunks(world) {
     ['kiln', 'market', 150, 55], ['cinder', 'cinder', -354, 300],
     ['tower', 'heights', -377, -315], ['mast', 'heights', -486, -397],
     ['crane', 'quay', 317, 304], ['containers', 'quay', 306, 390],
-    ['glasshook', 'glasshook', 565, -249],
+    ['glasshook', 'glasshook', GLASSHOOK_GANTRY.x, GLASSHOOK_GANTRY.z],
   ]) chunkFor(district, x, z).landmarks.push(id);
   return [...chunks.values()];
 }
@@ -162,12 +162,13 @@ export function instanceCityLandmarks(b, landmarks) {
   }
   // Glasshook's original open triangular tidal gantry, visible from the Strand.
   if (landmarks.includes('glasshook')) {
+    const { x, z, halfSpan } = GLASSHOOK_GANTRY, yaw = Math.PI / 2;
     b.box(564, 8, -290, 46, 16, 10, A.cream);
-    for (const x of [540, 590]) b.beam(x, 0, -249, 565, 56, -249, 2.2, A.terracotta);
-    b.box(565, 17, -249, 42, 1.4, 2, A.terracotta);
-    b.add('ring', 565, 29, -248.5, 13, 13, 8, A.cream, 0, 0, -0.45);
-    b.box(565, 55, -249, 17, 0.7, 1.2, A.ink);
-    b.box(565, 59, -249, 0.5, 9, 0.5, A.ink);
+    for (const side of [-1, 1]) b.beam(x, 0, z + side * halfSpan, x, 56, z, 2.2, A.terracotta);
+    b.box(x, 17, z, 42, 1.4, 2, A.terracotta, yaw);
+    b.add('ring', x - 0.5, 29, z, 13, 13, 8, 0xf5e9c9, 0, yaw, -0.45);
+    b.box(x, 55, z, 17, 0.7, 1.2, A.ink, yaw);
+    b.box(x, 59, z, 0.5, 9, 0.5, A.ink);
     meshLettering(b, 'TIDAL RELAY', 564, 11, -284.8, 0.63, 0);
   }
 }

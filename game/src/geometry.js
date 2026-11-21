@@ -1,6 +1,7 @@
 import * as THREE from '../vendor/three.module.min.js';
 import { useCityAtlas } from './atlas.js';
 import { ART_DIRECTION as A } from './art-direction.js';
+import { signWidth, signPosts } from './world.js';
 import { applyGroundTexture, createChunkRoughness, createGroundTextures } from './surface-textures.js';
 
 // Static primitives share spatial instance batches.
@@ -265,10 +266,9 @@ export function meshLettering(builder, text, x, y, z, size, yaw = 0, color = A.w
 }
 
 export function districtSign(builder, sign) {
-  const width = sign.text.length * 0.71 + 2;
+  const width = signWidth(sign);
   const { x, z, yaw, color, text } = sign;
-  for (const side of [-1, 1]) builder.box(x + Math.cos(yaw) * width * side * 0.43, 2.6,
-    z - Math.sin(yaw) * width * side * 0.43, 0.22, 5.2, 0.25, A.ink, yaw);
+  for (const post of signPosts(sign)) builder.box(post.x, 2.6, post.z, 0.22, 5.2, 0.25, A.ink, yaw);
   builder.box(x, 5.1, z, width, 2.1, 0.3, color, yaw);
   builder.box(x, 4.05, z, width + 0.2, 0.14, 0.5, A.white, yaw);
   const neon = text === 'KILN MARKET' ? A.neonPink : text === 'RELAY QUAY' ? A.neonMagenta : 0;

@@ -1,4 +1,5 @@
-import { AVENUES, STREETS, DISTRICTS } from './config.js';
+import { AVENUES, STREETS, DISTRICTS, GLASSHOOK_GANTRY } from './config.js';
+import { ART_DIRECTION as A } from './art-direction.js';
 import { createRandom } from './random.js';
 import { buildRoadGraph, nearestRoadNode } from './roads.js';
 import { buildCollisionGrid } from './collision.js';
@@ -37,13 +38,18 @@ export function createRooktideCity(seed = 20261121) {
   }
   for (let z = -410; z < 420; z += 29) palms.push({ x: 469 + random() * 9, z, height: 9 + random() * 3, turn: random() * 6.28 });
   signs.push(
-    { text: 'SAFFRON STRAND', x: 444, z: 65, yaw: 0, color: 0xc9845e },
-    { text: 'KILN MARKET', x: 126, z: 19, yaw: 0, color: 0xb93b87 },
+    { text: 'SAFFRON STRAND', x: 445, z: 34, yaw: 0, color: A.darkGlass, solidPosts: true },
+    { text: 'KILN MARKET', x: 105, z: -14, yaw: 0, color: A.ink },
     { text: 'RELAY QUAY', x: 298, z: 264, yaw: 0, color: 0x78347d },
     { text: 'CINDERBANK', x: -374, z: 262, yaw: 0, color: 0x807d61 },
     { text: 'SWITCHBACK HEIGHTS', x: -373, z: -322, yaw: 0, color: 0x7c8b6b },
     { text: 'GLASSHOOK', x: 574, z: -267, yaw: Math.PI / 2, color: 0x4b8789 },
   );
+  for (const sign of signs) if (sign.solidPosts) {
+    for (const post of signPosts(sign)) addCollider(world, post.x, post.z, 0.32, 0.32, 5.2, 'sign post');
+  }
+  const { x: gantryX, z: gantryZ, halfSpan } = GLASSHOOK_GANTRY;
+  for (const side of [-1, 1]) addCollider(world, gantryX, gantryZ + side * (halfSpan - 1), 2.2, 4.2, 5, 'gantry foot');
   addCollider(world, 564, -290, 46, 10, 17, 'relay hall');
   addCollider(world, -377, -315, 10, 10, 38, 'water tower');
   addCollider(world, 297, 304, 8, 8, 38, 'crane');
@@ -57,6 +63,11 @@ export function createRooktideCity(seed = 20261121) {
   addCollider(world, 568, -175, 86, 2, 1, 'island edge');
   world.grid = buildCollisionGrid(colliders);
   return world;
+}
+export function signWidth(sign) { return sign.text.length * 0.71 + 2; }
+export function signPosts(sign) {
+  const { x, z, yaw } = sign, offset = signWidth(sign) * 0.43;
+  return [-1, 1].map(side => ({ x: x + Math.cos(yaw) * offset * side, z: z - Math.sin(yaw) * offset * side }));
 }
 export function addCollider(world, x, z, width, depth, height, kind) {
   world.colliders.push({ minX: x - width / 2, maxX: x + width / 2, minZ: z - depth / 2, maxZ: z + depth / 2, height, kind });

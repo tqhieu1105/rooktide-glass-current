@@ -2,6 +2,7 @@ export const STEP = 1 / 60;
 export const WORLD_LIMITS = { minX: -550, maxX: 608, minZ: -450, maxZ: 450, shoreX: 449 };
 export const AVENUES = [-420, -252, -84, 84, 252, 420];
 export const STREETS = [-360, -240, -120, 0, 120, 240, 360];
+export const GLASSHOOK_GANTRY = { x: 565, z: -240, halfSpan: 25 };
 export const PLAYER_TUNING = { walk: 4.2, sprint: 7.8, radius: 0.38, enterDistance: 4.5 };
 
 // Original tuning data retained from our archived prototype; the simulation is new.
