@@ -50,14 +50,12 @@ export function createPoliceSystem(world, player, getCar, effects = {}) {
   const locate = () => ({ x: actor().x, z: actor().z, heading: actor().heading });
 
   function clear(message) {
-    if (!wanted.level) return true;
     wanted.level = wanted.heat = wanted.unseen = wanted.searchRadius = wanted.arrest = 0;
     wanted.seen = false; wanted.state = 'none'; wanted.incident = '';
     helicopter.active = false;
     while (roadblocks.length) removeRoadblock(roadblocks.pop());
     for (const unit of units) if (unit.active) { unit.mode = 'disengage'; unit.routeTimer = 0; }
     if (message) showWorldMessage(world, message, 4);
-    return true;
   }
 
   function reportCrime(kind, x = actor().x, z = actor().z, witnessed = true) {
@@ -330,8 +328,7 @@ export function createPoliceSystem(world, player, getCar, effects = {}) {
     for (const unit of units) if (unit.active) steerUnit(unit, p, dt);
   }
 
-  function clearIfUnseen() { return !wanted.outcome && !wanted.seen && clear('RCP DISENGAGE / Report closed.'); }
-  function reset() { clear(); wanted.outcome = ''; lastCrime.clear(); }
+  function reset() { clear(); wanted.outcome = ''; wanted.checkpoint = null; lastCrime.clear(); }
   function snapshot() {
     const p = actor();
     return { ...wanted, heat: Math.round(wanted.heat), lastSeen: { ...wanted.lastSeen }, escapeSeconds: ESCAPE_SECONDS[wanted.level],
@@ -341,5 +338,5 @@ export function createPoliceSystem(world, player, getCar, effects = {}) {
         seen: helicopter.seen, distance: dist(helicopter, p) } : null,
       roadblocks: roadblocks.map(block => ({ x: block.x, z: block.z, distance: dist(block, p) })) };
   }
-  return { units, wanted, helicopter, roadblocks, reportCrime, restorePursuit, clearIfUnseen, reset, step, snapshot };
+  return { units, wanted, helicopter, roadblocks, reportCrime, restorePursuit, reset, step, snapshot };
 }
